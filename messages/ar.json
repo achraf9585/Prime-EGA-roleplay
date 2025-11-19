@@ -1,0 +1,75 @@
+{
+  "navigation": {
+    "features": "المميزات",
+    "server": "معلومات الخادم",
+    "join": "انضم الآن",
+    "connect": "اتصل"
+  },
+  "hero": {
+    "badge": "تجربة لعب الأدوار المتميزة",
+    "title": "مرحباً بك في",
+    "titleHighlight": "Prime EGA Roleplay",
+    "description": "استمتع بأكثر خوادم لعب الأدوار غامرة في GTA V FiveM. انضم إلى آلاف اللاعبين في لوس سانتوس للعب الأدوار الواقعي والوظائف الفريدة والقصص التي لا تُنسى.",
+    "joinServer": "انضم للخادم الآن",
+    "joinDiscord": "انضم لديسكورد"
+  },
+  "features": {
+    "title": "لماذا تختار Prime EGA Roleplay؟",
+    "subtitle": "استمتع بأفضل المميزات في لعب الأدوار FiveM",
+    "activeCommunity": {
+      "title": "مجتمع نشط",
+      "description": "انضم إلى أكثر من 500 لاعب نشط يومياً في سيناريوهات لعب الأدوار الغامرة"
+    },
+    "professionalStaff": {
+      "title": "طاقم محترف",
+      "description": "مدراء ومشرفون ذوو خبرة يضمنون لعباً عادلاً وممتعاً"
+    },
+    "customVehicles": {
+      "title": "مركبات مخصصة",
+      "description": "اقود سيارات ودراجات نارية وطائرات فريدة مع معالجة مخصصة"
+    },
+    "housingSystem": {
+      "title": "نظام السكن",
+      "description": "اشتر وبع وخصص منزل أحلامك في لوس سانتوس"
+    },
+    "uniqueJobs": {
+      "title": "وظائف فريدة",
+      "description": "من المهن القانونية إلى المشاريع الإجرامية، اعثر على طريقك"
+    },
+    "realisticEconomy": {
+      "title": "اقتصاد واقعي",
+      "description": "نظام اقتصاد ديناميكي بأسعار وفرص واقعية"
+    }
+  },
+  "server": {
+    "title": "معلومات الخادم",
+    "subtitle": "كل ما تحتاج لمعرفته عن Prime EGA Roleplay",
+    "details": {
+      "title": "تفاصيل الخادم",
+      "serverName": "اسم الخادم:",
+      "serverNameValue": "Prime EGA Roleplay",
+      "playersOnline": "اللاعبون المتصلون:",
+      "playersOnlineValue": "128/128",
+      "uptime": "وقت التشغيل:",
+      "uptimeValue": "99.9%",
+      "location": "الموقع:",
+      "locationValue": "أوروبا"
+    },
+    "quickStart": {
+      "title": "البدء السريع",
+      "step1": "تحميل FiveM",
+      "step2": "انضم لديسكورد",
+      "step3": "أنشئ شخصيتك",
+      "step4": "ابدأ رحلتك في لعب الأدوار"
+    }
+  },
+  "join": {
+    "title": "مستعد للانضمام؟",
+    "description": "اتصل بخادمنا وابدأ مغامرة لعب الأدوار اليوم!",
+    "connectServer": "اتصل بالخادم",
+    "joinDiscord": "انضم لديسكورد"
+  },
+  "footer": {
+    "copyright": "© 2024 Prime EGA Roleplay. جميع الحقوق محفوظة. | خادم لعب الأدوار GTA V FiveM"
+  }
+}

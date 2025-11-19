@@ -1,0 +1,75 @@
+{
+  "navigation": {
+    "features": "الخصائص",
+    "server": "معلومات السيرفر",
+    "join": "انضم دابا",
+    "connect": "اتصل"
+  },
+  "hero": {
+    "badge": "تجربة لعب الأدوار الممتازة",
+    "title": "أهلاً وسهلاً في",
+    "titleHighlight": "Prime EGA Roleplay",
+    "description": "استمتع بأحسن سيرفر لعب الأدوار في GTA V FiveM. انضم مع آلاف اللاعبين في لوس سانتوس للعب الأدوار الواقعي والوظائف المميزة والقصص اللي ما تنساش.",
+    "joinServer": "انضم للسيرفر دابا",
+    "joinDiscord": "انضم للديسكورد"
+  },
+  "features": {
+    "title": "علاش تختار EGA Roleplay؟",
+    "subtitle": "استمتع بأحسن الخصائص في لعب الأدوار FiveM",
+    "activeCommunity": {
+      "title": "مجتمع نشط",
+      "description": "انضم مع أكثر من 500 لاعب نشط كل يوم في سيناريوهات لعب الأدوار الغامرة"
+    },
+    "professionalStaff": {
+      "title": "طاقم محترف",
+      "description": "مدراء ومشرفين ذوي خبرة يضمنوا لعب عادل وممتع"
+    },
+    "customVehicles": {
+      "title": "عربيات مخصصة",
+      "description": "اقود سيارات ودراجات نارية وطائرات مميزة مع معالجة مخصصة"
+    },
+    "housingSystem": {
+      "title": "نظام السكن",
+      "description": "اشري وبع وخصص بيت أحلامك في لوس سانتوس"
+    },
+    "uniqueJobs": {
+      "title": "وظائف مميزة",
+      "description": "من المهن القانونية للمشاريع الإجرامية، لاقي طريقك"
+    },
+    "realisticEconomy": {
+      "title": "اقتصاد واقعي",
+      "description": "نظام اقتصاد ديناميكي بأسعار وفرص واقعية"
+    }
+  },
+  "server": {
+    "title": "معلومات السيرفر",
+    "subtitle": "كل ما تحتاجه تعرف على EGA Roleplay",
+    "details": {
+      "title": "تفاصيل السيرفر",
+      "serverName": "اسم السيرفر:",
+      "serverNameValue": "EGA Roleplay",
+      "playersOnline": "اللاعبين المتصلين:",
+      "playersOnlineValue": "128/128",
+      "uptime": "وقت التشغيل:",
+      "uptimeValue": "99.9%",
+      "location": "الموقع:",
+      "locationValue": "أوروبا"
+    },
+    "quickStart": {
+      "title": "البداية السريعة",
+      "step1": "حمل FiveM",
+      "step2": "انضم للديسكورد",
+      "step3": "أنشئ شخصيتك",
+      "step4": "ابدأ رحلتك في لعب الأدوار"
+    }
+  },
+  "join": {
+    "title": "مستعد تنضم؟",
+    "description": "اتصل بسيرفرنا وابدأ مغامرة لعب الأدوار اليوم!",
+    "connectServer": "اتصل بالسيرفر",
+    "joinDiscord": "انضم للديسكورد"
+  },
+  "footer": {
+    "copyright": "© 2024 EGA Roleplay. جميع الحقوق محفوظة. | سيرفر لعب الأدوار GTA V FiveM"
+  }
+}

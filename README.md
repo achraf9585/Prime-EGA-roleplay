@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prime EGA Roleplay - GTA V FiveM Roleplay Server
+
+A modern, responsive landing page for EGA Roleplay, a GTA V FiveM roleplay server. Built with Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
+
+## Features
+
+- 🎮 **Modern Design**: Clean, professional design with GTA V/FiveM theme
+- 📱 **Responsive**: Fully responsive design that works on all devices
+- ⚡ **Fast**: Built with Next.js 14 for optimal performance
+- 🎨 **Beautiful UI**: Uses shadcn/ui components with Tailwind CSS
+- 🔧 **TypeScript**: Full TypeScript support for better development experience
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Icons**: Lucide React
+- **Fonts**: Geist Sans & Mono
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   ```bash
+   npm install
+   ```
+
+2. **Run the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Open your browser** and navigate to [http://localhost:3000](http://localhost:3000)
+
+## Project Structure
+
+```
+ega-roleplay/
+├── src/
+│   ├── app/
+│   │   ├── globals.css      # Global styles with shadcn/ui theme
+│   │   ├── layout.tsx       # Root layout with metadata
+│   │   └── page.tsx         # Main landing page
+│   ├── components/
+│   │   └── ui/              # shadcn/ui components
+│   └── lib/
+│       └── utils.ts         # Utility functions
+├── components.json          # shadcn/ui configuration
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Customization
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Colors
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The theme uses a dark slate background with green accents to match the GTA V/FiveM aesthetic. You can customize colors in `src/app/globals.css`.
 
-## Learn More
+### Content
 
-To learn more about Next.js, take a look at the following resources:
+Update the content in `src/app/page.tsx` to match your server's information:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Server name and description
+- Features and benefits
+- Server statistics
+- Social media links
+- Contact information
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Components
 
-## Deploy on Vercel
+Add more shadcn/ui components as needed:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx shadcn@latest add [component-name]
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This project can be deployed to any platform that supports Next.js:
+
+- **Vercel** (recommended)
+- **Netlify**
+- **Railway**
+- **DigitalOcean App Platform**
+
+## License
+
+© 2025 Prime EGA Roleplay. All rights reserved.
+
+---
+
+Built with ❤️ for the GTA V FiveM roleplay community.
