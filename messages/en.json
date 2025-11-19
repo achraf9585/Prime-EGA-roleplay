@@ -1,0 +1,75 @@
+{
+  "navigation": {
+    "features": "Features",
+    "server": "Server Info",
+    "join": "Join Now",
+    "connect": "Connect"
+  },
+  "hero": {
+    "badge": "Premium Roleplay Experience",
+    "title": "Welcome to",
+    "titleHighlight": "Prime EGA Roleplay",
+    "description": "Experience the most immersive GTA V FiveM roleplay server. Join thousands of players in Los Santos for realistic roleplay, unique jobs, and unforgettable stories.",
+    "joinServer": "Join Server Now",
+    "joinDiscord": "Join Discord"
+  },
+  "features": {
+    "title": "Why Choose Prime EGA Roleplay?",
+    "subtitle": "Experience the best features in FiveM roleplay",
+    "activeCommunity": {
+      "title": "Active Community",
+      "description": "Join 500+ active players daily in immersive roleplay scenarios"
+    },
+    "professionalStaff": {
+      "title": "Professional Staff",
+      "description": "Experienced admins and moderators ensure fair and fun gameplay"
+    },
+    "customVehicles": {
+      "title": "Custom Vehicles",
+      "description": "Drive unique cars, motorcycles, and aircraft with custom handling"
+    },
+    "housingSystem": {
+      "title": "Housing System",
+      "description": "Buy, sell, and customize your dream home in Los Santos"
+    },
+    "uniqueJobs": {
+      "title": "Unique Jobs",
+      "description": "From legal careers to criminal enterprises, find your path"
+    },
+    "realisticEconomy": {
+      "title": "Realistic Economy",
+      "description": "Dynamic economy system with realistic prices and opportunities"
+    }
+  },
+  "server": {
+    "title": "Server Information",
+    "subtitle": "Everything you need to know about Prime EGA Roleplay",
+    "details": {
+      "title": "Server Details",
+      "serverName": "Server Name:",
+      "serverNameValue": "Prime EGA Roleplay",
+      "playersOnline": "Players Online:",
+      "playersOnlineValue": "128/128",
+      "uptime": "Uptime:",
+      "uptimeValue": "99.9%",
+      "location": "Location:",
+      "locationValue": "Europe"
+    },
+    "quickStart": {
+      "title": "Quick Start",
+      "step1": "Download FiveM",
+      "step2": "Join our Discord",
+      "step3": "Create your character",
+      "step4": "Start your roleplay journey"
+    }
+  },
+  "join": {
+    "title": "Ready to Join?",
+    "description": "Connect to our server and start your roleplay adventure today!",
+    "connectServer": "Connect to Server",
+    "joinDiscord": "Join Discord"
+  },
+  "footer": {
+    "copyright": "© 2025 Prime EGA Roleplay. All rights reserved. | GTA V FiveM Roleplay Server"
+  }
+}
