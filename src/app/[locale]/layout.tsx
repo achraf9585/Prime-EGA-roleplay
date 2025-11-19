@@ -31,11 +31,13 @@ export const metadata: Metadata = {
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  // Use a loose type here to stay compatible with next-intl's LayoutProps
+  params: any;
 }) {
+  const locale = (params as { locale: string }).locale;
   const messages = await getMessages();
 
   return (
