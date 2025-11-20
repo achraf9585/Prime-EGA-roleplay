@@ -12,6 +12,9 @@ import ApplicationSection from "@/components/ApplicationSection";
 import RulesSection from "@/components/RulesSection";
 import JoinSection from "@/components/JoinSection";
 import Footer from "@/components/Footer";
+import LegalFactions from "@/components/LegalFactions";
+import IllegalFactions from "@/components/IllegalFactions";
+import AvailableJobs from "@/components/AvailableJobs";
 
 export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("en");
@@ -70,6 +73,9 @@ export default function Home() {
             </div>
           </section>
           <Features t={t} />
+          <LegalFactions t={t} />
+          <IllegalFactions t={t} />
+          <AvailableJobs t={t} />
           <HowToPlay t={t} />
           <ServerInfo t={t} />
           <ApplicationSection t={t} />

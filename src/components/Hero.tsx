@@ -11,7 +11,7 @@ export default function Hero({ t }: { t: any }) {
     <div className="relative container mx-auto flex flex-col md:flex-row items-center md:items-end justify-between gap-4 max-w-7xl min-h-[80vh]">
   
   {/* --- LEFT IMAGE (Bottom Left) --- */}
-  <div className="hidden md:block relative w-1/4 h-[20rem] lg:h-[28rem] flex-shrink-0">
+  <div className="hidden md:block relative w-1/4 h-[20rem] lg:h-[28rem] flex-shrink-0 animate-float">
     <Image
       src="/human1.png"
       alt="Character left"
@@ -37,9 +37,9 @@ export default function Hero({ t }: { t: any }) {
       <Star className="mr-1 h-3 w-3" />
       {t.hero.badge}
     </Badge>
-    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 font-orbitron tracking-wider">
+    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 font-orbitron tracking-wider drop-shadow-[0_0_15px_rgba(0,200,255,0.5)]">
       {t.hero.title}{" "}
-      <span className="bg-gradient-to-r from-[#00C8FF] to-[#1E90FF] bg-clip-text text-transparent font-orbitron">
+      <span className="bg-gradient-to-r from-[#00C8FF] to-[#1E90FF] bg-clip-text text-transparent font-orbitron drop-shadow-none">
         {t.hero.titleHighlight}
       </span>
     </h1>
@@ -57,16 +57,17 @@ export default function Hero({ t }: { t: any }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Button className="rounded-full bg-[#1F2933]/90 hover:bg-[#111827] text-white px-8 py-6 text-sm sm:text-base flex items-center gap-2 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
-          <Play className="h-4 w-4" />
-          Watch Now!
+        <Button className="relative overflow-hidden rounded-full bg-[#1F2933]/90 hover:bg-[#00C8FF] hover:text-black transition-all duration-300 px-8 py-6 text-sm sm:text-base flex items-center gap-2 border border-white/10 shadow-[0_0_20px_rgba(0,200,255,0.2)] hover:shadow-[0_0_40px_rgba(0,200,255,0.6)] group">
+          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+          <Play className="h-4 w-4 relative z-10" />
+          <span className="relative z-10">Watch Now!</span>
         </Button>
       </a>
     </div>
   </div>
 
   {/* --- RIGHT IMAGE (Bottom Right) --- */}
-  <div className="hidden md:block relative w-1/4 h-[20rem] lg:h-[28rem] flex-shrink-0">
+  <div className="hidden md:block relative w-1/4 h-[20rem] lg:h-[28rem] flex-shrink-0 animate-float-delayed">
     <Image
       src="/human1.png"
       alt="Character right"
