@@ -32,7 +32,7 @@ export default function IllegalFactions({ t }: { t: any }) {
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-amber-600 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
-               <Image src="/illegal factions/logos/gambino.png" alt="Gambino Logo" width={40} height={40} className="object-contain" />
+               <Image src="/illegal factions/logos/gambino.png" alt="Gambino Logo" width={180} height={180} className="object-contain" />
 
                 <span>{t.illegalFactions.gambino.title}</span>
               </h3>
