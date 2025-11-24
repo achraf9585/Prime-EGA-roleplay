@@ -64,23 +64,56 @@ const translations = {
     },
     legalFactions: {
       title: "Legal Factions",
-      subtitle: "Serve and protect the citizens of Los Santos",
-      police: { title: "Los Santos Police Dept", description: "Enforce the law and maintain order" },
-      ems: { title: "Emergency Medical Services", description: "Save lives and provide medical care" },
-      doj: { title: "Department of Justice", description: "Uphold the law and ensure justice" },
+      subtitle: "Serve and protect Los Santos with honor",
+      government: {
+        title: "Government",
+        description: "Lead the city with integrity and vision. Shape policies, manage budgets, and ensure the prosperity of Los Santos through effective governance and public service."
+      },
+      embassy: {
+        title: "Embassy",
+        description: "Represent international interests and facilitate diplomatic relations. Handle visa applications, protect foreign nationals, and maintain peace between nations."
+      },
+      doj: {
+        title: "Department of Justice",
+        description: "Uphold the law through fair prosecution and defense. Serve as judges, prosecutors, and public defenders to ensure justice prevails in Los Santos."
+      },
+      lspd: {
+        title: "LSPD Police",
+        description: "Protect and serve the citizens of Los Santos. Patrol the streets, investigate crimes, and maintain law and order in the city's urban areas."
+      },
+      sheriff: {
+        title: "Sheriff Department",
+        description: "Guard the county and rural areas with dedication. Patrol highways, respond to emergencies, and keep the outskirts of Los Santos safe."
+      },
+      ambulanceCity: {
+        title: "Ambulance City",
+        description: "Save lives in the heart of Los Santos. Respond to medical emergencies, provide critical care, and transport patients to safety in urban environments."
+      },
+      ambulanceNorth: {
+        title: "Ambulance North Side",
+        description: "Deliver emergency medical services to the northern regions. Cover rural areas and provide life-saving care where it's needed most."
+      },
+      ambulanceCayo: {
+        title: "Ambulance Cayo Perico",
+        description: "Provide medical assistance on the tropical island paradise. Handle unique island emergencies and ensure the safety of all visitors and residents."
+      },
+      journalist: {
+        title: "Journalist / News Agency",
+        description: "Report the truth and keep citizens informed. Investigate stories, conduct interviews, and broadcast breaking news across Los Santos."
+      }
     },
     illegalFactions: {
       title: "Illegal Factions",
       subtitle: "Dominate the underworld of Los Santos",
-      gangs: { title: "The Families", description: "Chamberlain Hills. Green is the color. Loyalty and respect. Gang wars against Ballas and Vagos." },
-      ballas: { title: "Ballas", description: "Davis. Purple is the color. Power and influence. Eternal rivals of The Families." },
-      vagos: { title: "Los Santos Vagos", description: "East Los Santos. Yellow is the color. Drug trade and territory control. Rivals of The Families." },
-      marabunta: { title: "Marabunta Grande", description: "El Burro Heights. Blue is the color. Ruthless and organized. Expanding their influence across the city." },
-      gambino: { title: "Gambino Crime Family", description: "Italian-American organized crime. Business ventures and underground operations. Old-school mafia traditions." },
-      velocity: { title: "Velocity Crew", description: "Street racing and high-speed heists. Fast cars and faster money. Living life in the fast lane." },
-      lostmc: { title: "The Lost MC", description: "Outlaw motorcycle club. Brotherhood and freedom on two wheels. Controlling the streets with iron fists." },
-      sonofanarchy: { title: "Sons of Anarchy MC", description: "Notorious biker gang. Gun running and protection rackets. Loyalty above all else." },
-      cartel: { title: "The Cartel", description: "International drug trafficking organization. Vast networks and ruthless enforcement. Power through fear and money." },
+      gangs: { title: "The Families", description: "Once kings of Los Santos, the Families fractured over leadership disputes and lost ground. Today they’re rebuilding—uniting smaller sets, protecting neighborhoods, and fighting to reclaim their old reputation from the Ballas and other rivals." },
+      ballas: { title: "Ballas", description: "Born from old neighborhood alliances and crack-era violence, the Ballas control blocks through fear and fast money. Betrayal and internal power struggles made them tougher, and now they push to reclaim territory by force, especially against the Families." },
+      vagos: { title: " Vagos", description: "The Vagos grew from migrant neighborhoods and built an empire through numbers and aggression. Known for intimidation and brutal retaliation, they maintain a tight grip on weapons trading and smaller drug corners, especially around East LS." },
+      marabunta: { title: "Marabunta Grande", description: "Marabunta built their foundation from refugees fleeing Central American conflicts. Skilled in guerrilla tactics, they’re feared for unpredictability and extreme loyalty to their leaders. Their rivalry with the Vagos and Families fuels constant street wars." },
+      gambino: { title: "Gambino Crime Family", description: "The Gambino Family arrived in Los Santos decades ago during a quiet expansion from Liberty City. What began as a small crew now manages the city’s most discreet criminal operations—black market deals, protection rackets, and money laundering through luxury businesses. Led by a cold, calculating boss, they prefer order, tradition, and silent power over street chaos." },
+      velocity: { title: "Velocity Crew", description: "The Velocity Crew started as a small group of adrenaline junkies hosting midnight races in the industrial zones of Los Santos. After a legendary racer created the Black List—a ranking of the top 15 drivers—the crew evolved into a full criminal network. They now control illegal tuning shops, run high-risk vehicle heists, and move stolen supercars across the city.Recruits must beat a Black List member in a one-on-one race to join, and losing a challenge means surrendering your ride.The crew doesn t care about turf or colors—only horsepower, reputation, and glory. One goal drives them: Be the fastest or be forgotten." },
+      lostmc: { title: "The Lost MC", description: "The Lost MC rose from a small Sandy Shores biker crew into a full outlaw chapter. After losing members in past wars, they rebuilt with iron discipline and a hunger for territory. They operate from rural hideouts, striking hard and disappearing fast." },
+      sonofanarchy: { title: "Sons of Anarchy MC", description: "Inspired by old-school biker legacy, the Sons established a San Andreas chapter with strict rules and military-like structure. They balance legit businesses with black-market gun trades, maintaining a dangerous but calculated presence across highways and truck routes." },
+      cartel: { title: "The Cartel", description: "After being hunted in Mexico, the Sinaloa Cartel relocated their high-ranking commanders to Cayo Perico, turning the island into a fortified drug stronghold. With private soldiers, ex-military strategists, and a deadly network of dealers across Los Santos, the cartel runs massive production labs, smuggling routes, and hits on anyone who threatens their empire." },
     },
     availableJobs: {
       title: "Civilian Jobs",
@@ -177,6 +210,10 @@ const translations = {
         },
       ],
     },
+    membershipPricing: {
+      title: "Membership Tiers",
+      subtitle: "Choose your membership level and unlock exclusive benefits",
+    },
   },
   ar: {
     navigation: {
@@ -225,11 +262,44 @@ const translations = {
       },
     },
     legalFactions: {
-      title: "القطاعات القانونية",
-      subtitle: "اخدم واحمي مواطني لوس سانتوس",
-      police: { title: "شرطة لوس سانتوس", description: "طبق القانون وحافظ على النظام" },
-      ems: { title: "الخدمات الطبية الطارئة", description: "أنقذ الأرواح وقدم الرعاية الطبية" },
-      doj: { title: "وزارة العدل", description: "طبق القانون واضمن العدالة" },
+      title: "الفصائل القانونية",
+      subtitle: "خدمة وحماية لوس سانتوس بشرف",
+      government: {
+        title: "الحكومة",
+        description: "قيادة المدينة بنزاهة ورؤية. صياغة السياسات، إدارة الميزانيات، وضمان ازدهار لوس سانتوس من خلال الحكم الفعال والخدمة العامة."
+      },
+      embassy: {
+        title: "السفارة",
+        description: "تمثيل المصالح الدولية وتسهيل العلاقات الدبلوماسية. معالجة طلبات التأشيرات، حماية المواطنين الأجانب، والحفاظ على السلام بين الدول."
+      },
+      doj: {
+        title: "وزارة العدل",
+        description: "إقامة العدل من خلال الادعاء والدفاع العادل. العمل كقضاة ومدعين عامين ومحامين عامين لضمان سيادة العدالة في لوس سانتوس."
+      },
+      lspd: {
+        title: "شرطة لوس سانتوس",
+        description: "حماية وخدمة مواطني لوس سانتوس. دوريات الشوارع، التحقيق في الجرائم، والحفاظ على القانون والنظام في المناطق الحضرية."
+      },
+      sheriff: {
+        title: "إدارة الشريف",
+        description: "حراسة المقاطعة والمناطق الريفية بتفان. دوريات الطرق السريعة، الاستجابة للطوارئ، والحفاظ على أمان ضواحي لوس سانتوس."
+      },
+      ambulanceCity: {
+        title: "إسعاف المدينة",
+        description: "إنقاذ الأرواح في قلب لوس سانتوس. الاستجابة للطوارئ الطبية، تقديم الرعاية الحرجة، ونقل المرضى إلى بر الأمان في البيئات الحضرية."
+      },
+      ambulanceNorth: {
+        title: "إسعاف الجانب الشمالي",
+        description: "تقديم خدمات الطوارئ الطبية للمناطق الشمالية. تغطية المناطق الريفية وتقديم الرعاية المنقذة للحياة حيث تشتد الحاجة إليها."
+      },
+      ambulanceCayo: {
+        title: "إسعاف كايو بيريكو",
+        description: "تقديم المساعدة الطبية في جنة الجزيرة الاستوائية. التعامل مع حالات الطوارئ الفريدة في الجزيرة وضمان سلامة جميع الزوار والمقيمين."
+      },
+      journalist: {
+        title: "صحفي / وكالة أنباء",
+        description: "الإبلاغ عن الحقيقة وإبقاء المواطنين على اطلاع. التحقيق في القصص، إجراء المقابلات، وبث الأخبار العاجلة في جميع أنحاء لوس سانتوس."
+      }
     },
     illegalFactions: {
       title: "القطاعات غير القانونية",
@@ -338,6 +408,10 @@ const translations = {
         },
       ],
     },
+    membershipPricing: {
+      title: "مستويات العضوية",
+      subtitle: "اختر مستوى عضويتك واحصل على مزايا حصرية",
+    },
   },
   tn: {
     navigation: {
@@ -385,11 +459,44 @@ const translations = {
       },
     },
     legalFactions: {
-      title: "القطاعات القانونية",
-      subtitle: "اخدم واحمي مواطني لوس سانتوس",
-      police: { title: "شرطة لوس سانتوس", description: "طبق القانون وحافظ على النظام" },
-      ems: { title: "الخدمات الطبية الطارئة", description: "أنقذ الأرواح وقدم الرعاية الطبية" },
-      doj: { title: "وزارة العدل", description: "طبق القانون واضمن العدالة" },
+      title: "الفصائل القانونية",
+      subtitle: "خدمة وحماية لوس سانتوس بشرف",
+      government: {
+        title: "الحكومة",
+        description: "قود المدينة بنزاهة ورؤية. صيغ السياسات، دير الميزانيات، وضمن ازدهار لوس سانتوس من خلال الحكم الفعال والخدمة العامة."
+      },
+      embassy: {
+        title: "السفارة",
+        description: "مثل المصالح الدولية وسهل العلاقات الدبلوماسية. عالج طلبات التأشيرات، احمي المواطنين الأجانب، وحافظ على السلام بين الدول."
+      },
+      doj: {
+        title: "وزارة العدل",
+        description: "أقم العدل من خلال الادعاء والدفاع العادل. اخدم كقاضي أو مدعي عام أو محامي عام باش تضمن سيادة العدالة في لوس سانتوس."
+      },
+      lspd: {
+        title: "شرطة لوس سانتوس",
+        description: "احمي واخدم مواطني لوس سانتوس. دوريات الشوارع، التحقيق في الجرائم، والحفاظ على القانون والنظام في المناطق الحضرية."
+      },
+      sheriff: {
+        title: "إدارة الشريف",
+        description: "احرس المقاطعة والمناطق الريفية بتفان. دوريات الطرق السريعة، الاستجابة للطوارئ، والحفاظ على أمان ضواحي لوس سانتوس."
+      },
+      ambulanceCity: {
+        title: "إسعاف المدينة",
+        description: "أنقذ الأرواح في قلب لوس سانتوس. استجب للطوارئ الطبية، قدم الرعاية الحرجة، وانقل المرضى للأمان في البيئات الحضرية."
+      },
+      ambulanceNorth: {
+        title: "إسعاف الجانب الشمالي",
+        description: "قدم خدمات الطوارئ الطبية للمناطق الشمالية. غطي المناطق الريفية وقدم الرعاية المنقذة للحياة وين تشد الحاجة."
+      },
+      ambulanceCayo: {
+        title: "إسعاف كايو بيريكو",
+        description: "قدم المساعدة الطبية في جنة الجزيرة الاستوائية. تعامل مع حالات الطوارئ الفريدة في الجزيرة وضمن سلامة كل الزوار والمقيمين."
+      },
+      journalist: {
+        title: "صحفي / وكالة أنباء",
+        description: "أبلغ على الحقيقة وخلي المواطنين على اطلاع. حقق في القصص، اعمل مقابلات، وبث الأخبار العاجلة في كل لوس سانتوس."
+      }
     },
     illegalFactions: {
       title: "القطاعات غير القانونية",
@@ -497,6 +604,10 @@ const translations = {
           icon: "💬",
         },
       ],
+    },
+    membershipPricing: {
+      title: "مستويات العضوية",
+      subtitle: "اختار مستوى عضويتك واحصل على مزايا حصرية",
     },
   },
 };

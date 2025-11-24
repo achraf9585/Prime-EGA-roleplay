@@ -69,6 +69,50 @@
     "connectServer": "Connect to Server",
     "joinDiscord": "Join Discord"
   },
+  "legalFactions": {
+    "title": "Legal Factions",
+    "subtitle": "Serve and protect Los Santos with honor",
+    "government": {
+      "title": "Government",
+      "description": "Lead the city with integrity and vision. Shape policies, manage budgets, and ensure the prosperity of Los Santos through effective governance and public service."
+    },
+    "embassy": {
+      "title": "Embassy",
+      "description": "Represent international interests and facilitate diplomatic relations. Handle visa applications, protect foreign nationals, and maintain peace between nations."
+    },
+    "doj": {
+      "title": "Department of Justice",
+      "description": "Uphold the law through fair prosecution and defense. Serve as judges, prosecutors, and public defenders to ensure justice prevails in Los Santos."
+    },
+    "lspd": {
+      "title": "LSPD Police",
+      "description": "Protect and serve the citizens of Los Santos. Patrol the streets, investigate crimes, and maintain law and order in the city's urban areas."
+    },
+    "sheriff": {
+      "title": "Sheriff Department",
+      "description": "Guard the county and rural areas with dedication. Patrol highways, respond to emergencies, and keep the outskirts of Los Santos safe."
+    },
+    "ambulanceCity": {
+      "title": "Ambulance City",
+      "description": "Save lives in the heart of Los Santos. Respond to medical emergencies, provide critical care, and transport patients to safety in urban environments."
+    },
+    "ambulanceNorth": {
+      "title": "Ambulance North Side",
+      "description": "Deliver emergency medical services to the northern regions. Cover rural areas and provide life-saving care where it's needed most."
+    },
+    "ambulanceCayo": {
+      "title": "Ambulance Cayo Perico",
+      "description": "Provide medical assistance on the tropical island paradise. Handle unique island emergencies and ensure the safety of all visitors and residents."
+    },
+    "journalist": {
+      "title": "Journalist / News Agency",
+      "description": "Report the truth and keep citizens informed. Investigate stories, conduct interviews, and broadcast breaking news across Los Santos."
+    }
+  },
+  "membershipPricing": {
+    "title": "Membership Tiers",
+    "subtitle": "Choose your membership level and unlock exclusive benefits"
+  },
   "footer": {
     "copyright": "© 2025 Prime EGA Roleplay. All rights reserved. | GTA V FiveM Roleplay Server"
   }
