@@ -63,8 +63,12 @@ export default function LegalFactions({ t }: { t: any }) {
             <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FFD700] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,215,0,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
-                <span className="text-[120px] drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">⚖️</span>
-              </div>
+      <Image 
+                  src="/legal factions/doj.jpg" 
+                  alt="Department of Justice" 
+                  fill
+                  className="object-cover"
+                />              </div>
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#FFD700] transition-colors duration-300">
