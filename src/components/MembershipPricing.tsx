@@ -33,7 +33,7 @@ export default function MembershipPricing({ t }: { t: any }) {
       name: "Bronze",
       icon: <Award className="h-16 w-16" />,
       price: 10,
-      benefits: ["Vehicle Tire 2"],
+      benefits: ["Vehicle Tire 2 or add-on ped"],
       color: "#CD7F32",
       glowColor: "205, 127, 50",
       gradient: "from-[#CD7F32] to-[#8B5A2B]"
@@ -147,7 +147,7 @@ export default function MembershipPricing({ t }: { t: any }) {
             {t?.membershipPricing?.title || "Membership Tiers"}
           </h2>
           <p className="text-xl text-[hsl(220_15%_72%)] font-inter max-w-2xl mx-auto">
-            {t?.membershipPricing?.subtitle || "Choose your membership level and unlock exclusive benefits"}
+            {t?.membershipPricing?.subtitle || "  Choose your membership level and unlock exclusive benefits monthly"}
           </p>
         </div>
 
