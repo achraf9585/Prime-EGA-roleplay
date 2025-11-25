@@ -109,6 +109,100 @@
       "description": "Report the truth and keep citizens informed. Investigate stories, conduct interviews, and broadcast breaking news across Los Santos."
     }
   },
+  "availableJobs": {
+    "title": "Available Jobs",
+    "subtitle": "Choose your career path in Los Santos",
+    "privateJobs": {
+      "title": "Private Jobs",
+      "wigwam": {
+        "title": "Wigwam / BurgerShot",
+        "description": "Serve the best burgers in town and keep the citizens fed."
+      },
+      "catCoffee": {
+        "title": "Cat Coffee",
+        "description": "A relaxing atmosphere with coffee, pastries, and cute cats."
+      },
+      "pearls": {
+        "title": "Pearls Restaurant",
+        "description": "Fine dining seafood experience for the elite of Los Santos."
+      },
+      "mechanic": {
+        "title": "Mechanic",
+        "description": "Repair, tune, and customize vehicles to perfection."
+      },
+      "bikersMecano": {
+        "title": "Bikers Mecano",
+        "description": "Specialized repair shop for motorcycles and biker culture."
+      },
+      "casino": {
+        "title": "Casino",
+        "description": "High stakes gambling, entertainment, and luxury."
+      },
+      "nightclubLux": {
+        "title": "Nightclub – Lux",
+        "description": "The premier nightlife destination for parties and events."
+      },
+      "nightclubUnicorn": {
+        "title": "Nightclub – Unicorn",
+        "description": "Adult entertainment and exclusive bar services."
+      },
+      "realEstate": {
+        "title": "Real Estate",
+        "description": "Buy, sell, and rent properties across the city."
+      },
+      "lostMcBar": {
+        "title": "Lost MC Bar",
+        "description": "The hangout spot for the Lost MC and their allies."
+      }
+    },
+    "freelanceJobs": {
+      "title": "Freelance Jobs",
+      "gasStation": {
+        "title": "Gas Station Ownership",
+        "description": "Manage fuel supplies and run your own convenience store."
+      },
+      "store": {
+        "title": "Store Ownership",
+        "description": "Own and operate retail stores throughout the city."
+      },
+      "factories": {
+        "title": "Factories Ownership",
+        "description": "Manage industrial production and manufacturing lines."
+      },
+      "fishing": {
+        "title": "Fishing",
+        "description": "Catch fresh fish from the ocean and sell for profit."
+      },
+      "hunting": {
+        "title": "Hunting",
+        "description": "Track and hunt wildlife in the wilderness."
+      },
+      "trucker": {
+        "title": "Trucker Job",
+        "description": "Transport goods and cargo across the state."
+      },
+      "delivery": {
+        "title": "Delivery Job",
+        "description": "Deliver packages and parcels to customers on time."
+      },
+      "taxi": {
+        "title": "Taxi Job",
+        "description": "Transport passengers to their destinations safely."
+      },
+      "mining": {
+        "title": "Mining Job",
+        "description": "Extract valuable resources and minerals from the earth."
+      },
+      "tow": {
+        "title": "Tow/Recovery Job",
+        "description": "Recover stranded or illegally parked vehicles."
+      },
+      "farmer": {
+        "title": "Farmer Job",
+        "description": "Cultivate crops and manage livestock on the farm."
+      }
+    }
+  },
   "membershipPricing": {
     "title": "Membership Tiers",
     "subtitle": "Choose your membership level and unlock exclusive benefits"
