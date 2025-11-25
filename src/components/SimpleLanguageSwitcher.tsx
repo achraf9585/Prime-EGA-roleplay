@@ -235,7 +235,7 @@ const translations = {
     },
     membershipPricing: {
       title: "Membership Tiers",
-      subtitle: "Choose your membership level and unlock exclusive benefits",
+      subtitle: "Choose your membership level and unlock exclusive benefits monthly",
     },
   },
   ar: {
