@@ -33,7 +33,7 @@ export default function MembershipPricing({ t }: { t: any }) {
       name: "Bronze",
       icon: <Award className="h-16 w-16" />,
       price: 10,
-      benefits: ["Vehicle Tire 2 or add-on ped"],
+      benefits: ["Vehicle Tier 2 or add-on ped"],
       color: "#CD7F32",
       glowColor: "205, 127, 50",
       gradient: "from-[#CD7F32] to-[#8B5A2B]"
@@ -43,7 +43,7 @@ export default function MembershipPricing({ t }: { t: any }) {
       name: "Silver",
       icon: <Star className="h-16 w-16" />,
       price: 20,
-      benefits: ["Vehicle Tire 1"],
+      benefits: ["Vehicle Tier 1"],
       color: "#C0C0C0",
       glowColor: "192, 192, 192",
       gradient: "from-[#C0C0C0] to-[#808080]"
@@ -58,32 +58,33 @@ export default function MembershipPricing({ t }: { t: any }) {
       glowColor: "255, 215, 0",
       gradient: "from-[#FFD700] to-[#FFA500]"
     },
-    {
-      id: "diamond",
-      name: "Diamond",
-      icon: <Diamond className="h-16 w-16" />,
-      price: 40,
-      benefits: ["Company Tire 2"],
-      color: "#B9F2FF",
-      glowColor: "185, 242, 255",
-      gradient: "from-[#B9F2FF] to-[#00C8FF]"
-    },
+  
     {
       id: "platinum",
       name: "Platinum",
       icon: <Gem className="h-16 w-16" />,
       price: 40,
-      benefits: ["Exclusive Vehicle"],
+      benefits: ["1 mlo"],
       color: "#E5E4E2",
       glowColor: "229, 228, 226",
       gradient: "from-[#E5E4E2] to-[#BCC6CC]"
+    },
+      {
+      id: "diamond",
+      name: "Diamond",
+      icon: <Diamond className="h-16 w-16" />,
+      price: 40,
+      benefits: ["Company Tier 2"],
+      color: "#B9F2FF",
+      glowColor: "185, 242, 255",
+      gradient: "from-[#B9F2FF] to-[#00C8FF]"
     },
     {
       id: "prime",
       name: "Prime",
       icon: <Sparkles className="h-16 w-16" />,
       price: 50,
-      benefits: ["Company Tire 2", "Vehicle Tire 1"],
+      benefits: ["Company Tier 2", "Vehicle Tier 1"],
       color: "#9D00FF",
       glowColor: "157, 0, 255",
       gradient: "from-[#9D00FF] to-[#6A00B8]"
@@ -93,7 +94,7 @@ export default function MembershipPricing({ t }: { t: any }) {
       name: "Elite",
       icon: <Trophy className="h-16 w-16" />,
       price: 70,
-      benefits: ["Company Tire 2", "Exclusive Vehicle"],
+      benefits: ["Company Tier 2", "Exclusive Vehicle"],
       color: "#FF1493",
       glowColor: "255, 20, 147",
       gradient: "from-[#FF1493] to-[#C71585]"
@@ -103,7 +104,7 @@ export default function MembershipPricing({ t }: { t: any }) {
       name: "Ruby",
       icon: <Flame className="h-16 w-16" />,
       price: 70,
-      benefits: ["Company Tire 1"],
+      benefits: ["Company Tier 1"],
       color: "#E0115F",
       glowColor: "224, 17, 95",
       gradient: "from-[#E0115F] to-[#9B111E]"
@@ -113,7 +114,7 @@ export default function MembershipPricing({ t }: { t: any }) {
       name: "Ultimate",
       icon: <Zap className="h-16 w-16" />,
       price: 100,
-      benefits: ["Company Tire 1", "Exclusive Vehicle"],
+      benefits: ["Company Tier 1", "Exclusive Vehicle"],
       color: "#00FFFF",
       glowColor: "0, 255, 255",
       gradient: "from-[#00FFFF] to-[#00CED1]"
