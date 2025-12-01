@@ -149,51 +149,7 @@ export default function LegalFactions({ t }: { t: any }) {
             </div>
           </div>
 
-          {/* Ambulance North Side - Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#E74C3C] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(231,76,60,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#E74C3C]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/ambulance_north.jpg" 
-                  alt="Ambulance North Side" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#E74C3C] transition-colors duration-300">
-                {t.legalFactions.ambulanceNorth.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.ambulanceNorth.description}
-              </p>
-            </div>
-          </div>
 
-          {/* Ambulance Cayo Perico - Right Image, Left Text */}
-          <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#1ABC9C] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(26,188,156,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#1ABC9C]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/ambulance_cayo.jpg" 
-                  alt="Ambulance Cayo Perico" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-right">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#1ABC9C] transition-colors duration-300">
-                {t.legalFactions.ambulanceCayo.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.ambulanceCayo.description}
-              </p>
-            </div>
-          </div>
 
           {/* Journalist - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
