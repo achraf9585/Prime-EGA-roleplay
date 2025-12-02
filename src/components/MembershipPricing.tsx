@@ -22,6 +22,7 @@ interface MembershipTier {
   color: string;
   glowColor: string;
   gradient: string;
+  link: string;
 }
 
 export default function MembershipPricing({ t }: { t: any }) {
@@ -36,7 +37,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Vehicle Tier 2 or add-on ped"],
       color: "#CD7F32",
       glowColor: "205, 127, 50",
-      gradient: "from-[#CD7F32] to-[#8B5A2B]"
+      gradient: "from-[#CD7F32] to-[#8B5A2B]",
+      link: "https://egamarketplace.com/p/bronze-membership"
     },
     {
       id: "silver",
@@ -46,7 +48,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Vehicle Tier 1"],
       color: "#C0C0C0",
       glowColor: "192, 192, 192",
-      gradient: "from-[#C0C0C0] to-[#808080]"
+      gradient: "from-[#C0C0C0] to-[#808080]",
+      link: "https://egamarketplace.com/p/silver-membership-2"
     },
     {
       id: "gold",
@@ -56,9 +59,9 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Exclusive Vehicle"],
       color: "#FFD700",
       glowColor: "255, 215, 0",
-      gradient: "from-[#FFD700] to-[#FFA500]"
+      gradient: "from-[#FFD700] to-[#FFA500]",
+      link: "https://egamarketplace.com/p/gold-membership-1"
     },
-  
     {
       id: "platinum",
       name: "Platinum",
@@ -67,9 +70,10 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["1 mlo"],
       color: "#E5E4E2",
       glowColor: "229, 228, 226",
-      gradient: "from-[#E5E4E2] to-[#BCC6CC]"
+      gradient: "from-[#E5E4E2] to-[#BCC6CC]",
+      link: "https://egamarketplace.com/p/platinum-membership"
     },
-      {
+    {
       id: "diamond",
       name: "Diamond",
       icon: <Diamond className="h-16 w-16" />,
@@ -77,7 +81,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Company Tier 2"],
       color: "#B9F2FF",
       glowColor: "185, 242, 255",
-      gradient: "from-[#B9F2FF] to-[#00C8FF]"
+      gradient: "from-[#B9F2FF] to-[#00C8FF]",
+      link: "https://egamarketplace.com/p/diamond-membership"
     },
     {
       id: "prime",
@@ -87,7 +92,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Company Tier 2", "Vehicle Tier 1"],
       color: "#9D00FF",
       glowColor: "157, 0, 255",
-      gradient: "from-[#9D00FF] to-[#6A00B8]"
+      gradient: "from-[#9D00FF] to-[#6A00B8]",
+      link: "https://egamarketplace.com/p/prime-membership"
     },
     {
       id: "elite",
@@ -97,7 +103,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Company Tier 2", "Exclusive Vehicle"],
       color: "#FF1493",
       glowColor: "255, 20, 147",
-      gradient: "from-[#FF1493] to-[#C71585]"
+      gradient: "from-[#FF1493] to-[#C71585]",
+      link: "https://egamarketplace.com/p/elite-membership"
     },
     {
       id: "ruby",
@@ -107,7 +114,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Company Tier 1"],
       color: "#E0115F",
       glowColor: "224, 17, 95",
-      gradient: "from-[#E0115F] to-[#9B111E]"
+      gradient: "from-[#E0115F] to-[#9B111E]",
+      link: "https://egamarketplace.com/p/ruby-membership"
     },
     {
       id: "ultimate",
@@ -117,7 +125,8 @@ export default function MembershipPricing({ t }: { t: any }) {
       benefits: ["Company Tier 1", "Exclusive Vehicle"],
       color: "#00FFFF",
       glowColor: "0, 255, 255",
-      gradient: "from-[#00FFFF] to-[#00CED1]"
+      gradient: "from-[#00FFFF] to-[#00CED1]",
+      link: "https://egamarketplace.com/p/ultimate-membership"
     }
   ];
 
@@ -299,8 +308,12 @@ export default function MembershipPricing({ t }: { t: any }) {
                       </div>
 
                       {/* CTA Button */}
-                      <button
-                        className="relative w-full py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg overflow-hidden group"
+
+                      <a
+                        href={membership.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative w-full py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg overflow-hidden group block text-center"
                         style={{
                           background: `linear-gradient(135deg, ${membership.color}, rgba(${membership.glowColor}, 0.8))`,
                           boxShadow: `0 4px 15px rgba(${membership.glowColor}, 0.4)`
@@ -310,7 +323,7 @@ export default function MembershipPricing({ t }: { t: any }) {
                         <div
                           className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                         />
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
