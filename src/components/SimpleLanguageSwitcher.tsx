@@ -126,7 +126,7 @@ const translations = {
         mechanic: { title: "Mechanic", description: "Repair, tune, and customize vehicles to perfection." },
         bikersMecano: { title: "Bikers Mecano", description: "Specialized repair shop for motorcycles and biker culture." },
         casino: { title: "Casino", description: "High stakes gambling, entertainment, and luxury." },
-        nightclubLux: { title: "Nightclub – Lux", description: "The premier nightlife destination for parties and events." },
+        nightclubLux: { title: "Nightclub – Tropical Nights", description: "The premier nightlife destination for parties and events." },
         nightclubUnicorn: { title: "Nightclub – Unicorn", description: "Adult entertainment and exclusive bar services." },
         realEstate: { title: "Real Estate", description: "Buy, sell, and rent properties across the city." },
         lostMcBar: { title: "Lost MC Bar", description: "The hangout spot for the Lost MC and their allies." }
@@ -236,6 +236,11 @@ const translations = {
     membershipPricing: {
       title: "Membership Tiers",
       subtitle: "Choose your monthly membership level and unlock exclusive benefits ",
+    },
+    redeem: {
+      badge: "Rewards",
+      title: "Redeem Your Code",
+      subtitle: "Enter your exclusive code to unlock special rewards in-game."
     },
   },
   ar: {
@@ -458,6 +463,11 @@ const translations = {
       title: "مستويات العضوية",
       subtitle: "اختر مستوى عضويتك واحصل على مزايا حصرية",
     },
+    redeem: {
+      badge: "المكافآت",
+      title: "استرداد الرمز الخاص بك",
+      subtitle: "أدخل الرمز الحصري الخاص بك لفتح مكافآت خاصة داخل اللعبة."
+    },
   },
   tn: {
     navigation: {
@@ -677,6 +687,11 @@ const translations = {
     membershipPricing: {
       title: "مستويات العضوية",
       subtitle: "اختار مستوى عضويتك واحصل على مزايا حصرية",
+    },
+    redeem: {
+      badge: "المكافآت",
+      title: "دخل الكود متاعك",
+      subtitle: "حط الكود الحصري متاعك باش تربح جوائز خاصة في اللعبة."
     },
   },
 };

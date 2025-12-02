@@ -16,6 +16,7 @@ import LegalFactions from "@/components/LegalFactions";
 import IllegalFactions from "@/components/IllegalFactions";
 import AvailableJobs from "@/components/AvailableJobs";
 import MembershipPricing from "@/components/MembershipPricing";
+import RedeemSection from "@/components/RedeemSection";
 
 export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("en");
@@ -68,6 +69,7 @@ export default function Home() {
         </div>
       </section>
             <MembershipPricing t={t} />
+      <RedeemSection t={t} />
       <Features t={t} />
       <LegalFactions t={t} />
       <IllegalFactions t={t} />

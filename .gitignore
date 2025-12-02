@@ -76,3 +76,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Security: Ignore data files containing codes
+src/data/*.csv
+src/data/*.json
+
+/src/generated/prisma

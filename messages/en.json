@@ -94,16 +94,9 @@
     },
     "ambulanceCity": {
       "title": "Ambulance City",
-      "description": "Save lives in the heart of Los Santos. Respond to medical emergencies, provide critical care, and transport patients to safety in urban environments."
+      "description": "Save lives in the heart of Los Santos, North side and Cayo Perico. Respond to medical emergencies, provide critical care, and transport patients to safety in urban environments."
     },
-    "ambulanceNorth": {
-      "title": "Ambulance North Side",
-      "description": "Deliver emergency medical services to the northern regions. Cover rural areas and provide life-saving care where it's needed most."
-    },
-    "ambulanceCayo": {
-      "title": "Ambulance Cayo Perico",
-      "description": "Provide medical assistance on the tropical island paradise. Handle unique island emergencies and ensure the safety of all visitors and residents."
-    },
+
     "journalist": {
       "title": "Journalist / News Agency",
       "description": "Report the truth and keep citizens informed. Investigate stories, conduct interviews, and broadcast breaking news across Los Santos."
@@ -139,7 +132,7 @@
         "description": "High stakes gambling, entertainment, and luxury."
       },
       "nightclubLux": {
-        "title": "Nightclub – Lux",
+        "title": "Nightclub – Tripical Nights",
         "description": "The premier nightlife destination for parties and events."
       },
       "nightclubUnicorn": {

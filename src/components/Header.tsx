@@ -49,6 +49,9 @@ export default function Header({ t }: { t: any }) {
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-6">
+                 <a href="#membership" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+                Membership
+              </a>
               <a href="#features" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.features}
               </a>
