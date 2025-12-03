@@ -3,6 +3,7 @@ import { Orbitron, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import AuthProvider from "@/components/AuthProvider";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -38,7 +39,10 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${orbitron.variable} ${inter.variable} antialiased`}>
         <AuthProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <ScrollToTop />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
