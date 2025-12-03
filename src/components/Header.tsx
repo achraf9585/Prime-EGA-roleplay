@@ -32,7 +32,7 @@ export default function Header({ t }: { t: any }) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[hsl(215_18%_20%)] bg-[#0b2032]/70 backdrop-blur-sm ">
+      <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-[hsl(215_18%_20%)] bg-[#0b2032]/70 backdrop-blur-sm ">
         <div className="container mx-auto px-4 py-4 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">

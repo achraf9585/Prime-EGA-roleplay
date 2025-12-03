@@ -51,6 +51,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#081B2B] via-[#12181F] to-[#12181F] relative">
       <div className="pointer-events-none absolute inset-0 bg-cyan-radials" />
+      <Header t={t} />
       <section className="relative overflow-hidden min-h-[650px]">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute -top-10 left-0 w-full h-[120%]">
@@ -64,7 +65,6 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#020817]/20 via-[#020817]/60 to-[#020817]/90" />
         </div>
         <div className="relative z-10">
-          <Header t={t} />
           <Hero t={t} />
         </div>
       </section>
