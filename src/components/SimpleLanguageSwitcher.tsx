@@ -114,6 +114,18 @@ const translations = {
       lostmc: { title: "The Lost MC", description: "The Lost MC rose from a small Sandy Shores biker crew into a full outlaw chapter. After losing members in past wars, they rebuilt with iron discipline and a hunger for territory. They operate from rural hideouts, striking hard and disappearing fast." },
       sonofanarchy: { title: "Sons of Anarchy MC", description: "Inspired by old-school biker legacy, the Sons established a San Andreas chapter with strict rules and military-like structure. They balance legit businesses with black-market gun trades, maintaining a dangerous but calculated presence across highways and truck routes." },
       cartel: { title: "The Cartel", description: "After being hunted in Mexico, the Sinaloa Cartel relocated their high-ranking commanders to Cayo Perico, turning the island into a fortified drug stronghold. With private soldiers, ex-military strategists, and a deadly network of dealers across Los Santos, the cartel runs massive production labs, smuggling routes, and hits on anyone who threatens their empire." },
+      animals: {
+        title: "The Animalz",
+        description: "During the ongoing Los Santos blackouts, the first group to exploit the chaos is The Animalz—a loose crew of young looters and vandals striking across Los Santos and Blaine County. They hit stores, supply depots, and vehicles during power outages, sometimes using stolen military-grade gear recovered by LCPD. While they have no clear hierarchy or turf, the repeated appearance of members in white rabbit masks suggests hidden leadership. Police are actively hunting anyone connected to these dangerous blackout looters."
+      },
+      newOrder: {
+        title: "The New Order",
+        description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
+      },
+      otf: {
+        title: "OTF",
+        description: "OTF is a tight-knit family gang built around music, loyalty, and street influence. Formed by rappers and producers who grew up together, OTF runs the city’s underground sound—mixing raw lyricism, heavy beats, and real street stories. Their studios act as both creative hubs and meeting points where business, deals, and strategy flow behind closed doors. They use music to speak for the streets, protect their own, and grow their power. Known for their unity, style, and ambition, OTF balances fame and street presence—turning their talent into influence and their influence into respect. OTF: loyalty first, music second, everything else after."
+      },
     },
     availableJobs: {
       title: "Available Jobs",
@@ -121,7 +133,7 @@ const translations = {
       privateJobs: {
         title: "Private Jobs",
         wigwam: { title: "Wigwam / BurgerShot", description: "Serve the best burgers in town and keep the citizens fed." },
-        catCoffee: { title: "Cat Coffee", description: "A relaxing atmosphere with coffee, pastries, and cute cats." },
+        leapfrogCoffee: { title: "Leapfrog Coffee", description: "A relaxing atmosphere with coffee, pastries, and cute cats." },
         pearls: { title: "Pearls Restaurant", description: "Fine dining seafood experience for the elite of Los Santos." },
         mechanic: { title: "Mechanic", description: "Repair, tune, and customize vehicles to perfection." },
         bikersMecano: { title: "Bikers Mecano", description: "Specialized repair shop for motorcycles and biker culture." },
@@ -177,7 +189,7 @@ const translations = {
     },
     footer: {
       copyright:
-        "© 2024 EGA Roleplay. All rights reserved. | GTA V FiveM Roleplay Server",
+        "© 2025 Prime EGA Roleplay. All rights reserved. | GTA V FiveM Roleplay Server",
     },
     video: {
       title: "Watch Our Trailer",
@@ -196,21 +208,73 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Server Rules",
+      title: "Prime EGA Roleplay Guidelines",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
-        "Respect all players and staff members",
-        "No cheating, hacking, or exploiting",
-        "Stay in character at all times",
-        "No random killing or griefing",
-        "Follow real-life laws and regulations",
-        "Use proper English in public channels",
-        "No advertising other servers",
-        "Report rule violations to staff",
-      ],
+        {
+          title: "Logic RP",
+          description: "Everything should stay within the roleplay based on common logic relative to the character's status, wealth, and social position in the community.",
+          example: "A burger worker eligible for dirty business can rob a shop to earn extra money, but the burger owner, due to their wealth and social status, should not engage in street-level crimes. Instead, they could participate in high-stakes operations like money laundering."
+        },
+        {
+          title: "Reason RP",
+          description: "Every action, legal or illegal, must be supported by a valid reason grounded in common sense.",
+          example: "A burger worker should not rob a wallet from another player without a valid reason due to their social and economic status. Conversely, a gang member might rob someone in their territory to assert dominance or send a message, but this should always be justified with a creative and valid reason."
+        },
+        {
+          title: "Mere RP",
+          description: "Mere RP refers to low-level interactions based on primitive motives like random robbing, killing, or vandalizing without purpose.",
+          rule: "Any form of mere RP not supported by valid reasons and common logic will result in a severe ban. Ensure all actions have a purpose and contribute meaningfully to the roleplay narrative."
+        },
+        {
+          title: "Gradation RP",
+          description: "Characters should progress logically through their journey, climbing the ladder step by step.",
+          rule: "Jumping from low-level roles directly to high-stakes crimes or major criminal roles is not acceptable. Build your character's story from small beginnings to larger, more complex roles and actions, reflecting a natural progression."
+        },
+        {
+          title: "Fail RP",
+          description: "Failure to adhere to roleplay immersion or logic will be penalized.",
+          rule: "Any behavior that disrupts the roleplay world, such as out-of-character (OOC) actions, meta-gaming, or power-gaming, will result in a ban. Roleplay should be consistent and uninterrupted by OOC elements."
+        },
+        {
+          title: "Force RP",
+          description: "Forcing actions or ideas onto other players is prohibited.",
+          rule: "You cannot coerce other players into actions or situations without a valid, roleplay-relevant reason. For instance, a kidnapper cannot force a hostage to commit suicide unless it is contextually justified and the hostage's situation reflects this possibility. Law enforcement cannot force a player to become a criminal without clear evidence."
+        },
+        {
+          title: "Interaction RP",
+          description: "Roleplay scenes should be interactive and balanced, involving mutual exchange.",
+          rule: "When creating a scene, ensure that there is a give-and-take dynamic. If you kidnap a group of people, you must offer something in return or engage in a meaningful interaction. The scene should involve negotiation or exchange, rather than simply taking without giving."
+        },
+        {
+          title: "Involvement RP",
+          description: "When deciding to involve yourself in an ongoing scene, ensure it is logical and well-planned.",
+          rule: "Intervening in an ongoing scenes requires adherence to three major rules: Logic RP (ensure your involvement makes sense), Reason RP (have a valid reason for interference), and Fear RP (acknowledge the risks involved). If these conditions are not met, avoid intervening. This rule aims to replace traditional third-party interference with more thoughtful engagement."
+        },
+        {
+          title: "Fear RP",
+          description: "Characters should realistically react to threats and risks.",
+          rule: "Plan your actions considering potential dangers. Avoid scenarios where your character acts without regard for risk or consequences, as this can lead to power gaming or breaking the roleplay immersion."
+        },
+        {
+          title: "Assuming RP",
+          description: "This is a reminder that roleplay has no inherent limits if logic and reason are respected.",
+          rule: "In scenarios involving large-scale confrontations or events, like a crew of 5 being ambushed by 25, ensure that your response is balanced and realistic. The focus should be on creative, logical, and fair roleplay, respecting the overall narrative and balance of the game world."
+        },
+        {
+          title: "Lore RP",
+          description: "This is a reminder that the overall Lore needs to be respected.",
+          rule: "Respect the established lore, and contribute to it thoughtfully with your roleplay. You also need to evolve your character story and create a meaningful and a creative storyline for it."
+        },
+        {
+          title: "Toxicity",
+          description: "Any kind of toxicity in or outside the RP podium is severely prohibited.",
+          rule: "Any kind of cheating, exploit bugs, massive insulting, sexual harassments, family or religious aggression or even sexism will be treated as a permanent suspension from the podium."
+        }
+      ]
     },
     howToPlay: {
-      title: "How to Play on EGA Roleplay",
+      title: "How to Play on Prime EGA Roleplay",
       subtitle: "Follow these simple steps to join our community",
       steps: [
         {
@@ -341,6 +405,18 @@ const translations = {
       lostmc: { title: "ذا لوست إم سي", description: "نادي دراجات نارية خارج عن القانون. الأخوة والحرية على عجلتين. السيطرة على الشوارع بقبضة حديدية." },
       sonofanarchy: { title: "سونز أوف أناركي إم سي", description: "عصابة دراجات نارية سيئة السمعة. تهريب الأسلحة وعصابات الحماية. الولاء فوق كل شيء." },
       cartel: { title: "الكارتل", description: "منظمة دولية لتهريب المخدرات. شبكات واسعة وإنفاذ قاس. القوة من خلال الخوف والمال." },
+      animals: {
+        title: "The Animalz",
+        description: "During the ongoing Los Santos blackouts, the first group to exploit the chaos is The Animalz—a loose crew of young looters and vandals striking across Los Santos and Blaine County. They hit stores, supply depots, and vehicles during power outages, sometimes using stolen military-grade gear recovered by LCPD. While they have no clear hierarchy or turf, the repeated appearance of members in white rabbit masks suggests hidden leadership. Police are actively hunting anyone connected to these dangerous blackout looters."
+      },
+      newOrder: {
+        title: "The New Order",
+        description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
+      },
+      otf: {
+        title: "OTF",
+        description: "OTF is a tight-knit family gang built around music, loyalty, and street influence. Formed by rappers and producers who grew up together, OTF runs the city’s underground sound—mixing raw lyricism, heavy beats, and real street stories. Their studios act as both creative hubs and meeting points where business, deals, and strategy flow behind closed doors. They use music to speak for the streets, protect their own, and grow their power. Known for their unity, style, and ambition, OTF balances fame and street presence—turning their talent into influence and their influence into respect. OTF: loyalty first, music second, everything else after."
+      },
     },
     availableJobs: {
       title: "الوظائف المتاحة",
@@ -348,7 +424,7 @@ const translations = {
       privateJobs: {
         title: "وظائف خاصة",
         wigwam: { title: "ويغوام / برجر شوت", description: "قدم أفضل البرغر في المدينة وأطعم المواطنين." },
-        catCoffee: { title: "مقهى القطط", description: "جو مريح مع القهوة والمعجنات والقطط اللطيفة." },
+        leapfrogCoffee : { title: "مقهىLeapfrog", description: "جو مريح مع القهوة والمعجنات والقطط اللطيفة." },
         pearls: { title: "مطعم بيرلز", description: "تجربة طعام بحري فاخرة لنخبة لوس سانتوس." },
         mechanic: { title: "ميكانيكي", description: "إصلاح وضبط وتخصيص المركبات بإتقان." },
         bikersMecano: { title: "ميكانيكي الدراجات", description: "ورشة إصلاح متخصصة للدراجات النارية وثقافة الدراجين." },
@@ -422,18 +498,70 @@ const translations = {
       },
     },
     serverRules: {
-      title: "قواعد الخادم",
-      subtitle: "اتبع هذه القواعد لضمان تجربة رائعة للجميع",
+      title: "Prime EGA Roleplay Guidelines",
+      subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
-        "احترم جميع اللاعبين وأعضاء الطاقم",
-        "لا غش أو اختراق أو استغلال",
-        "ابق في شخصيتك في جميع الأوقات",
-        "لا قتل عشوائي أو مضايقة",
-        "اتبع قوانين الحياة الواقعية",
-        "استخدم الإنجليزية المناسبة في القنوات العامة",
-        "لا إعلان عن خوادم أخرى",
-        "أبلغ عن انتهاكات القواعد للطاقم",
-      ],
+        {
+          title: "Logic RP",
+          description: "Everything should stay within the roleplay based on common logic relative to the character's status, wealth, and social position in the community.",
+          example: "A burger worker eligible for dirty business can rob a shop to earn extra money, but the burger owner, due to their wealth and social status, should not engage in street-level crimes. Instead, they could participate in high-stakes operations like money laundering."
+        },
+        {
+          title: "Reason RP",
+          description: "Every action, legal or illegal, must be supported by a valid reason grounded in common sense.",
+          example: "A burger worker should not rob a wallet from another player without a valid reason due to their social and economic status. Conversely, a gang member might rob someone in their territory to assert dominance or send a message, but this should always be justified with a creative and valid reason."
+        },
+        {
+          title: "Mere RP",
+          description: "Mere RP refers to low-level interactions based on primitive motives like random robbing, killing, or vandalizing without purpose.",
+          rule: "Any form of mere RP not supported by valid reasons and common logic will result in a severe ban. Ensure all actions have a purpose and contribute meaningfully to the roleplay narrative."
+        },
+        {
+          title: "Gradation RP",
+          description: "Characters should progress logically through their journey, climbing the ladder step by step.",
+          rule: "Jumping from low-level roles directly to high-stakes crimes or major criminal roles is not acceptable. Build your character's story from small beginnings to larger, more complex roles and actions, reflecting a natural progression."
+        },
+        {
+          title: "Fail RP",
+          description: "Failure to adhere to roleplay immersion or logic will be penalized.",
+          rule: "Any behavior that disrupts the roleplay world, such as out-of-character (OOC) actions, meta-gaming, or power-gaming, will result in a ban. Roleplay should be consistent and uninterrupted by OOC elements."
+        },
+        {
+          title: "Force RP",
+          description: "Forcing actions or ideas onto other players is prohibited.",
+          rule: "You cannot coerce other players into actions or situations without a valid, roleplay-relevant reason. For instance, a kidnapper cannot force a hostage to commit suicide unless it is contextually justified and the hostage's situation reflects this possibility. Law enforcement cannot force a player to become a criminal without clear evidence."
+        },
+        {
+          title: "Interaction RP",
+          description: "Roleplay scenes should be interactive and balanced, involving mutual exchange.",
+          rule: "When creating a scene, ensure that there is a give-and-take dynamic. If you kidnap a group of people, you must offer something in return or engage in a meaningful interaction. The scene should involve negotiation or exchange, rather than simply taking without giving."
+        },
+        {
+          title: "Involvement RP",
+          description: "When deciding to involve yourself in an ongoing scene, ensure it is logical and well-planned.",
+          rule: "Intervening in an ongoing scenes requires adherence to three major rules: Logic RP (ensure your involvement makes sense), Reason RP (have a valid reason for interference), and Fear RP (acknowledge the risks involved). If these conditions are not met, avoid intervening. This rule aims to replace traditional third-party interference with more thoughtful engagement."
+        },
+        {
+          title: "Fear RP",
+          description: "Characters should realistically react to threats and risks.",
+          rule: "Plan your actions considering potential dangers. Avoid scenarios where your character acts without regard for risk or consequences, as this can lead to power gaming or breaking the roleplay immersion."
+        },
+        {
+          title: "Assuming RP",
+          description: "This is a reminder that roleplay has no inherent limits if logic and reason are respected.",
+          rule: "In scenarios involving large-scale confrontations or events, like a crew of 5 being ambushed by 25, ensure that your response is balanced and realistic. The focus should be on creative, logical, and fair roleplay, respecting the overall narrative and balance of the game world."
+        },
+        {
+          title: "Lore RP",
+          description: "This is a reminder that the overall Lore needs to be respected.",
+          rule: "Respect the established lore, and contribute to it thoughtfully with your roleplay. You also need to evolve your character story and create a meaningful and a creative storyline for it."
+        },
+        {
+          title: "Toxicity",
+          description: "Any kind of toxicity in or outside the RP podium is severely prohibited.",
+          rule: "Any kind of cheating, exploit bugs, massive insulting, sexual harassments, family or religious aggression or even sexism will be treated as a permanent suspension from the podium."
+        }
+      ]
     },
     howToPlay: {
       title: "كيف تلعب على EGA Roleplay",
@@ -566,6 +694,18 @@ const translations = {
       lostmc: { title: "ذا لوست إم سي", description: "نادي دراجات نارية خارج عن القانون. الأخوة والحرية على عجلتين. السيطرة على الشوارع بقبضة حديدية." },
       sonofanarchy: { title: "سونز أوف أناركي إم سي", description: "عصابة دراجات نارية سيئة السمعة. تهريب الأسلحة وعصابات الحماية. الولاء فوق كل شيء." },
       cartel: { title: "الكارتل", description: "منظمة دولية لتهريب المخدرات. شبكات واسعة وإنفاذ قاس. القوة من خلال الخوف والمال." },
+      animals: {
+        title: "The Animalz",
+        description: "During the ongoing Los Santos blackouts, the first group to exploit the chaos is The Animalz—a loose crew of young looters and vandals striking across Los Santos and Blaine County. They hit stores, supply depots, and vehicles during power outages, sometimes using stolen military-grade gear recovered by LCPD. While they have no clear hierarchy or turf, the repeated appearance of members in white rabbit masks suggests hidden leadership. Police are actively hunting anyone connected to these dangerous blackout looters."
+      },
+      newOrder: {
+        title: "The New Order",
+        description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
+      },
+      otf: {
+        title: "OTF",
+        description: "OTF is a tight-knit family gang built around music, loyalty, and street influence. Formed by rappers and producers who grew up together, OTF runs the city’s underground sound—mixing raw lyricism, heavy beats, and real street stories. Their studios act as both creative hubs and meeting points where business, deals, and strategy flow behind closed doors. They use music to speak for the streets, protect their own, and grow their power. Known for their unity, style, and ambition, OTF balances fame and street presence—turning their talent into influence and their influence into respect. OTF: loyalty first, music second, everything else after."
+      },
     },
     availableJobs: {
       title: "الوظائف المتاحة",
@@ -573,7 +713,7 @@ const translations = {
       privateJobs: {
         title: "وظائف خاصة",
         wigwam: { title: "ويغوام / برجر شوت", description: "قدم أفضل البرغر في المدينة وأطعم المواطنين." },
-        catCoffee: { title: "مقهى القطط", description: "جو مريح مع القهوة والمعجنات والقطط اللطيفة." },
+        leapfrogCoffee: { title: "مقهى القطط", description: "جو مريح مع القهوة والمعجنات والقطط اللطيفة." },
         pearls: { title: "مطعم بيرلز", description: "تجربة طعام بحري فاخرة لنخبة لوس سانتوس." },
         mechanic: { title: "ميكانيكي", description: "إصلاح وضبط وتخصيص المركبات بإتقان." },
         bikersMecano: { title: "ميكانيكي الدراجات", description: "ورشة إصلاح متخصصة للدراجات النارية وثقافة الدراجين." },
@@ -647,18 +787,70 @@ const translations = {
       },
     },
     serverRules: {
-      title: "قواعد السيرفر",
-      subtitle: "اتبع هاذي القواعد باش تضمن تجربة رائعة للكل",
+      title: "Prime EGA Roleplay Guidelines",
+      subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
-        "احترم جميع اللاعبين وأعضاء الطاقم",
-        "ما تغشش ولا تخترق ولا تستغل",
-        "ابق في شخصيتك في كل الأوقات",
-        "ما تقتلش عشوائي ولا تضايق",
-        "اتبع قوانين الحياة الواقعية",
-        "استخدم الإنجليزية المناسبة في القنوات العامة",
-        "ما تعلنش على سيرفرات أخرى",
-        "أبلغ عن انتهاكات القواعد للطاقم",
-      ],
+        {
+          title: "Logic RP",
+          description: "Everything should stay within the roleplay based on common logic relative to the character's status, wealth, and social position in the community.",
+          example: "A burger worker eligible for dirty business can rob a shop to earn extra money, but the burger owner, due to their wealth and social status, should not engage in street-level crimes. Instead, they could participate in high-stakes operations like money laundering."
+        },
+        {
+          title: "Reason RP",
+          description: "Every action, legal or illegal, must be supported by a valid reason grounded in common sense.",
+          example: "A burger worker should not rob a wallet from another player without a valid reason due to their social and economic status. Conversely, a gang member might rob someone in their territory to assert dominance or send a message, but this should always be justified with a creative and valid reason."
+        },
+        {
+          title: "Mere RP",
+          description: "Mere RP refers to low-level interactions based on primitive motives like random robbing, killing, or vandalizing without purpose.",
+          rule: "Any form of mere RP not supported by valid reasons and common logic will result in a severe ban. Ensure all actions have a purpose and contribute meaningfully to the roleplay narrative."
+        },
+        {
+          title: "Gradation RP",
+          description: "Characters should progress logically through their journey, climbing the ladder step by step.",
+          rule: "Jumping from low-level roles directly to high-stakes crimes or major criminal roles is not acceptable. Build your character's story from small beginnings to larger, more complex roles and actions, reflecting a natural progression."
+        },
+        {
+          title: "Fail RP",
+          description: "Failure to adhere to roleplay immersion or logic will be penalized.",
+          rule: "Any behavior that disrupts the roleplay world, such as out-of-character (OOC) actions, meta-gaming, or power-gaming, will result in a ban. Roleplay should be consistent and uninterrupted by OOC elements."
+        },
+        {
+          title: "Force RP",
+          description: "Forcing actions or ideas onto other players is prohibited.",
+          rule: "You cannot coerce other players into actions or situations without a valid, roleplay-relevant reason. For instance, a kidnapper cannot force a hostage to commit suicide unless it is contextually justified and the hostage's situation reflects this possibility. Law enforcement cannot force a player to become a criminal without clear evidence."
+        },
+        {
+          title: "Interaction RP",
+          description: "Roleplay scenes should be interactive and balanced, involving mutual exchange.",
+          rule: "When creating a scene, ensure that there is a give-and-take dynamic. If you kidnap a group of people, you must offer something in return or engage in a meaningful interaction. The scene should involve negotiation or exchange, rather than simply taking without giving."
+        },
+        {
+          title: "Involvement RP",
+          description: "When deciding to involve yourself in an ongoing scene, ensure it is logical and well-planned.",
+          rule: "Intervening in an ongoing scenes requires adherence to three major rules: Logic RP (ensure your involvement makes sense), Reason RP (have a valid reason for interference), and Fear RP (acknowledge the risks involved). If these conditions are not met, avoid intervening. This rule aims to replace traditional third-party interference with more thoughtful engagement."
+        },
+        {
+          title: "Fear RP",
+          description: "Characters should realistically react to threats and risks.",
+          rule: "Plan your actions considering potential dangers. Avoid scenarios where your character acts without regard for risk or consequences, as this can lead to power gaming or breaking the roleplay immersion."
+        },
+        {
+          title: "Assuming RP",
+          description: "This is a reminder that roleplay has no inherent limits if logic and reason are respected.",
+          rule: "In scenarios involving large-scale confrontations or events, like a crew of 5 being ambushed by 25, ensure that your response is balanced and realistic. The focus should be on creative, logical, and fair roleplay, respecting the overall narrative and balance of the game world."
+        },
+        {
+          title: "Lore RP",
+          description: "This is a reminder that the overall Lore needs to be respected.",
+          rule: "Respect the established lore, and contribute to it thoughtfully with your roleplay. You also need to evolve your character story and create a meaningful and a creative storyline for it."
+        },
+        {
+          title: "Toxicity",
+          description: "Any kind of toxicity in or outside the RP podium is severely prohibited.",
+          rule: "Any kind of cheating, exploit bugs, massive insulting, sexual harassments, family or religious aggression or even sexism will be treated as a permanent suspension from the podium."
+        }
+      ]
     },
     howToPlay: {
       title: "كيفاش تلعب على EGA Roleplay",

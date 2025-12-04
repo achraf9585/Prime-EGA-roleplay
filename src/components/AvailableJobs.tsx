@@ -11,7 +11,7 @@ export default function AvailableJobs({ t }: { t: any }) {
 
   const privateJobs = [
     { key: 'wigwam', icon: Utensils, color: 'text-orange-500', border: 'group-hover:border-orange-500', shadow: 'group-hover:shadow-[0_0_50px_rgba(249,115,22,0.15)]' },
-    { key: 'catCoffee', icon: Coffee, color: 'text-amber-700', border: 'group-hover:border-amber-700', shadow: 'group-hover:shadow-[0_0_50px_rgba(180,83,9,0.15)]' },
+    { key: 'leapfrogCoffee', icon: Coffee, color: 'text-amber-700', border: 'group-hover:border-amber-700', shadow: 'group-hover:shadow-[0_0_50px_rgba(180,83,9,0.15)]' },
     { key: 'pearls', icon: Utensils, color: 'text-cyan-400', border: 'group-hover:border-cyan-400', shadow: 'group-hover:shadow-[0_0_50px_rgba(34,211,238,0.15)]' },
     { key: 'mechanic', icon: Wrench, color: 'text-green-500', border: 'group-hover:border-green-500', shadow: 'group-hover:shadow-[0_0_50px_rgba(34,197,94,0.15)]' },
     { key: 'bikersMecano', icon: Bike, color: 'text-slate-400', border: 'group-hover:border-slate-400', shadow: 'group-hover:shadow-[0_0_50px_rgba(148,163,184,0.15)]' },
@@ -19,7 +19,6 @@ export default function AvailableJobs({ t }: { t: any }) {
     { key: 'nightclubLux', icon: Music, color: 'text-purple-500', border: 'group-hover:border-purple-500', shadow: 'group-hover:shadow-[0_0_50px_rgba(168,85,247,0.15)]' },
     { key: 'nightclubUnicorn', icon: GlassWater, color: 'text-pink-500', border: 'group-hover:border-pink-500', shadow: 'group-hover:shadow-[0_0_50px_rgba(236,72,153,0.15)]' },
     { key: 'realEstate', icon: Home, color: 'text-blue-500', border: 'group-hover:border-blue-500', shadow: 'group-hover:shadow-[0_0_50px_rgba(59,130,246,0.15)]' },
-    { key: 'lostMcBar', icon: Beer, color: 'text-yellow-600', border: 'group-hover:border-yellow-600', shadow: 'group-hover:shadow-[0_0_50px_rgba(202,138,4,0.15)]' },
   ];
 
   const freelanceJobs = [

@@ -55,15 +55,15 @@ export default function Header({ t }: { t: any }) {
               <a href="#features" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.features}
               </a>
-              <a href="#server" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
-                {t.navigation.server}
+
+                   <a href="#factions" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+           Factions
               </a>
+        
               <a href="#how-to-play" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 How to Play
               </a>
-              <a href="#application" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
-                Application
-              </a>
+          
               <a href="#rules" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 Rules
               </a>

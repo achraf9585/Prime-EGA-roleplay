@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Play, Disc, Twitter, Youtube } from "lucide-react";
+import { Play, Disc, Twitter, Youtube, Instagram } from "lucide-react";
 
 export default function JoinSection({ t }: { t: any }) {
   return (
@@ -16,7 +16,8 @@ export default function JoinSection({ t }: { t: any }) {
               <Play className="mr-2 h-5 w-5" />
               {t.join.connectServer}
             </Button>
-            <Button
+            <a href="https://discord.gg/sZsqsJFBBN" target="_blank" rel="noopener noreferrer">
+               <Button
               size="lg"
               variant="outline"
               className="border-[hsl(215_18%_20%)] text-[hsl(220_15%_72%)] hover:bg-[#12181F] hover:text-white text-lg px-8 py-6"
@@ -24,16 +25,18 @@ export default function JoinSection({ t }: { t: any }) {
               <Disc className="mr-2 h-5 w-5" />
               {t.join.joinDiscord}
             </Button>
+            </a>
+         
           </div>
 
           <div className="flex justify-center space-x-6">
-            <a href="#" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
-              <Twitter className="h-6 w-6" />
+            <a href="https://www.instagram.com/prime_roleplay_tn/" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+              <Instagram className="h-6 w-6" />
             </a>
-            <a href="#" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+            <a href="https://www.youtube.com/@ega_roleplay" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
               <Youtube className="h-6 w-6" />
             </a>
-            <a href="#" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+            <a href="https://discord.gg/sZsqsJFBBN" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
               <Disc className="h-6 w-6" />
             </a>
           </div>

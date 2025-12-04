@@ -23,7 +23,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/gambino.jpg" 
+                  src="/illegal factions/gambino.png" 
                   alt="Gambino Crime Family" 
                   fill
                   className="object-cover"
@@ -59,7 +59,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/cartel.jpg" 
+                  src="/illegal factions/cartel.png" 
                   alt="The Cartel" 
                   fill
                   className="object-cover"
@@ -74,7 +74,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-slate-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/lostmc.jpg" 
+                  src="/illegal factions/lostmc.png" 
                   alt="The Lost MC" 
                   fill
                   className="object-cover"
@@ -98,7 +98,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-bl from-orange-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/sonofanarchy.jpg" 
+                  src="/illegal factions/sonofanarchy.png" 
                   alt="Sons of Anarchy MC" 
                   fill
                   className="object-cover"
@@ -132,7 +132,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-bl from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/ballas.jpg" 
+                  src="/illegal factions/ballas.png" 
                   alt="Ballas" 
                   fill
                   className="object-cover"
@@ -157,7 +157,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/vagos.jpg" 
+                  src="/illegal factions/vagos.png" 
                   alt="Los Santos Vagos" 
                   fill
                   className="object-cover"
@@ -173,7 +173,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/families.jpg" 
+                  src="/illegal factions/families.png" 
                   alt="The Families" 
                   fill
                   className="object-cover"
@@ -200,7 +200,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-bl from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/marabunta.jpg" 
+                  src="/illegal factions/marabunta.png" 
                   alt="Marabunta Grande" 
                   fill
                   className="object-cover"
@@ -243,6 +243,78 @@ export default function IllegalFactions({ t }: { t: any }) {
               </div>
             </div>
           </div>     
+
+          {/* The Animalz - Left Image, Right Text */}
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-zinc-600/30 flex items-center justify-center group-hover:border-zinc-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(113,113,122,0.15)] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-zinc-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                <Image 
+                  src="/illegal factions/animalz.png" 
+                  alt="The Animalz" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 text-center md:text-left">
+              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-zinc-400 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
+                <Image src="/illegal factions/logos/animalz.png" alt="Animals Logo" width={180} height={180} className="object-contain" />
+                <span>{t.illegalFactions.animals.title}</span>
+              </h3>
+              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
+                {t.illegalFactions.animals.description}
+              </p>
+            </div>
+          </div>
+
+          {/* The New Order - Right Image, Left Text */}
+          <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-indigo-900/30 flex items-center justify-center group-hover:border-indigo-600 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(79,70,229,0.15)] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-bl from-indigo-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                <Image 
+                  src="/illegal factions/neworder.png" 
+                  alt="The New Order" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 text-center md:text-left">
+              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-indigo-500 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
+                <Image src="/illegal factions/logos/neworder.png" alt="New Order Logo" width={180} height={180} className="object-contain" />
+                <span>{t.illegalFactions.newOrder.title}</span>
+              </h3>
+              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
+                {t.illegalFactions.newOrder.description}
+              </p>
+            </div>
+          </div>
+
+          {/* OTF - Left Image, Right Text */}
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-amber-500/30 flex items-center justify-center group-hover:border-amber-400 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(251,191,36,0.15)] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                <Image 
+                  src="/illegal factions/otf.png" 
+                  alt="OTF" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 text-center md:text-left">
+              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-amber-400 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
+                <Image src="/illegal factions/logos/otf.png" alt="OTF Logo" width={180} height={180} className="object-contain" />
+                <span>{t.illegalFactions.otf.title}</span>
+              </h3>
+              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
+                {t.illegalFactions.otf.description}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

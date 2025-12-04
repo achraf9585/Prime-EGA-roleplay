@@ -6,7 +6,7 @@ export default function Footer({ t }: { t: any }) {
       <div className="container mx-auto px-4 text-center">
         <div className="flex items-center justify-center space-x-2 mb-4">
           <Image src="/PRIME LOGO.png" alt="EGA Roleplay Logo" width={24} height={24} className="rounded-none" />
-          <span className="text-xl font-bold text-white">EGA Roleplay</span>
+          <span className="text-xl font-bold text-white">Prime EGA Roleplay</span>
         </div>
         <p className="text-slate-400">{t.footer.copyright}</p>
       </div>

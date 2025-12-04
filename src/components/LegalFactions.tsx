@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function LegalFactions({ t }: { t: any }) {
   return (
-    <section id="legal-factions" className="py-20 px-4 bg-[#12181F]">
+    <section id="factions" className="py-20 px-4 bg-[#12181F]">
       <div className="container mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-4xl font-bold text-white mb-4 font-orbitron tracking-wider">
@@ -64,7 +64,7 @@ export default function LegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
       <Image 
-                  src="/legal factions/doj.jpg" 
+                  src="/legal factions/doj.png" 
                   alt="Department of Justice" 
                   fill
                   className="object-cover"
@@ -86,7 +86,7 @@ export default function LegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-bl from-[#00C8FF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/legal factions/lspd.jpg" 
+                  src="/legal factions/lspd.png" 
                   alt="LSPD Police" 
                   fill
                   className="object-cover"
@@ -109,7 +109,7 @@ export default function LegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-[#D4A574]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/legal factions/sheriff.jpg" 
+                  src="/legal factions/sheriff.png" 
                   alt="Sheriff Department" 
                   fill
                   className="object-cover"
@@ -132,7 +132,7 @@ export default function LegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-bl from-[#FF3366]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/legal factions/ambulance_city.jpg" 
+                  src="/legal factions/ambulance_city.png" 
                   alt="Ambulance City" 
                   fill
                   className="object-cover"

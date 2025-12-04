@@ -76,8 +76,7 @@ export default function Home() {
       <AvailableJobs t={t} />
 
       <HowToPlay t={t} />
-      <ServerInfo t={t} />
-      <ApplicationSection t={t} />
+     
       <RulesSection t={t} />
       <JoinSection t={t} />
       <Footer t={t} />
