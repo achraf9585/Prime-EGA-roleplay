@@ -14,14 +14,14 @@ export default function HowToPlay({ t }: { t: any }) {
             {t.howToPlay.steps.map((step: any, index: number) => (
               <Card
                 key={index}
-                className="bg-[#12181F] border-[hsl(215_18%_20%)] hover:scale-105 transition-all duration-300 hover:border-[#00C8FF] hover:shadow-[0_0_30px_rgba(0,200,255,0.2)]"
+                className="bg-[#140f0b] border-[hsl(215_18%_20%)] hover:scale-105 transition-all duration-300 hover:border-[#fa5d3d] hover:shadow-[0_0_30px_rgba(250,93,61,0.2)]"
               >
                 <CardContent className="p-8 text-center">
                   <div className="mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-r from-[#00C8FF] to-[#1E90FF] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-20 h-20 bg-gradient-to-r from-[#fa5d3d] to-[#ff8c73] rounded-full flex items-center justify-center mx-auto mb-4">
                       <span className="text-4xl">{step.icon}</span>
                     </div>
-                    <div className="w-12 h-12 bg-gradient-to-r from-[#00C8FF] to-[#1E90FF] rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#fa5d3d] to-[#ff8c73] rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
                       {index + 1}
                     </div>
                   </div>

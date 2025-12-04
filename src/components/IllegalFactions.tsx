@@ -4,8 +4,8 @@ import { Skull, DollarSign, Crosshair } from "lucide-react";
 
 export default function IllegalFactions({ t }: { t: any }) {
   return (
-    <section id="illegal-factions" className="py-20 px-4 bg-[#080B10] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/10 via-[#080B10] to-[#080B10] pointer-events-none" />
+    <section id="illegal-factions" className="py-20 px-4 bg-[#140f0b] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-900/10 via-[#140f0b] to-[#140f0b] pointer-events-none" />
       <div className="container mx-auto relative z-10">
         <div className="text-center mb-20">
           <h2 className="text-4xl font-bold text-white mb-4 font-orbitron tracking-wider">
@@ -19,7 +19,7 @@ export default function IllegalFactions({ t }: { t: any }) {
           
           {/* Gambino Crime Family - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-amber-900/30 flex items-center justify-center group-hover:border-amber-700 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(180,83,9,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-amber-900/30 flex items-center justify-center group-hover:border-amber-700 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(180,83,9,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -70,7 +70,7 @@ export default function IllegalFactions({ t }: { t: any }) {
 
                  {/* The Lost MC - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-slate-600/30 flex items-center justify-center group-hover:border-slate-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(100,116,139,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-slate-600/30 flex items-center justify-center group-hover:border-slate-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(100,116,139,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-slate-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -94,7 +94,7 @@ export default function IllegalFactions({ t }: { t: any }) {
 
               {/* Sons of Anarchy MC - Right Image, Left Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-orange-600/30 flex items-center justify-center group-hover:border-orange-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(234,88,12,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-orange-600/30 flex items-center justify-center group-hover:border-orange-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(234,88,12,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-bl from-orange-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -169,7 +169,7 @@ export default function IllegalFactions({ t }: { t: any }) {
 
           {/* The Families - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-green-600/30 flex items-center justify-center group-hover:border-green-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(34,197,94,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-green-600/30 flex items-center justify-center group-hover:border-green-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(34,197,94,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -196,7 +196,7 @@ export default function IllegalFactions({ t }: { t: any }) {
        
           {/* Marabunta Grande - Right Image, Left Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-blue-600/30 flex items-center justify-center group-hover:border-blue-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(37,99,235,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-blue-600/30 flex items-center justify-center group-hover:border-blue-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(37,99,235,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-bl from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -246,7 +246,7 @@ export default function IllegalFactions({ t }: { t: any }) {
 
           {/* The Animalz - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-zinc-600/30 flex items-center justify-center group-hover:border-zinc-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(113,113,122,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-zinc-600/30 flex items-center justify-center group-hover:border-zinc-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(113,113,122,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-zinc-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -270,7 +270,7 @@ export default function IllegalFactions({ t }: { t: any }) {
 
           {/* The New Order - Right Image, Left Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-indigo-900/30 flex items-center justify-center group-hover:border-indigo-600 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(79,70,229,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-indigo-900/30 flex items-center justify-center group-hover:border-indigo-600 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(79,70,229,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-bl from-indigo-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -294,7 +294,7 @@ export default function IllegalFactions({ t }: { t: any }) {
 
           {/* OTF - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#121212] rounded-2xl border border-amber-500/30 flex items-center justify-center group-hover:border-amber-400 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(251,191,36,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-amber-500/30 flex items-center justify-center group-hover:border-amber-400 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(251,191,36,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 

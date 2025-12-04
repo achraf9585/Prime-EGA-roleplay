@@ -49,8 +49,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#081B2B] via-[#12181F] to-[#12181F] relative">
-      <div className="pointer-events-none absolute inset-0 bg-cyan-radials" />
+    <div className="min-h-screen bg-gradient-to-br from-[#1a0a08] via-[#140f0b] to-[#140f0b] relative">
+      <div className="pointer-events-none absolute inset-0 bg-orange-radials" />
       <Header t={t} />
       <section className="relative overflow-hidden min-h-[650px]">
         <div className="absolute inset-0 z-0 overflow-hidden">

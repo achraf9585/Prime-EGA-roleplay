@@ -208,7 +208,7 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Prime EGA Roleplay Guidelines",
+      title: "Prime EGA Roleplay Rules",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
         {
@@ -498,7 +498,7 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Prime EGA Roleplay Guidelines",
+      title: "Prime EGA Roleplay Rules",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
         {
@@ -787,7 +787,7 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Prime EGA Roleplay Guidelines",
+      title: "Prime EGA Roleplay Rules",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
         {

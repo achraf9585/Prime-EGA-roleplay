@@ -49,7 +49,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
     <section className="relative py-20 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] to-[#020617] opacity-90" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
 
       <div className="container relative z-10 mx-auto px-4">
@@ -58,7 +58,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 mb-6"
           >
             <Gift className="w-4 h-4" />
             <span className="text-sm font-medium uppercase tracking-wider">
@@ -80,7 +80,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
           viewport={{ once: true }}
           className="max-w-md mx-auto relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-purple-600 rounded-2xl blur opacity-20" />
           <div className="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
             
             <div className="space-y-6">
@@ -90,7 +90,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                     placeholder="XXXX-XXXX-XXXX"
-                    className="w-full bg-slate-800/50 border border-slate-600 focus:border-cyan-500 rounded-xl px-5 py-4 text-center text-xl tracking-widest text-white placeholder:text-slate-600 outline-none transition-all"
+                    className="w-full bg-slate-800/50 border border-slate-600 focus:border-orange-500 rounded-xl px-5 py-4 text-center text-xl tracking-widest text-white placeholder:text-slate-600 outline-none transition-all"
                   />
                 </div>
 
@@ -102,7 +102,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
                       ? "bg-green-500 hover:bg-green-600" 
                       : status === "error"
                       ? "bg-red-500 hover:bg-red-600"
-                      : "bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500"
+                      : "bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500"
                   }`}
                 >
                   {status === "loading" ? (

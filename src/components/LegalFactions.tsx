@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function LegalFactions({ t }: { t: any }) {
   return (
-    <section id="factions" className="py-20 px-4 bg-[#12181F]">
+    <section id="factions" className="py-20 px-4 bg-[#140f0b]">
       <div className="container mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-4xl font-bold text-white mb-4 font-orbitron tracking-wider">
@@ -14,7 +14,7 @@ export default function LegalFactions({ t }: { t: any }) {
         <div className="flex flex-col gap-24">
           {/* Government - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#4A90E2] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(74,144,226,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#4A90E2] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(74,144,226,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#4A90E2]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -37,7 +37,7 @@ export default function LegalFactions({ t }: { t: any }) {
 
           {/* Embassy - Right Image, Left Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#2ECC71] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(46,204,113,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#2ECC71] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(46,204,113,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-bl from-[#2ECC71]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -60,7 +60,7 @@ export default function LegalFactions({ t }: { t: any }) {
 
           {/* DOJ - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FFD700] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,215,0,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FFD700] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,215,0,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
       <Image 
@@ -82,7 +82,7 @@ export default function LegalFactions({ t }: { t: any }) {
 
           {/* LSPD Police - Right Image, Left Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#00C8FF] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(0,200,255,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#00C8FF] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(0,200,255,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-bl from-[#00C8FF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -105,7 +105,7 @@ export default function LegalFactions({ t }: { t: any }) {
 
           {/* Sheriff Department - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#D4A574] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(212,165,116,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#D4A574] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(212,165,116,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#D4A574]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -128,7 +128,7 @@ export default function LegalFactions({ t }: { t: any }) {
 
           {/* Ambulance City - Right Image, Left Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FF3366] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,51,102,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FF3366] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,51,102,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-bl from-[#FF3366]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
@@ -153,7 +153,7 @@ export default function LegalFactions({ t }: { t: any }) {
 
           {/* Journalist - Left Image, Right Text */}
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#081B2B] rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#9B59B6] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(155,89,182,0.15)] overflow-hidden">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#9B59B6] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(155,89,182,0.15)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#9B59B6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 

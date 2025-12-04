@@ -36,7 +36,7 @@ export default function AvailableJobs({ t }: { t: any }) {
   ];
 
   return (
-    <section id="available-jobs" className="py-20 px-4 bg-[#12181F]/50">
+    <section id="available-jobs" className="py-20 px-4 bg-[#140f0b]/50">
       <div className="container mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-4xl font-bold text-white mb-4 font-orbitron tracking-wider">
@@ -52,7 +52,7 @@ export default function AvailableJobs({ t }: { t: any }) {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {privateJobs.map((job) => (
-              <div key={job.key} className={`group relative bg-[#12181F] rounded-xl border border-[hsl(215_18%_20%)] p-6 transition-all duration-300 hover:-translate-y-1 ${job.border} ${job.shadow}`}>
+              <div key={job.key} className={`group relative bg-[#140f0b] rounded-xl border border-[hsl(215_18%_20%)] p-6 transition-all duration-300 hover:-translate-y-1 ${job.border} ${job.shadow}`}>
                 <div className="flex items-start gap-4">
                   <div className={`p-3 rounded-lg bg-opacity-10 bg-white`}>
                     <job.icon className={`w-8 h-8 ${job.color}`} />
@@ -78,7 +78,7 @@ export default function AvailableJobs({ t }: { t: any }) {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {freelanceJobs.map((job) => (
-              <div key={job.key} className={`group relative bg-[#12181F] rounded-xl border border-[hsl(215_18%_20%)] p-6 transition-all duration-300 hover:-translate-y-1 ${job.border} ${job.shadow}`}>
+              <div key={job.key} className={`group relative bg-[#140f0b] rounded-xl border border-[hsl(215_18%_20%)] p-6 transition-all duration-300 hover:-translate-y-1 ${job.border} ${job.shadow}`}>
                 <div className="flex items-start gap-4">
                   <div className={`p-3 rounded-lg bg-opacity-10 bg-white`}>
                     <job.icon className={`w-8 h-8 ${job.color}`} />

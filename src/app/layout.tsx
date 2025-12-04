@@ -17,16 +17,19 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "EGA Roleplay - GTA V FiveM Roleplay Server",
+  title: "Prime EGA Roleplay - GTA V FiveM Roleplay Server",
   description:
-    "Join EGA Roleplay, the most immersive GTA V FiveM roleplay server. Experience realistic roleplay, unique jobs, and an active community in Los Santos.",
+    "Join Prime EGA Roleplay, the most immersive GTA V FiveM roleplay server. Experience realistic roleplay, unique jobs, and an active community in Los Santos.",
   keywords: "GTA V, FiveM, Roleplay, Server, Los Santos, EGA Roleplay",
   authors: [{ name: "EGA Roleplay" }],
   openGraph: {
-    title: "EGA Roleplay - GTA V FiveM Roleplay Server",
+    title: "Prime EGA Roleplay - GTA V FiveM Roleplay Server",
     description:
-      "Join EGA Roleplay, the most immersive GTA V FiveM roleplay server. Experience realistic roleplay, unique jobs, and an active community in Los Santos.",
+      "Join Prime EGA Roleplay, the most immersive GTA V FiveM roleplay server. Experience realistic roleplay, unique jobs, and an active community in Los Santos.",
     type: "website",
+  },
+  icons: {
+    icon: "/EGA_LOGO_S.png",
   },
 };
 

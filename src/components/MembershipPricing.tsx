@@ -143,10 +143,10 @@ export default function MembershipPricing({ t }: { t: any }) {
   };
 
   return (
-    <section id="membership" className="py-20 px-4 bg-[#12181F]/50 relative overflow-hidden">
+    <section id="membership" className="py-20 px-4 bg-[#140f0b]/50 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C8FF]/10 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#fa5d3d]/10 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#9D00FF]/10 rounded-full blur-[120px] animate-pulse delay-1000" />
       </div>
 
@@ -188,7 +188,7 @@ export default function MembershipPricing({ t }: { t: any }) {
                     style={{
                       backfaceVisibility: "hidden",
                       borderColor: membership.color,
-                      background: `linear-gradient(135deg, rgba(18, 24, 31, 0.95) 0%, rgba(18, 24, 31, 0.85) 100%)`,
+                      background: `linear-gradient(135deg, rgba(20, 15, 11, 0.95) 0%, rgba(20, 15, 11, 0.85) 100%)`,
                       boxShadow: `0 0 30px rgba(${membership.glowColor}, 0.3)`
                     }}
                   >
@@ -256,7 +256,7 @@ export default function MembershipPricing({ t }: { t: any }) {
                       backfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
                       borderColor: membership.color,
-                      background: `linear-gradient(135deg, rgba(18, 24, 31, 0.98) 0%, rgba(18, 24, 31, 0.95) 100%)`,
+                      background: `linear-gradient(135deg, rgba(20, 15, 11, 0.98) 0%, rgba(20, 15, 11, 0.95) 100%)`,
                       boxShadow: `0 0 40px rgba(${membership.glowColor}, 0.4)`
                     }}
                   >

@@ -32,16 +32,16 @@ export default function Header({ t }: { t: any }) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-[hsl(215_18%_20%)] bg-[#0b2032]/70 backdrop-blur-sm ">
+      <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-[hsl(215_18%_20%)] bg-[#1a0a08]/70 backdrop-blur-sm ">
         <div className="container mx-auto px-4 py-4 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Image
-                src="/PRIME LOGO.png"
+                src="/EGA_PRIME.png"
                 alt="EGA Roleplay Logo"
                 width={40}
                 height={40}
-                className="rounded-none drop-shadow-[0_0_18px_rgba(0,200,255,0.35)]"
+                className="rounded-none drop-shadow-[0_0_18px_rgba(250,93,61,0.35)]"
                 priority
               />
               <span className="text-sm sm:text-l font-bold text-white font-orbitron tracking-wider whitespace-nowrap">
@@ -92,12 +92,12 @@ export default function Header({ t }: { t: any }) {
                       )}
                     </div>
                     {/* Online indicator */}
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#0b2032]" />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1a0a08]" />
                   </button>
 
                   {/* Dropdown Menu */}
                   {showDropdown && (
-                    <div className="absolute right-0 top-full mt-2 w-56 bg-[#0b2032] border border-[#5865F2]/30 rounded-lg shadow-[0_0_30px_rgba(88,101,242,0.2)] z-[9999] overflow-hidden">
+                    <div className="absolute right-0 top-full mt-2 w-56 bg-[#1a0a08] border border-[#5865F2]/30 rounded-lg shadow-[0_0_30px_rgba(88,101,242,0.2)] z-[9999] overflow-hidden">
                       <div className="p-3 border-b border-[#5865F2]/20">
                         <p className="text-white font-semibold text-sm truncate">
                           {session.user?.name}
