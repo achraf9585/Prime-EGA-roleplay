@@ -114,9 +114,9 @@ const translations = {
       lostmc: { title: "The Lost MC", description: "The Lost MC rose from a small Sandy Shores biker crew into a full outlaw chapter. After losing members in past wars, they rebuilt with iron discipline and a hunger for territory. They operate from rural hideouts, striking hard and disappearing fast." },
       sonofanarchy: { title: "Sons of Anarchy MC", description: "Inspired by old-school biker legacy, the Sons established a San Andreas chapter with strict rules and military-like structure. They balance legit businesses with black-market gun trades, maintaining a dangerous but calculated presence across highways and truck routes." },
       cartel: { title: "The Cartel", description: "After being hunted in Mexico, the Sinaloa Cartel relocated their high-ranking commanders to Cayo Perico, turning the island into a fortified drug stronghold. With private soldiers, ex-military strategists, and a deadly network of dealers across Los Santos, the cartel runs massive production labs, smuggling routes, and hits on anyone who threatens their empire." },
-      animals: {
-        title: "The Animalz",
-        description: "During the ongoing Los Santos blackouts, the first group to exploit the chaos is The Animalz—a loose crew of young looters and vandals striking across Los Santos and Blaine County. They hit stores, supply depots, and vehicles during power outages, sometimes using stolen military-grade gear recovered by LCPD. While they have no clear hierarchy or turf, the repeated appearance of members in white rabbit masks suggests hidden leadership. Police are actively hunting anyone connected to these dangerous blackout looters."
+      bloods: {
+        title: "Bloods",
+        description: "The Bloods are a feared street gang known for their red colors, loyalty, and violent control of their territory. They deal in drugs, weapons, and protection, enforcing respect through force. Anyone who enters their zone without permission is seen as an enemy. Brotherhood, loyalty, and power define their way of life."
       },
       newOrder: {
         title: "The New Order",
@@ -405,9 +405,9 @@ const translations = {
       lostmc: { title: "ذا لوست إم سي", description: "نادي دراجات نارية خارج عن القانون. الأخوة والحرية على عجلتين. السيطرة على الشوارع بقبضة حديدية." },
       sonofanarchy: { title: "سونز أوف أناركي إم سي", description: "عصابة دراجات نارية سيئة السمعة. تهريب الأسلحة وعصابات الحماية. الولاء فوق كل شيء." },
       cartel: { title: "الكارتل", description: "منظمة دولية لتهريب المخدرات. شبكات واسعة وإنفاذ قاس. القوة من خلال الخوف والمال." },
-      animals: {
-        title: "The Animalz",
-        description: "During the ongoing Los Santos blackouts, the first group to exploit the chaos is The Animalz—a loose crew of young looters and vandals striking across Los Santos and Blaine County. They hit stores, supply depots, and vehicles during power outages, sometimes using stolen military-grade gear recovered by LCPD. While they have no clear hierarchy or turf, the repeated appearance of members in white rabbit masks suggests hidden leadership. Police are actively hunting anyone connected to these dangerous blackout looters."
+      bloods: {
+        title: "البلودز",
+        description: "البلودز عصابة شوارع خطيرة معروفة بألوانهم الحمراء، ولائهم، وسيطرتهم العنيفة على مناطقهم. يتاجرون في المخدرات، الأسلحة، والحماية، ويفرضون الاحترام بالقوة. أي واحد يدخل منطقتهم من غير إذن يعتبر عدو. الأخوة، الولاء، والقوة هي اللي تعرف طريق حياتهم."
       },
       newOrder: {
         title: "The New Order",
@@ -694,9 +694,9 @@ const translations = {
       lostmc: { title: "ذا لوست إم سي", description: "نادي دراجات نارية خارج عن القانون. الأخوة والحرية على عجلتين. السيطرة على الشوارع بقبضة حديدية." },
       sonofanarchy: { title: "سونز أوف أناركي إم سي", description: "عصابة دراجات نارية سيئة السمعة. تهريب الأسلحة وعصابات الحماية. الولاء فوق كل شيء." },
       cartel: { title: "الكارتل", description: "منظمة دولية لتهريب المخدرات. شبكات واسعة وإنفاذ قاس. القوة من خلال الخوف والمال." },
-      animals: {
-        title: "The Animalz",
-        description: "During the ongoing Los Santos blackouts, the first group to exploit the chaos is The Animalz—a loose crew of young looters and vandals striking across Los Santos and Blaine County. They hit stores, supply depots, and vehicles during power outages, sometimes using stolen military-grade gear recovered by LCPD. While they have no clear hierarchy or turf, the repeated appearance of members in white rabbit masks suggests hidden leadership. Police are actively hunting anyone connected to these dangerous blackout looters."
+      bloods: {
+        title: "البلودز",
+        description: "البلودز عصابة معروفة ومخوفة بألوانهم الحمراء، والولاء، والسيطرة بالقوة على حومتهم. يخدموا في المخدرات، السلاح، والحماية، ويفرضوا القدر بالقوة. أي حد يدخل منطقتهم بلاش إذن يعتبر عدو. الأخوة، والولاء، والقوة هي أساس حياتهم."
       },
       newOrder: {
         title: "The New Order",

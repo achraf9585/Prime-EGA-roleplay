@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { 
   Award, 
   Star, 
@@ -290,20 +291,38 @@ export default function MembershipPricing({ t }: { t: any }) {
                           Includes:
                         </h4>
                         <ul className="space-y-3">
-                          {membership.benefits.map((benefit, index) => (
-                            <li
-                              key={index}
-                              className="flex items-start text-[hsl(220_15%_72%)]"
-                            >
-                              <span
-                                className="mr-3 mt-1 flex-shrink-0"
-                                style={{ color: membership.color }}
+                          {membership.benefits.map((benefit, index) => {
+                            // Check if benefit contains "Vehicle Tier 1" or "Vehicle Tier 2"
+                            const isTier1 = benefit.toLowerCase().includes("vehicle tier 1");
+                            const isTier2 = benefit.toLowerCase().includes("vehicle tier 2");
+                            const isVehicleTier = isTier1 || isTier2;
+                            const tierLink = isTier1 ? "/vehicles/tier1" : isTier2 ? "/vehicles/tier2" : null;
+
+                            return (
+                              <li
+                                key={index}
+                                className="flex items-start text-[hsl(220_15%_72%)]"
                               >
-                                ✦
-                              </span>
-                              <span className="text-base">{benefit}</span>
-                            </li>
-                          ))}
+                                <span
+                                  className="mr-3 mt-1 flex-shrink-0"
+                                  style={{ color: membership.color }}
+                                >
+                                  ✦
+                                </span>
+                                {isVehicleTier && tierLink ? (
+                                  <Link 
+                                    href={tierLink}
+                                    className="text-base hover:text-white transition-colors duration-200 underline decoration-dotted underline-offset-4 hover:decoration-solid cursor-pointer"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    {benefit}
+                                  </Link>
+                                ) : (
+                                  <span className="text-base">{benefit}</span>
+                                )}
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
 

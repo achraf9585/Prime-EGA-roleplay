@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skull, DollarSign, Crosshair } from "lucide-react";
+
 
 export default function IllegalFactions({ t }: { t: any }) {
   return (
@@ -65,6 +64,30 @@ export default function IllegalFactions({ t }: { t: any }) {
                   className="object-cover"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* The Commonwealth - Left Image, Right Text */}
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-teal-900/30 flex items-center justify-center group-hover:border-teal-700 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(20,184,166,0.15)] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                 <Image 
+                  src="/illegal factions/commonwealth.png" 
+                  alt="The Commonwealth" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 text-center md:text-left">
+              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-teal-500 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
+               <Image src="/illegal factions/logos/commonwealth.png" alt="Commonwealth Logo" width={180} height={180} className="object-contain" />
+                <span>{t.illegalFactions.commonwealth?.title || "The Commonwealth"}</span>
+              </h3>
+              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
+                {t.illegalFactions.commonwealth?.description || "Description loading..."}
+              </p>
             </div>
           </div>
 
@@ -259,11 +282,11 @@ export default function IllegalFactions({ t }: { t: any }) {
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-zinc-400 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
-                <Image src="/illegal factions/logos/animalz.png" alt="Animals Logo" width={180} height={180} className="object-contain" />
-                <span>{t.illegalFactions.animals.title}</span>
+                <Image src="/illegal factions/logos/bloods.png" alt="Bloods Logo" width={180} height={180} className="object-contain" />
+                <span>{t.illegalFactions.bloods.title}</span>
               </h3>
               <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.illegalFactions.animals.description}
+                {t.illegalFactions.bloods.description}
               </p>
             </div>
           </div>
@@ -312,6 +335,30 @@ export default function IllegalFactions({ t }: { t: any }) {
               </h3>
               <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
                 {t.illegalFactions.otf.description}
+              </p>
+            </div>
+          </div>
+
+          {/* Crips - Right Image, Left Text */}
+          <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
+            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-blue-600/30 flex items-center justify-center group-hover:border-blue-500 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(37,99,235,0.15)] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-bl from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                <Image 
+                  src="/illegal factions/crips.jpeg" 
+                  alt="Crips" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 text-center md:text-left">
+              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-blue-500 transition-colors duration-300 flex items-center justify-center md:justify-start gap-3">
+                <Image src="/illegal factions/logos/crips.jpg" alt="Crips Logo" width={180} height={180} className="object-contain" />
+                <span>{t.illegalFactions.crips?.title || "Crips"}</span>
+              </h3>
+              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
+                {t.illegalFactions.crips?.description || "Description loading..."}
               </p>
             </div>
           </div>
