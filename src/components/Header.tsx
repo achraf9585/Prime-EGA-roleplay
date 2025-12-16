@@ -36,6 +36,7 @@ export default function Header({ t }: { t: any }) {
         <div className="container mx-auto px-4 py-4 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
+              <a href="/">
               <Image
                 src="/EGA_PRIME.png"
                 alt="EGA Roleplay Logo"
@@ -47,6 +48,7 @@ export default function Header({ t }: { t: any }) {
               <span className="text-sm sm:text-l font-bold text-white font-orbitron tracking-wider whitespace-nowrap">
                 Prime EGA ROLEPLAY
               </span>
+              </a>
             </div>
             <div className="hidden md:flex items-center space-x-6">
                  <a href="#membership" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
