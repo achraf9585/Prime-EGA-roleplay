@@ -279,8 +279,8 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-br from-zinc-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/logos/animalz.png" 
-                  alt="The Animalz" 
+                  src="/illegal factions/logos/bloods.png" 
+                  alt="Bloods" 
                   fill
                   className="object-contain"
                 />
@@ -351,7 +351,7 @@ export default function IllegalFactions({ t }: { t: any }) {
               <div className="absolute inset-0 bg-gradient-to-bl from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                 <Image 
-                  src="/illegal factions/logos/crips.jpg" 
+                  src="/illegal factions/logos/crips.png" 
                   alt="Crips" 
                   fill
                   className="object-contain"
