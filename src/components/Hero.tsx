@@ -63,7 +63,7 @@ export default function Hero({ t }: { t: any }) {
               Season 2 Trailer
             </span>
             <a
-              href="https://www.youtube.com/watch?v=ydz7Wss0PAk"
+              href="https://www.youtube.com/watch?v=wyUoXy-b8Pg"
               target="_blank"
               rel="noopener noreferrer"
             >

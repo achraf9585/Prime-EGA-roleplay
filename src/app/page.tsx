@@ -48,6 +48,9 @@ export default function Home() {
       );
   }, []);
 
+
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a0a08] via-[#140f0b] to-[#140f0b] relative">
       <div className="pointer-events-none absolute inset-0 bg-orange-radials" />
@@ -56,8 +59,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute -top-10 left-0 w-full h-[120%]">
             <iframe
-
-              src="https://www.youtube.com/embed/EQ2TthZ2k84?autoplay=1&mute=1&controls=0&loop=1&playlist=ydz7Wss0PAk&modestbranding=1&showinfo=0&rel=0"
+              src="https://www.youtube.com/embed/wyUoXy-b8Pg?autoplay=1&mute=1&controls=0&loop=1&playlist=ydz7Wss0PAk&modestbranding=1&showinfo=0&rel=0"
               title="EGA Roleplay Chapter 2 Trailer"
               className="w-full h-full pointer-events-none scale-110"
               allow="autoplay; fullscreen; encrypted-media"

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
+
 
 const languages = [
   { code: "en", name: "English", flag: "🇺🇸", country: "United States" },
@@ -118,6 +118,15 @@ const translations = {
         title: "Bloods",
         description: "The Bloods are a feared street gang known for their red colors, loyalty, and violent control of their territory. They deal in drugs, weapons, and protection, enforcing respect through force. Anyone who enters their zone without permission is seen as an enemy. Brotherhood, loyalty, and power define their way of life."
       },
+      crips: {
+        title: "Crips",
+        description: "TA large street gang known for its blue colors and decentralized structure. They originated in Los Angeles and are associated with neighborhood-based sets that often operate independently. In roleplay settings, they’re typically portrayed as a tight-knit group focused on territory, loyalty, and community influence."
+      },
+      commonwealth: {
+        title: "Commonwealth",
+        description: "The Commonwealth is a massive, militarized community built on restoring a new world with their vision.It operates under a strict class system meant to maintain order and productivity. Its objectives focus on rebuilding civilization through structure, security, and economic stability. However, its pursuit of order often clashes with freedom, fairness, and individual rights."
+      },
+
       newOrder: {
         title: "The New Order",
         description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
@@ -132,7 +141,7 @@ const translations = {
       subtitle: "Choose your career path in Los Santos",
       privateJobs: {
         title: "Private Jobs",
-        wigwam: { title: "Wigwam / BurgerShot", description: "Serve the best burgers in town and keep the citizens fed." },
+        wigwam: { title: "Aldente / Restaurant", description: "Serve the best burgers in town and keep the citizens fed." },
         leapfrogCoffee: { title: "Leapfrog Coffee", description: "A relaxing atmosphere with coffee, pastries, and cute cats." },
         pearls: { title: "Pearls Resort", description: "Fine dining seafood experience for the elite of Los Santos." },
         mechanic: { title: "Mechanic", description: "Repair, tune, and customize vehicles to perfection." },
@@ -155,7 +164,39 @@ const translations = {
         taxi: { title: "Taxi Job", description: "Transport passengers to their destinations safely." },
         mining: { title: "Mining Job", description: "Extract valuable resources and minerals from the earth." },
         tow: { title: "Tow/Recovery Job", description: "Recover stranded or illegally parked vehicles." },
-        farmer: { title: "Farmer Job", description: "Cultivate crops and manage livestock on the farm." }
+        farmer: { title: "Farmer Job", description: "Cultivate crops and manage livestock on the farm." },
+        busDriver: { title: "Bus Driver", description: "Transport passengers along designated routes across the city." },
+        detectorist: { title: "Detectorist", description: "Search for hidden treasures and lost items on beaches and parks." },
+        diver: { title: "Diver", description: "Explore the ocean depths for salvage and underwater treasures." },
+        electrician: { title: "Electrician", description: "Repair and maintain the city's electrical grid and infrastructure." },
+        firefighter: { title: "Firefighter", description: "Respond to fires and emergencies to protect life and property." },
+        forklift: { title: "Forklift Operator", description: "Move cargo and manage inventory in warehouses and docks." },
+        gardener: { title: "Gardener", description: "Maintain the city's parks and private gardens." },
+        hotdog: { title: "Hotdog Vendor", description: "Sell delicious hotdogs to hungry pedestrians." },
+        newsReporter: { title: "News Reporter", description: "Cover breaking news and stories across Los Santos." },
+        pizza: { title: "Pizza Delivery", description: "Deliver fresh pizzas to customers before they get cold." },
+        projectCar: { title: "Project Car", description: "Find and restore classic cars to their former glory." },
+        roadHelper: { title: "Road Helper", description: "Assist stranded motorists and keep the roads safe." }
+      },
+      illegalMissions: {
+        title: "Illegal Missions",
+        subtitle: "High risk, high reward operations",
+        bagSnatch: { title: "Bag Snatch", description: "Quickly snatch items from unsuspecting pedestrians." },
+        carTheft: { title: "Car Theft", description: "Steal and deliver high-value vehicles." },
+        chopshop: { title: "Chopshop", description: "Dismantle stolen cars for parts." },
+        cocaine: { title: "Cocaine Job", description: "Process and distribute cocaine." },
+        cornerDeal: { title: "Corner Deal", description: "Sell illicit goods on street corners." },
+        counterfeit: { title: "Counterfeit Money", description: "Print and circulate fake currency." },
+        illegalDiving: { title: "Illegal Diving", description: "Scavenge for restricted items underwater." },
+        fraud: { title: "Fraud", description: "Commit various acts of financial fraud." },
+        gunSmuggling: { title: "Gun Smuggling", description: "Transport and sell illegal firearms." },
+        illegalDelivery: { title: "Illegal Delivery", description: "Transport contraband across the city." },
+        meth: { title: "Meth Job", description: "Cook and sell methamphetamine." },
+        moneyLaundering: { title: "Money Laundering", description: "Clean your dirty money through businesses." },
+        moonshine: { title: "Moonshine Production", description: "Distill and sell illegal alcohol." },
+        npcBoxing: { title: "NPC Boxing", description: "Participate in underground fights." },
+        weed: { title: "Weed Job", description: "Grow and distribute marijuana." },
+        robberies: { title: "Robberies", description: "Execute store, bank, and house robberies." }
       }
     },
     server: {
@@ -409,6 +450,14 @@ const translations = {
         title: "البلودز",
         description: "البلودز عصابة شوارع خطيرة معروفة بألوانهم الحمراء، ولائهم، وسيطرتهم العنيفة على مناطقهم. يتاجرون في المخدرات، الأسلحة، والحماية، ويفرضون الاحترام بالقوة. أي واحد يدخل منطقتهم من غير إذن يعتبر عدو. الأخوة، الولاء، والقوة هي اللي تعرف طريق حياتهم."
       },
+      crips: {
+        title: "Crips",
+        description: "A large street gang known for its blue colors and decentralized structure. They originated in Los Angeles and are associated with neighborhood-based sets that often operate independently. In roleplay settings, they’re typically portrayed as a tight-knit group focused on territory, loyalty, and community influence."
+      },
+      commonwealth: {
+        title: "Commonwealth",
+        description: "The Commonwealth is a massive, militarized community built on restoring a new world with their vision.It operates under a strict class system meant to maintain order and productivity. Its objectives focus on rebuilding civilization through structure, security, and economic stability. However, its pursuit of order often clashes with freedom, fairness, and individual rights."
+      },
       newOrder: {
         title: "The New Order",
         description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
@@ -446,7 +495,39 @@ const translations = {
         taxi: { title: "سائق تاكسي", description: "نقل الركاب إلى وجهاتهم بأمان." },
         mining: { title: "وظيفة التعدين", description: "استخراج الموارد والمعادن القيمة من الأرض." },
         tow: { title: "سحب / استعادة السيارات", description: "استعادة المركبات المتعطلة أو المتوقفة بشكل غير قانوني." },
-        farmer: { title: "مزارع", description: "زراعة المحاصيل وإدارة الماشية في المزرعة." }
+        farmer: { title: "مزارع", description: "زراعة المحاصيل وإدارة الماشية في المزرعة." },
+        busDriver: { title: "سائق حافلة", description: "نقل الركاب عبر مسارات محددة في جميع أنحاء المدينة." },
+        detectorist: { title: "كاشف معادن", description: "البحث عن الكنوز المخفية والمفقودات في الشواطئ والحدائق." },
+        diver: { title: "غواص", description: "استكشاف أعماق المحيطات بحثًا عن حطام السفن والكنوز." },
+        electrician: { title: "كهربائي", description: "إصلاح وصيانة الشبكة الكهربائية والبنية التحتية للمدينة." },
+        firefighter: { title: "رجل إطفاء", description: "الاستجابة للحرائق وحالات الطوارئ لحماية الأرواح والممتلكات." },
+        forklift: { title: "مشغل رافعة شوكية", description: "نقل البضائع وإدارة المخزون في المستودعات والموانئ." },
+        gardener: { title: "بستاني", description: "صيانة حدائق المدينة والحدائق الخاصة." },
+        hotdog: { title: "بائع هوت دوج", description: "بيع الهوت دوج اللذيذ للمشاة الجائعين." },
+        newsReporter: { title: "مراسل أخبار", description: "تغطية الأخبار العاجلة والقصص في جميع أنحاء لوس سانتوس." },
+        pizza: { title: "توصيل بيتزا", description: "توصيل البيتزا الطازجة للعملاء قبل أن تبرد." },
+        projectCar: { title: "مشروع سيارة", description: "العثور على السيارات الكلاسيكية وترميمها إلى مجدها السابق." },
+        roadHelper: { title: "مساعد طريق", description: "مساعدة السائقين الذين تقطعت بهم السبل والحفاظ على سلامة الطرق." }
+      },
+      illegalMissions: {
+        title: "مهام غير قانونية",
+        subtitle: "مخاطر عالية، مكافآت عالية",
+        bagSnatch: { title: "نقل الحقائب", description: "خطف الحقائب بسرعة." },
+        carTheft: { title: "سرقة السيارات", description: "سرقة وتسليم السيارات الفاخرة." },
+        chopshop: { title: "تشليح السيارات", description: "تفكيك السيارات المسروقة لبيع قطع الغيار." },
+        cocaine: { title: "تجارة الكوكايين", description: "معالجة وتوزيع الكوكايين." },
+        cornerDeal: { title: "بيع المخدرات", description: "بيع البضائع المهربة في الشوارع." },
+        counterfeit: { title: "تزوير الأموال", description: "طباعة وتوزيع العملات المزورة." },
+        illegalDiving: { title: "الغوص غير القانوني", description: "البحث عن أشياء محظورة تحت الماء." },
+        fraud: { title: "الاحتيال", description: "ارتكاب عمليات احتيال مالي." },
+        gunSmuggling: { title: "تهريب الأسلحة", description: "نقل وبيع الأسلحة غير المرخصة." },
+        illegalDelivery: { title: "توصيل غير قانوني", description: "نقل المهربات عبر المدينة." },
+        meth: { title: "تجارة الميث", description: "طبخ وبيع الميثامفيتامين." },
+        moneyLaundering: { title: "غسيل الأموال", description: "تنظيف الأموال القذرة." },
+        moonshine: { title: "صناعة المونشاين", description: "تقطير وبيع الكحول غير القانوني." },
+        npcBoxing: { title: "ملاكمة الشوارع", description: "المشاركة في قتالات تحت الأرض." },
+        weed: { title: "تجارة الحشيش", description: "زراعة وتوزيع الماريجوانا." },
+        robberies: { title: "السرقات", description: "تنفيذ سرقات المتاجر والبنوك والمنازل." }
       }
     },
     server: {
@@ -698,6 +779,14 @@ const translations = {
         title: "البلودز",
         description: "البلودز عصابة معروفة ومخوفة بألوانهم الحمراء، والولاء، والسيطرة بالقوة على حومتهم. يخدموا في المخدرات، السلاح، والحماية، ويفرضوا القدر بالقوة. أي حد يدخل منطقتهم بلاش إذن يعتبر عدو. الأخوة، والولاء، والقوة هي أساس حياتهم."
       },
+      crips: {
+        title: "Crips",
+        description: "A large street gang known for its blue colors and decentralized structure. They originated in Los Angeles and are associated with neighborhood-based sets that often operate independently. In roleplay settings, they’re typically portrayed as a tight-knit group focused on territory, loyalty, and community influence."
+      },
+      commonwealth: {
+        title: "Commonwealth",
+        description: "The Commonwealth is a massive, militarized community built on restoring a new world with their vision.It operates under a strict class system meant to maintain order and productivity. Its objectives focus on rebuilding civilization through structure, security, and economic stability. However, its pursuit of order often clashes with freedom, fairness, and individual rights."
+      },
       newOrder: {
         title: "The New Order",
         description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
@@ -735,7 +824,39 @@ const translations = {
         taxi: { title: "سائق تاكسي", description: "نقل الركاب إلى وجهاتهم بأمان." },
         mining: { title: "وظيفة التعدين", description: "استخراج الموارد والمعادن القيمة من الأرض." },
         tow: { title: "سحب / استعادة السيارات", description: "استعادة المركبات المتعطلة أو المتوقفة بشكل غير قانوني." },
-        farmer: { title: "مزارع", description: "زراعة المحاصيل وإدارة الماشية في المزرعة." }
+        farmer: { title: "مزارع", description: "زراعة المحاصيل وإدارة الماشية في المزرعة." },
+        busDriver: { title: "شوفور كار", description: "نقل الركاب عبر مسارات محددة في المدينة." },
+        detectorist: { title: "كاشف معادن", description: "لوج على الكنوز المخفية في الشطوط والجردات." },
+        diver: { title: "غطاس", description: "اكتشف أعماق البحر ولوج على الكنوز." },
+        electrician: { title: "تريسيان", description: "صلح الضوء والشبكة الكهربائية في المدينة." },
+        firefighter: { title: "حماية مدنية", description: "طفي الحرائق واحمي الناس والممتلكات." },
+        forklift: { title: "فوركليفت", description: "هز السلعة ونظم الدبوات." },
+        gardener: { title: "جنايني", description: "لاهي بحدائق المدينة والجردات." },
+        hotdog: { title: "بائع هوت دوج", description: "بيع الهوت دوج بنين للناس." },
+        newsReporter: { title: "صحافي", description: "غطي الأخبار والقصص في لوس سانتوس." },
+        pizza: { title: "ليفرور بيتزا", description: "وصل البيتزا للناس وهي سخونة." },
+        projectCar: { title: "مشروع كرهبة", description: "لوج على كراهب قدم وعاود صلحهم." },
+        roadHelper: { title: "ديبناج", description: "عاون الناس اللي طاحت بيهم الكرهبة في الطريق." }
+      },
+      illegalMissions: {
+        title: "مهام ممنوعة",
+        subtitle: "ريسك كبير، وفلوس برشا",
+        bagSnatch: { title: "نطرة", description: "انطر ساك واهرب." },
+        carTheft: { title: "سرقان كراهب", description: "اسرق كراهب غالية وبيعهم." },
+        chopshop: { title: "تفكيك كراهب", description: "فرك الكراهب المسروقة وبيع القطايع." },
+        cocaine: { title: "كوكايين", description: "خدمة وتوزيع الكوكايين." },
+        cornerDeal: { title: "بيع في الحومة", description: "بيع الزطلة والممنوعات في الحومة." },
+        counterfeit: { title: "تزوير فلوس", description: "اطبع ووزع الفلوس المضروبة." },
+        illegalDiving: { title: "غطس ممنوع", description: "لوج على حاجات ممنوعة تحت الماء." },
+        fraud: { title: "تحيل", description: "عمليات تحيل مالي." },
+        gunSmuggling: { title: "تهريب سلاح", description: "هز وبيع السلاح كونترا." },
+        illegalDelivery: { title: "توصيل كونترا", description: "وصل الممنوعات في البلاد." },
+        meth: { title: "كريستال ميث", description: "طيب وبيع الكريستال." },
+        moneyLaundering: { title: "تبييض أموال", description: "نظف فلوسك الحرام." },
+        moonshine: { title: "لاقمي / شراب", description: "صنع وبيع الشراب الممنوع." },
+        npcBoxing: { title: "بوكس الشارع", description: "اشارك في عرك الشوارع." },
+        weed: { title: "زطلة", description: "ازرع وبيع الزطلة." },
+        robberies: { title: "براكاجات", description: "سرقة حوانت، بانكات، وديار." }
       }
     },
     server: {
