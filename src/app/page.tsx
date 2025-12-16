@@ -59,7 +59,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute -top-10 left-0 w-full h-[120%]">
             <iframe
-              src="https://www.youtube.com/embed/wyUoXy-b8Pg?autoplay=1&mute=1&controls=0&loop=1&playlist=ydz7Wss0PAk&modestbranding=1&showinfo=0&rel=0"
+              src="https://www.youtube.com/embed/wyUoXy-b8Pg?autoplay=1&mute=1&controls=0&loop=1&playlist=wyUoXy-b8Pg&modestbranding=1&showinfo=0&rel=0"
               title="EGA Roleplay Chapter 2 Trailer"
               className="w-full h-full pointer-events-none scale-110"
               allow="autoplay; fullscreen; encrypted-media"
