@@ -18,7 +18,7 @@ export default function JoinSection({ t }: { t: any }) {
               {t.join.connectServer}
             </Button> 
             </a>
-            <a href="https://discord.gg/sZsqsJFBBN" target="_blank" rel="noopener noreferrer">
+            <a href="https://discord.gg/DN68KscXch" target="_blank" rel="noopener noreferrer">
                <Button
               size="lg"
               variant="outline"
