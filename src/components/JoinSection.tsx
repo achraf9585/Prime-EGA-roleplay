@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Play, Disc, Twitter, Youtube, Instagram } from "lucide-react";
+import { Play, Disc, Youtube, Instagram } from "lucide-react";
 
 export default function JoinSection({ t }: { t: any }) {
   return (
@@ -32,10 +32,10 @@ export default function JoinSection({ t }: { t: any }) {
           </div>
 
           <div className="flex justify-center space-x-6">
-            <a href="https://www.instagram.com/prime_roleplay_tn/" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+            <a href="https://www.instagram.com/prime_ega_roleplay_tn/" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
               <Instagram className="h-6 w-6" />
             </a>
-            <a href="https://www.youtube.com/@ega_roleplay" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+            <a href="https://www.youtube.com/@EGAMES_ARENA" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
               <Youtube className="h-6 w-6" />
             </a>
             <a href="https://discord.gg/sZsqsJFBBN" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
