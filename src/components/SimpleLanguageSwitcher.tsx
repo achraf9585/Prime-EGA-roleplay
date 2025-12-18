@@ -30,7 +30,7 @@ const translations = {
       joinDiscord: "Join Discord",
     },
     features: {
-      title: "Why Choose EGA Roleplay?",
+      title: "Why Choose Prime EGA Roleplay?",
       subtitle: "Experience the best features in FiveM roleplay",
       activeCommunity: {
         title: "Active Community",
