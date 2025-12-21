@@ -129,7 +129,7 @@ const translations = {
 
       newOrder: {
         title: "The New Order",
-        description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
+        description: "The New Order is a hidden faction created to expose the government ’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
       },
       otf: {
         title: "OTF",
@@ -460,7 +460,7 @@ const translations = {
       },
       newOrder: {
         title: "The New Order",
-        description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
+        description: "The New Order is a hidden faction created to expose the government ’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
       },
       otf: {
         title: "OTF",
@@ -789,7 +789,7 @@ const translations = {
       },
       newOrder: {
         title: "The New Order",
-        description: "The New Order is a hidden faction created to expose the City Keepers’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
+        description: "The New Order is a hidden faction created to expose the government ’ false promise of “protection.” By day, members live as normal citizens; by night, they move through the shadows—spreading doubt, sabotaging control, and revealing the truth the Keepers try to hide."
       },
       otf: {
         title: "OTF",
