@@ -18,21 +18,22 @@ export default function Tier1VehiclesPage() {
 
     // List of tier1 vehicle images
     const tier1Images = [
-      "2020g900.PNG",
-      "R34.PNG",
-      "RS7.PNG",
-      "c63w205.PNG",
-      "cls2015.PNG",
-      "e92.PNG",
-      "gt3hycade.PNG",
-      "lsterrato.PNG",
-      "m3e46.PNG",
-      "mercblackseries.PNG",
-      "nisa31.PNG",
-      "rmodmustang.PNG",
-      "rmodsvj.PNG",
-      "rmodx6.PNG",
-      "urus.PNG"
+      "bdragon.png",
+      "bnr34.png",
+      "c63w.png",
+      "cls.png",
+      "demon.png",
+      "e46.png",
+      "e92.png",
+      "f40lb.png",
+      "gt3rs.png",
+      "isserto.png",
+      "m3g80.png",
+      "m8c.png",
+      "nisa31.png",
+      "rmodmustang.png",
+      "rmodsvj.png",
+      "rs7.png"
     ];
     setImages(tier1Images);
   }, []);

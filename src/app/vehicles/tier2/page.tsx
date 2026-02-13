@@ -18,21 +18,28 @@ export default function Tier2VehiclesPage() {
 
     // List of tier2 vehicle images
     const tier2Images = [
-      "190ASAP.PNG",
-      "22M5.PNG",
-      "500ew124.PNG",
-      "DBLexushycade.PNG",
-      "Hycaders6.PNG",
-      "divo.PNG",
-      "fk8hr.PNG",
-      "giulia_2021.PNG",
-      "gwopdemon.PNG",
-      "mbslr.PNG",
-      "rbmwm3f80.PNG",
-      "rmod240sx.PNG",
-      "rmodbacalar.PNG",
-      "rmodm3e36.PNG",
-      "rsq8m.PNG"
+      "240sx.png",
+      "GODzBMWS1000RR.png",
+      "cbr650rr.png",
+      "darkfate.png",
+      "f80.png",
+      "fk8.png",
+      "h2.png",
+      "kmr1000rr.png",
+      "m3kean.png",
+      "m5.png",
+      "mk7.png",
+      "peptos.png",
+      "rmodcharger.png",
+      "rmode36.png",
+      "rr01.png",
+      "rs6.png",
+      "rsq8.png",
+      "s1000rr.png",
+      "urus.png",
+      "z8r.png",
+      "zx10r.png",
+      "zx6r.png"
     ];
     setImages(tier2Images);
   }, []);

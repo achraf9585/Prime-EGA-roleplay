@@ -51,27 +51,32 @@ export default function Header({ t }: { t: any }) {
               </a>
             </div>
             <div className="hidden md:flex items-center space-x-6">
-                 <a href="#membership" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+               <a href="/about-us" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+                {t.navigation.about}
+              </a>
+
+                  <a href="/#membership" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 Membership
               </a>
-              <a href="#features" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+              <a href="/#features" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.features}
               </a>
 
-                   <a href="#factions" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+                   <a href="/#factions" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
            Factions
               </a>
         
-              <a href="#how-to-play" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+              <a href="/#how-to-play" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 How to Play
               </a>
           
-              <a href="#rules" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+              <a href="/#rules" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 Rules
               </a>
-              <a href="#join" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
+              <a href="/#join" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.join}
               </a>
+
             </div>
             <div className="flex items-center space-x-3">
               {status === "loading" ? (

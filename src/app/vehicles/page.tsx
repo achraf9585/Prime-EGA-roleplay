@@ -42,21 +42,21 @@ export default function VehiclesPage() {
     {
       id: "tier1",
       name: "Tier 1 Vehicles",
-      description: "Premium collection of 15 exclusive vehicles",
+      description: "Premium collection of 16 exclusive vehicles",
       icon: Crown,
       color: "#FFD700",
       gradient: "from-[#FFD700] to-[#FFA500]",
-      count: 15,
+      count: 16,
       link: "/vehicles/tier1"
     },
     {
       id: "tier2",
       name: "Tier 2 Vehicles",
-      description: "Elite collection of 15 high-performance vehicles",
+      description: "Elite collection of 22 high-performance vehicles",
       icon: Gem,
       color: "#CD7F32",
       gradient: "from-[#CD7F32] to-[#8B5A2B]",
-      count: 15,
+      count: 22,
       link: "/vehicles/tier2"
     }
   ];

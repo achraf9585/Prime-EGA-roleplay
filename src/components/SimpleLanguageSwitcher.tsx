@@ -19,6 +19,7 @@ const translations = {
       server: "Server Info",
       join: "Join Now",
       connect: "Connect",
+      about: "About Us",
     },
     hero: {
       badge: "Premium Roleplay Experience",
@@ -347,6 +348,28 @@ const translations = {
       title: "Redeem Your Code",
       subtitle: "Enter your exclusive code to unlock special rewards in-game."
     },
+    aboutPage: {
+      title: "About Us",
+      storyline: {
+        title: "Season Storyline",
+        description: "Welcome to the new era of EGA Roleplay. The world has evolved, and power dynamics have shifted. Three major powers have emerged, each defined by their unique culture, governance, and challenges. Explore the futuristic streets of Neo San Voro, survive the harsh wilderness of The North, or navigate the treacherous waters of Cayo Repuplica."
+      },
+      countries: {
+        title: "Our Continents",
+        neoSanVoro: {
+            title: "Neo San Voro",
+            description: "A sprawling metropolis of neon and steel. Neo San Voro is the heart of commerce and technology, but beneath its shiny exterior lies a web of corporate intrigue and criminal syndicates."
+        },
+        theNorth: {
+            title: "The North",
+            description: "Rugged, untamed, and unforgiving. The North is home to those who reject the city's control. Survival here means mastering the wild and defending your territory against rival factions."
+        },
+        cayo: {
+            title: "Cayo Repuplica",
+            description: "A tropical paradise ruled by iron fists. Cayo Repuplica offers immense wealth and luxury, but it is built on a foundation of illicit trade and dangerous power struggles."
+        }
+      }
+    },
   },
   ar: {
     navigation: {
@@ -354,6 +377,7 @@ const translations = {
       server: "معلومات الخادم",
       join: "انضم الآن",
       connect: "اتصل",
+      about: "معلومات عنا",
     },
     hero: {
       badge: "تجربة لعب الأدوار المتميزة",
@@ -677,6 +701,28 @@ const translations = {
       title: "استرداد الرمز الخاص بك",
       subtitle: "أدخل الرمز الحصري الخاص بك لفتح مكافآت خاصة داخل اللعبة."
     },
+    aboutPage: {
+      title: "معلومات عنا",
+      storyline: {
+        title: "قصة الموسم",
+        description: "Welcome to the new era of EGA Roleplay. The world has evolved, and power dynamics have shifted. Three major powers have emerged, each defined by their unique culture, governance, and challenges. Explore the futuristic streets of Neo San Voro, survive the harsh wilderness of The North, or navigate the treacherous waters of Cayo Repuplica."
+      },
+      countries: {
+        title: "قاراتنا",
+        neoSanVoro: {
+            title: "Neo San Voro",
+            description: "A sprawling metropolis of neon and steel. Neo San Voro is the heart of commerce and technology, but beneath its shiny exterior lies a web of corporate intrigue and criminal syndicates."
+        },
+        theNorth: {
+            title: "The North",
+            description: "Rugged, untamed, and unforgiving. The North is home to those who reject the city's control. Survival here means mastering the wild and defending your territory against rival factions."
+        },
+        cayo: {
+            title: "Cayo Repuplica",
+            description: "A tropical paradise ruled by iron fists. Cayo Repuplica offers immense wealth and luxury, but it is built on a foundation of illicit trade and dangerous power struggles."
+        }
+      }
+    },
   },
   tn: {
     navigation: {
@@ -684,6 +730,7 @@ const translations = {
       server: "معلومات السيرفر",
       join: "انضم دابا",
       connect: "اتصل",
+      about: "معلومات عنا",
     },
     hero: {
       badge: "تجربة لعب الأدوار الممتازة",
@@ -1005,6 +1052,28 @@ const translations = {
       badge: "المكافآت",
       title: "دخل الكود متاعك",
       subtitle: "حط الكود الحصري متاعك باش تربح جوائز خاصة في اللعبة."
+    },
+    aboutPage: {
+      title: "معلومات عنا",
+      storyline: {
+        title: "قصة الموسم",
+        description: "Welcome to the new era of EGA Roleplay. The world has evolved, and power dynamics have shifted. Three major powers have emerged, each defined by their unique culture, governance, and challenges. Explore the futuristic streets of Neo San Voro, survive the harsh wilderness of The North, or navigate the treacherous waters of Cayo Repuplica."
+      },
+      countries: {
+        title: "قاراتنا",
+        neoSanVoro: {
+            title: "Neo San Voro",
+            description: "A sprawling metropolis of neon and steel. Neo San Voro is the heart of commerce and technology, but beneath its shiny exterior lies a web of corporate intrigue and criminal syndicates."
+        },
+        theNorth: {
+            title: "The North",
+            description: "Rugged, untamed, and unforgiving. The North is home to those who reject the city's control. Survival here means mastering the wild and defending your territory against rival factions."
+        },
+        cayo: {
+            title: "Cayo Repuplica",
+            description: "A tropical paradise ruled by iron fists. Cayo Repuplica offers immense wealth and luxury, but it is built on a foundation of illicit trade and dangerous power struggles."
+        }
+      }
     },
   },
 };
