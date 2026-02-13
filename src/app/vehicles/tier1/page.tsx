@@ -24,16 +24,16 @@ export default function Tier1VehiclesPage() {
       "cls.png",
       "demon.png",
       "e46.png",
-      "e92.png",
+      "e92_new.png",
       "f40lb.png",
       "gt3rs.png",
       "isserto.png",
       "m3g80.png",
       "m8c.png",
-      "nisa31.png",
-      "rmodmustang.png",
-      "rmodsvj.png",
-      "rs7.png"
+      "nisa31_new.png",
+      "rmodmustang_new.png",
+      "rmodsvj_new.png",
+      "rs7_new.png"
     ];
     setImages(tier1Images);
   }, []);
