@@ -32,21 +32,21 @@ export default function Header({ t }: { t: any }) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-[hsl(215_18%_20%)] bg-[#1a0a08]/70 backdrop-blur-sm ">
+      <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-[#2A1E0A] bg-[#0A0700]/75 backdrop-blur-md ">
         <div className="container mx-auto px-4 py-4 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <a href="/">
+              <a href="/" className="flex items-center gap-3">
               <Image
-                src="/EGA_PRIME.png"
+                src="/logo.png"
                 alt="EGA Roleplay Logo"
-                width={40}
-                height={40}
-                className="rounded-none drop-shadow-[0_0_18px_rgba(250,93,61,0.35)]"
+                width={80}
+                height={80}
+                className="rounded-none drop-shadow-[0_0_14px_rgba(139,92,246,0.55)] flex-shrink-0"
                 priority
               />
-              <span className="text-sm sm:text-l font-bold text-white font-orbitron tracking-wider whitespace-nowrap">
-                Prime EGA ROLEPLAY
+              <span className="text-sm sm:text-base font-bold text-white font-orbitron tracking-wider whitespace-nowrap">
+                EGA ROLEPLAY
               </span>
               </a>
             </div>
@@ -72,6 +72,12 @@ export default function Header({ t }: { t: any }) {
           
               <a href="/#rules" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 Rules
+              </a>
+              <a href="/streamer-apply" className="text-amber-500 font-semibold hover:text-amber-400 transition-colors animate-pulse-slow">
+                Streamer
+              </a>
+              <a href="/family-apply" className="text-[#a855f7] font-semibold hover:text-[#c084fc] transition-colors">
+                {t.navigation.familyApply}
               </a>
               <a href="/#join" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.join}
@@ -99,13 +105,13 @@ export default function Header({ t }: { t: any }) {
                       )}
                     </div>
                     {/* Online indicator */}
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1a0a08]" />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0F0A04]" />
                   </button>
 
                   {/* Dropdown Menu */}
                   {showDropdown && (
-                    <div className="absolute right-0 top-full mt-2 w-56 bg-[#1a0a08] border border-[#5865F2]/30 rounded-lg shadow-[0_0_30px_rgba(88,101,242,0.2)] z-[9999] overflow-hidden">
-                      <div className="p-3 border-b border-[#5865F2]/20">
+                    <div className="absolute right-0 top-full mt-2 w-56 bg-[#0a0514] border border-[#8b5cf6]/25 rounded-lg shadow-[0_0_30px_rgba(139,92,246,0.15)] z-[9999] overflow-hidden">
+                      <div className="p-3 border-b border-[#8b5cf6]/15">
                         <p className="text-white font-semibold text-sm truncate">
                           {session.user?.name}
                         </p>

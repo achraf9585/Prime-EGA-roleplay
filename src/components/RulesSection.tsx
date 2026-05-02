@@ -48,7 +48,7 @@ export default function RulesSection({ t }: { t: { serverRules: { title: string;
   return (
     <section id="rules" className="py-24 px-4 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a0a08] via-[#140f0b] to-[#1a0a08]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0700] via-[#0D0802] to-[#0A0700]" />
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid-pattern.svg')] opacity-5" />
       
       <div className="container mx-auto relative z-10">
@@ -59,7 +59,7 @@ export default function RulesSection({ t }: { t: { serverRules: { title: string;
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-300 mb-6">
+            <h2 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFE86E] via-[#C9A84C] to-[#FFD700] mb-6">
               {t.serverRules.title}
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light">
@@ -79,19 +79,19 @@ export default function RulesSection({ t }: { t: { serverRules: { title: string;
             const Icon = getIcon(index);
             return (
               <motion.div key={index} variants={item}>
-                <Card className="h-full bg-[#140f0b]/80 backdrop-blur-sm border-slate-800 hover:border-orange-500/50 transition-all duration-300 group overflow-hidden relative">
+                <Card className="h-full bg-[#120C04]/85 backdrop-blur-sm border-[#2A1E0A] hover:border-[#C9A84C]/50 transition-all duration-300 group overflow-hidden relative">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Icon className="w-24 h-24 text-orange-400" />
+                    <Icon className="w-24 h-24 text-[#C9A84C]/60" />
                   </div>
                   
                   <CardHeader className="relative pb-2">
                     <div className="flex items-center gap-4 mb-2">
-                      <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
-                        <span className="text-orange-400 font-bold font-mono">
+                      <div className="w-10 h-10 rounded-lg bg-[#C9A84C]/10 flex items-center justify-center border border-[#C9A84C]/20 group-hover:bg-[#C9A84C]/20 transition-colors">
+                        <span className="text-[#C9A84C] font-bold font-mono">
                           {String(index + 1).padStart(2, '0')}
                         </span>
                       </div>
-                      <CardTitle className="text-xl text-slate-100 group-hover:text-orange-400 transition-colors">
+                      <CardTitle className="text-xl text-slate-100 group-hover:text-[#C9A84C] transition-colors">
                         {rule.title}
                       </CardTitle>
                     </div>

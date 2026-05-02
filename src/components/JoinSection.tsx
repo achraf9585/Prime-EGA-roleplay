@@ -1,47 +1,133 @@
+"use client";
+
+import { motion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Play, Disc, Youtube, Instagram } from "lucide-react";
 
+const container: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.11, delayChildren: 0.15 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: "easeOut" } },
+};
+
+const SOCIALS = [
+  { href: "https://www.instagram.com/prime_ega_roleplay_tn/", Icon: Instagram, label: "Instagram" },
+  { href: "https://www.youtube.com/@EGAMES_ARENA", Icon: Youtube, label: "YouTube" },
+  { href: "https://discord.gg/sZsqsJFBBN", Icon: Disc, label: "Discord" },
+];
+
 export default function JoinSection({ t }: { t: any }) {
   return (
-    <section id="join" className="py-20 px-4 bg-[#140f0b]/50">
-      <div className="container mx-auto text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-6">{t.join.title}</h2>
-          <p className="text-xl text-[hsl(220_15%_72%)] mb-8 font-inter">{t.join.description}</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-           <a href="fivem://connect/45.134.108.118:30120" target="_blank" rel="noopener noreferrer">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-[#fa5d3d] to-[#ff8c73] hover:from-[#ff8c73] hover:to-[#fa5d3d] text-lg px-8 py-6 font-inter font-semibold tracking-wide hover:shadow-[0_0_30px_rgba(250,93,61,0.35)] transition-all duration-300 hover:scale-105"
-            >
-              <Play className="mr-2 h-5 w-5" />
-              {t.join.connectServer}
-            </Button> 
-            </a>
-            <a href="https://discord.gg/DN68KscXch" target="_blank" rel="noopener noreferrer">
-               <Button
-              size="lg"
-              variant="outline"
-              className="border-[hsl(215_18%_20%)] text-[hsl(220_15%_72%)] hover:bg-[#12181F] hover:text-white text-lg px-8 py-6"
-            >
-              <Disc className="mr-2 h-5 w-5" />
-              {t.join.joinDiscord}
-            </Button>
-            </a>
-         
-          </div>
+    <section id="join" className="py-28 px-4 bg-[#0A0700] relative overflow-hidden">
+      {/* Layered ambient glows */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#C9A84C]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[220px] bg-[#FFD700]/4 rounded-full blur-2xl" />
+      </div>
 
-          <div className="flex justify-center space-x-6">
-            <a href="https://www.instagram.com/prime_ega_roleplay_tn/" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
-              <Instagram className="h-6 w-6" />
-            </a>
-            <a href="https://www.youtube.com/@EGAMES_ARENA" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
-              <Youtube className="h-6 w-6" />
-            </a>
-            <a href="https://discord.gg/sZsqsJFBBN" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
-              <Disc className="h-6 w-6" />
-            </a>
-          </div>
+      {/* Animated top border */}
+      <div className="absolute top-0 left-0 w-full h-px overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C9A84C]/65 to-transparent"
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
+      <div className="container mx-auto text-center relative z-10">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="flex flex-col items-center gap-6"
+          >
+            {/* Decorative divider */}
+            <motion.div variants={item} className="flex items-center gap-3">
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#C9A84C]/45" />
+              <div className="w-2 h-2 rounded-full bg-[#C9A84C]" />
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#C9A84C]/45" />
+            </motion.div>
+
+            <motion.h2
+              variants={item}
+              className="text-4xl md:text-5xl font-bold text-white font-orbitron tracking-wider"
+            >
+              {t.join.title}
+            </motion.h2>
+
+            <motion.p
+              variants={item}
+              className="text-xl text-[hsl(220_15%_72%)] font-inter leading-relaxed"
+            >
+              {t.join.description}
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              variants={item}
+              className="flex flex-col sm:flex-row gap-4 justify-center mt-2"
+            >
+              <motion.a
+                href="fivem://connect/45.134.108.118:30120"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <Button
+                  size="lg"
+                  className="relative overflow-hidden rounded-full bg-gradient-to-r from-[#C9A84C] to-[#B8860B] hover:from-[#FFD700] hover:to-[#C9A84C] text-[#0F0A04] text-lg px-10 py-6 font-orbitron font-bold tracking-wide shadow-[0_0_32px_rgba(201,168,76,0.28)] hover:shadow-[0_0_54px_rgba(255,215,0,0.50)] transition-shadow duration-300 border-0"
+                >
+                  <Play className="mr-2 h-5 w-5" />
+                  {t.join.connectServer}
+                </Button>
+              </motion.a>
+
+              <motion.a
+                href="https://discord.gg/DN68KscXch"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <Button
+                  size="lg"
+                  className="rounded-full bg-[#5865F2]/12 hover:bg-[#5865F2]/22 border border-[#5865F2]/38 hover:border-[#5865F2]/75 text-white text-lg px-10 py-6 font-inter font-semibold transition-all duration-300 hover:shadow-[0_0_32px_rgba(88,101,242,0.28)]"
+                >
+                  <Disc className="mr-2 h-5 w-5" />
+                  {t.join.joinDiscord}
+                </Button>
+              </motion.a>
+            </motion.div>
+
+            {/* Social icons */}
+            <motion.div variants={item} className="flex justify-center gap-3 mt-2">
+              {SOCIALS.map(({ href, Icon, label }, i) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-11 h-11 rounded-full bg-[#1A1208] border border-[#2A1E0A] hover:border-[#C9A84C]/45 flex items-center justify-center text-[hsl(220_15%_60%)] hover:text-[#C9A84C] transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + i * 0.08, duration: 0.4, ease: "easeOut" }}
+                  whileHover={{ scale: 1.18, y: -3 }}
+                  whileTap={{ scale: 0.93 }}
+                >
+                  <Icon className="h-5 w-5" />
+                </motion.a>
+              ))}
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

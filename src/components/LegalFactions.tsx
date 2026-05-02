@@ -1,178 +1,112 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+interface FactionRowProps {
+  imageSrc: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+  accentColor: string;
+  reverse?: boolean;
+}
+
+function FactionRow({ imageSrc, imageAlt, title, description, accentColor, reverse = false }: FactionRowProps) {
+  return (
+    <motion.div
+      className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-8 md:gap-16`}
+      initial={{ opacity: 0, x: reverse ? 60 : -60 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.75, ease: "easeOut" }}
+    >
+      {/* Image panel */}
+      <div className="w-full md:w-1/2 relative h-[300px] rounded-2xl overflow-hidden border border-[#2A1E0A] group">
+        <motion.div
+          className="absolute inset-0"
+          whileHover={{ scale: 1.07 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+        >
+          <Image src={imageSrc} alt={imageAlt} fill className="object-cover" />
+        </motion.div>
+
+        {/* Hover color overlay */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ background: `linear-gradient(135deg, ${accentColor}14 0%, transparent 65%)` }}
+        />
+
+        {/* Hover accent border */}
+        <div
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"
+          style={{ boxShadow: `inset 0 0 0 1.5px ${accentColor}` }}
+        />
+
+        {/* Glow behind card on hover */}
+        <div
+          className="absolute inset-0 -z-10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ boxShadow: `0 0 50px ${accentColor}28` }}
+        />
+      </div>
+
+      {/* Text */}
+      <div className={`w-full md:w-1/2 ${reverse ? "text-center md:text-right" : "text-center md:text-left"}`}>
+        <h3
+          className="text-2xl md:text-3xl font-bold text-white mb-4 font-orbitron transition-colors duration-300 group-hover:text-white"
+          style={{ "--accent": accentColor } as React.CSSProperties}
+        >
+          {title}
+        </h3>
+        <p className="text-lg text-[hsl(220_15%_65%)] leading-relaxed font-inter">
+          {description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+const FACTIONS = [
+  { imageSrc: "/legal factions/goverment.png", imageAlt: "Government", key: "government", accentColor: "#4A90E2" },
+  { imageSrc: "/legal factions/embassy.png", imageAlt: "Embassy", key: "embassy", accentColor: "#2ECC71", reverse: true },
+  { imageSrc: "/legal factions/doj.png", imageAlt: "Department of Justice", key: "doj", accentColor: "#FFD700" },
+  { imageSrc: "/legal factions/lspd.png", imageAlt: "LSPD Police", key: "lspd", accentColor: "#00C8FF", reverse: true },
+  { imageSrc: "/legal factions/sheriff.png", imageAlt: "Sheriff Department", key: "sheriff", accentColor: "#D4A574" },
+  { imageSrc: "/legal factions/ambulance_city.png", imageAlt: "Ambulance City", key: "ambulanceCity", accentColor: "#FF3366", reverse: true },
+  { imageSrc: "/legal factions/journalist.jpg", imageAlt: "Journalist / News Agency", key: "journalist", accentColor: "#9B59B6" },
+];
 
 export default function LegalFactions({ t }: { t: any }) {
   return (
-    <section id="factions" className="py-20 px-4 bg-[#140f0b]">
+    <section id="factions" className="py-24 px-4 bg-[#0D0802] relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-[#C9A84C]/4 rounded-full blur-3xl pointer-events-none" />
+
       <div className="container mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-white mb-4 font-orbitron tracking-wider">
+        <motion.div
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-orbitron tracking-wider">
             {t.legalFactions.title}
           </h2>
           <p className="text-xl text-[hsl(220_15%_72%)] font-inter">{t.legalFactions.subtitle}</p>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col gap-24">
-          {/* Government - Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#4A90E2] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(74,144,226,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#4A90E2]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/goverment.png" 
-                  alt="Government" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#4A90E2] transition-colors duration-300">
-                {t.legalFactions.government.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.government.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Embassy - Right Image, Left Text */}
-          <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#2ECC71] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(46,204,113,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#2ECC71]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/embassy.png" 
-                  alt="Embassy" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-right">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#2ECC71] transition-colors duration-300">
-                {t.legalFactions.embassy.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.embassy.description}
-              </p>
-            </div>
-          </div>
-
-          {/* DOJ - Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FFD700] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,215,0,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
-      <Image 
-                  src="/legal factions/doj.png" 
-                  alt="Department of Justice" 
-                  fill
-                  className="object-cover"
-                />              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#FFD700] transition-colors duration-300">
-                {t.legalFactions.doj.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.doj.description}
-              </p>
-            </div>
-          </div>
-
-          {/* LSPD Police - Right Image, Left Text */}
-          <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#00C8FF] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(0,200,255,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#00C8FF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/lspd.png" 
-                  alt="LSPD Police" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-right">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#00C8FF] transition-colors duration-300">
-                {t.legalFactions.lspd.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.lspd.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Sheriff Department - Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#D4A574] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(212,165,116,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#D4A574]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/sheriff.png" 
-                  alt="Sheriff Department" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#D4A574] transition-colors duration-300">
-                {t.legalFactions.sheriff.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.sheriff.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Ambulance City - Right Image, Left Text */}
-          <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#FF3366] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,51,102,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#FF3366]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/ambulance_city.png" 
-                  alt="Ambulance City" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-right">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#FF3366] transition-colors duration-300">
-                {t.legalFactions.ambulanceCity.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.ambulanceCity.description}
-              </p>
-            </div>
-          </div>
-
-
-
-          {/* Journalist - Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-            <div className="w-full md:w-1/2 relative h-[300px] bg-[#1a0a08]/80 backdrop-blur-sm rounded-2xl border border-[hsl(215_18%_20%)] flex items-center justify-center group-hover:border-[#9B59B6] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(155,89,182,0.15)] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#9B59B6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/legal factions/journalist.jpg" 
-                  alt="Journalist / News Agency" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white mb-4 font-orbitron group-hover:text-[#9B59B6] transition-colors duration-300">
-                {t.legalFactions.journalist.title}
-              </h3>
-              <p className="text-lg text-[hsl(220_15%_72%)] leading-relaxed font-inter">
-                {t.legalFactions.journalist.description}
-              </p>
-            </div>
-          </div>
+          {FACTIONS.map(({ imageSrc, imageAlt, key, accentColor, reverse }) => (
+            <FactionRow
+              key={key}
+              imageSrc={imageSrc}
+              imageAlt={imageAlt}
+              title={t.legalFactions[key].title}
+              description={t.legalFactions[key].description}
+              accentColor={accentColor}
+              reverse={reverse}
+            />
+          ))}
         </div>
       </div>
     </section>

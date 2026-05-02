@@ -62,7 +62,7 @@ export default function VehiclesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a0a08] via-[#140f0b] to-[#140f0b] relative">
+    <div className="min-h-screen bg-gradient-to-br from-[#0F0A04] via-[#140C04] to-[#0A0804] relative">
       <Header t={t} />
       <div className="py-24 px-4 sm:px-6 lg:px-8">
       {/* Background Effects */}
@@ -78,15 +78,15 @@ export default function VehiclesPage() {
           className="text-center mb-16"
         >
           <div className="flex justify-center mb-6">
-            <Car className="h-16 w-16 text-[#fa5d3d]" />
+            <Car className="h-16 w-16 text-[#C9A84C]" />
           </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fa5d3d] to-white">
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-white via-[#C9A84C] to-white">
             Vehicle Collections
           </h1>
           <p className="text-xl text-[hsl(220_15%_72%)] font-inter max-w-2xl mx-auto">
             Explore our exclusive vehicle collections. Choose your tier and discover premium rides.
           </p>
-          <div className="h-1 w-24 bg-[#fa5d3d] mx-auto rounded-full mt-6 animate-pulse" />
+          <div className="h-1 w-24 bg-[#C9A84C] mx-auto rounded-full mt-6 animate-pulse" />
         </motion.div>
 
         {/* Tier Cards */}
@@ -102,7 +102,7 @@ export default function VehiclesPage() {
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
                 <Link href={tier.link}>
-                  <Card className="group overflow-hidden bg-[#1a0a08]/70 border-2 backdrop-blur-sm hover:border-[#fa5d3d] transition-all duration-300 hover:shadow-[0_0_40px_rgba(250,93,61,0.3)] h-full cursor-pointer"
+                  <Card className="group overflow-hidden bg-[#120C04]/80 border-2 backdrop-blur-sm hover:border-[#C9A84C] transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,168,76,0.3)] h-full cursor-pointer"
                     style={{ borderColor: `${tier.color}40` }}
                   >
                     <CardContent className="p-8 relative">
@@ -192,7 +192,7 @@ export default function VehiclesPage() {
         >
           <Link 
             href="/"
-            className="text-[#fa5d3d] hover:text-white transition-colors duration-300 font-semibold"
+            className="text-[#C9A84C] hover:text-white transition-colors duration-300 font-semibold"
           >
             ← Back to Home
           </Link>

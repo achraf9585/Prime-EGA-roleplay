@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import SimpleLanguageSwitcher from "@/components/SimpleLanguageSwitcher";
 import AuthProvider from "@/components/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,8 @@ export const metadata: Metadata = {
   },
 };
 
+import TrafficTracker from "@/components/TrafficTracker";
+
 export default function RootLayout({
   children,
 }: {
@@ -44,10 +47,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}
       >
         <AuthProvider>
+          <TrafficTracker />
           <div className="fixed top-4 right-4 z-50">
             <SimpleLanguageSwitcher />
           </div>
           {children}
+          <Toaster richColors position="top-right" />
         </AuthProvider>
       </body>
     </html>

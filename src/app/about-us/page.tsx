@@ -49,7 +49,7 @@ export default function AboutUs() {
 
                 <div className="relative z-10 container mx-auto">
                     <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-gray-400 mb-6 backdrop-blur-sm">
-                        Welcome to Season 2
+                        Welcome to Season 3
                     </span>
                     <h1 className="text-5xl md:text-7xl font-bold font-orbitron tracking-wider mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
                         {t.aboutPage.title}

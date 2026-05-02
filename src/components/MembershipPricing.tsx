@@ -144,11 +144,11 @@ export default function MembershipPricing({ t }: { t: any }) {
   };
 
   return (
-    <section id="membership" className="py-20 px-4 bg-[#140f0b]/50 relative overflow-hidden">
+    <section id="membership" className="py-20 px-4 bg-[#0D0802] relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#fa5d3d]/10 rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#9D00FF]/10 rounded-full blur-[120px] animate-pulse delay-1000" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#C9A84C]/8 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#B8860B]/10 rounded-full blur-[120px] animate-pulse delay-1000" />
       </div>
 
       <div className="container mx-auto relative z-10">

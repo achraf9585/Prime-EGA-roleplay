@@ -20,18 +20,19 @@ const translations = {
       join: "Join Now",
       connect: "Connect",
       about: "About Us",
+      familyApply: "Family application",
     },
     hero: {
       badge: "Premium Roleplay Experience",
       title: "Welcome to",
-      titleHighlight: "Prime EGA Roleplay",
+      titleHighlight: " EGA Roleplay",
       description:
         "Experience the most immersive GTA V FiveM roleplay server. Join thousands of players in Los Santos for realistic roleplay, unique jobs, and unforgettable stories.",
       joinServer: "Join Server Now",
       joinDiscord: "Join Discord",
     },
     features: {
-      title: "Why Choose Prime EGA Roleplay?",
+      title: "Why Choose  EGA Roleplay?",
       subtitle: "Experience the best features in FiveM roleplay",
       activeCommunity: {
         title: "Active Community",
@@ -231,7 +232,7 @@ const translations = {
     },
     footer: {
       copyright:
-        "© 2025 Prime EGA Roleplay. All rights reserved. | GTA V FiveM Roleplay Server",
+        "© 2026 EGA Roleplay. All rights reserved. | GTA V FiveM Roleplay Server",
     },
     video: {
       title: "Watch Our Trailer",
@@ -250,7 +251,7 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Prime EGA Roleplay Rules",
+      title: " EGA Roleplay Rules",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
         {
@@ -316,7 +317,7 @@ const translations = {
       ]
     },
     howToPlay: {
-      title: "How to Play on Prime EGA Roleplay",
+      title: "How to Play on  EGA Roleplay",
       subtitle: "Follow these simple steps to join our community",
       steps: [
         {
@@ -378,11 +379,12 @@ const translations = {
       join: "انضم الآن",
       connect: "اتصل",
       about: "معلومات عنا",
+      familyApply: "طلب عائلة",
     },
     hero: {
       badge: "تجربة لعب الأدوار المتميزة",
       title: "مرحباً بك في",
-      titleHighlight: "Prime EGA Roleplay",
+      titleHighlight: " EGA Roleplay",
       description:
         "استمتع بأكثر خوادم لعب الأدوار غامرة في GTA V FiveM. انضم إلى آلاف اللاعبين في لوس سانتوس للعب الأدوار الواقعي والوظائف الفريدة والقصص التي لا تُنسى.",
       joinServer: "انضم للخادم الآن",
@@ -603,7 +605,7 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Prime EGA Roleplay Rules",
+      title: " EGA Roleplay Rules",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
         {
@@ -731,11 +733,12 @@ const translations = {
       join: "انضم دابا",
       connect: "اتصل",
       about: "معلومات عنا",
+      familyApply: "طلب عائلة",
     },
     hero: {
       badge: "تجربة لعب الأدوار الممتازة",
       title: "أهلاً وسهلاً في",
-      titleHighlight: " Prime EGA Roleplay",
+      titleHighlight: "  EGA Roleplay",
       description:
         "استمتع بأحسن سيرفر لعب الأدوار في GTA V FiveM. انضم مع آلاف اللاعبين في لوس سانتوس للعب الأدوار الواقعي والوظائف المميزة والقصص اللي ما تنساش.",
       joinServer: "انضم للسيرفر دابا",
@@ -955,7 +958,7 @@ const translations = {
       },
     },
     serverRules: {
-      title: "Prime EGA Roleplay Rules",
+      title: " EGA Roleplay Rules",
       subtitle: "Follow these rules to ensure a great experience for everyone",
       rules: [
         {

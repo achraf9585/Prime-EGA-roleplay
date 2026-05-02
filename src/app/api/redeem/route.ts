@@ -3,10 +3,13 @@ import { NextResponse } from 'next/server';
 // import { redeemCode } from '@/lib/codeStore'; // Legacy CSV method
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/server';
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
+  
+  // Create Supabase client
+  const supabase = await createClient();
   
   // Optional: Require login
   if (!session) {

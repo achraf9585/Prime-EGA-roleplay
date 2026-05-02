@@ -1,4 +1,4 @@
-# Prime EGA Roleplay - GTA V FiveM Roleplay Server
+#  EGA Roleplay - GTA V FiveM Roleplay Server
 
 A modern, responsive landing page for EGA Roleplay, a GTA V FiveM roleplay server. Built with Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
 
@@ -87,7 +87,7 @@ This project can be deployed to any platform that supports Next.js:
 
 ## License
 
-© 2025 Prime EGA Roleplay. All rights reserved.
+© 2026 EGA Roleplay. All rights reserved.
 
 ---
 

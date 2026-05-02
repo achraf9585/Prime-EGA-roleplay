@@ -10,7 +10,7 @@ I've set up Discord OAuth authentication for your EGA Roleplay website. Users ca
 
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
 2. Click "New Application"
-3. Name it "Prime EGA Roleplay" (or whatever you want)
+3. Name it "EGA Roleplay" (or whatever you want)
 4. Click "Create"
 
 ### 2. Configure OAuth2
