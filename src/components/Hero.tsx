@@ -152,7 +152,7 @@ export default function Hero({ t }: { t: any }) {
           {/* ── TITLE ── */}
           <motion.h1
             variants={item}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white font-orbitron tracking-wider drop-shadow-[0_0_24px_rgba(139,92,246,0.45)]"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white font-orbitron tracking-wide drop-shadow-[0_0_24px_rgba(139,92,246,0.45)]"
           >
             {t.hero.title}{" "}
             <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent font-orbitron">
@@ -163,7 +163,7 @@ export default function Hero({ t }: { t: any }) {
           {/* ── DESCRIPTION ── */}
           <motion.p
             variants={item}
-            className="text-lg md:text-xl text-[hsl(220_15%_72%)] max-w-2xl mx-auto font-inter leading-relaxed"
+            className="text-base md:text-lg text-[hsl(220_15%_72%)] max-w-2xl mx-auto font-inter leading-relaxed"
           >
             {t.hero.description}
           </motion.p>

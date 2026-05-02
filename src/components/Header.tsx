@@ -45,12 +45,12 @@ export default function Header({ t }: { t: any }) {
                 className="rounded-none drop-shadow-[0_0_14px_rgba(139,92,246,0.55)] flex-shrink-0"
                 priority
               />
-              <span className="text-sm sm:text-base font-bold text-white font-orbitron tracking-wider whitespace-nowrap">
+              <span className="text-xs sm:text-sm lg:text-base font-bold text-white font-orbitron tracking-wider whitespace-nowrap hidden sm:block">
                 EGA ROLEPLAY
               </span>
               </a>
             </div>
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-3 xl:space-x-5 text-sm">
                <a href="/about-us" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.about}
               </a>
