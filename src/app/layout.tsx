@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 };
 
 import TrafficTracker from "@/components/TrafficTracker";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function RootLayout({
   children,
@@ -52,6 +53,7 @@ export default function RootLayout({
             <SimpleLanguageSwitcher />
           </div>
           {children}
+          <Analytics />
           <Toaster richColors position="top-right" />
         </AuthProvider>
       </body>
