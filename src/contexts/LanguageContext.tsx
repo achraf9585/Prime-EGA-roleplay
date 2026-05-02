@@ -26,13 +26,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const savedLanguage = localStorage.getItem("language") as Language;
     if (savedLanguage && ["en", "ar", "tn"].includes(savedLanguage)) {
       setCurrentLanguage(savedLanguage);
-      setT(translations[savedLanguage]);
     }
   }, []);
 
   useEffect(() => {
     // Update translations when language changes
-    setT(translations[currentLanguage]);
     if (isClient) {
       localStorage.setItem("language", currentLanguage);
     }
