@@ -29,9 +29,9 @@ const FEATURES = [
 
 export default function Features({ t }: { t: any }) {
   return (
-    <section id="features" className="py-24 px-4 bg-[#0D0802]/60 relative overflow-hidden">
+    <section id="features" className="py-24 px-4 bg-[#0a0514]/60 relative overflow-hidden">
       {/* ambient glow */}
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#C9A84C]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#8b5cf6]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto relative">
         <motion.div
@@ -63,14 +63,14 @@ export default function Features({ t }: { t: any }) {
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 className="h-full"
               >
-                <Card className="bg-[#120C04] border-[#2A1E0A] hover:border-[#C9A84C]/50 transition-colors duration-300 hover:shadow-[0_0_40px_rgba(201,168,76,0.13)] h-full group">
+                <Card className="bg-[#0a0514] border-[#1a103c] hover:border-[#8b5cf6]/50 transition-colors duration-300 hover:shadow-[0_0_40px_rgba(139,92,246,0.13)] h-full group">
                   <CardHeader className="pb-4">
                     <motion.div
-                      className="w-14 h-14 rounded-xl bg-[#1A1208] border border-[#C9A84C]/20 flex items-center justify-center mb-4 group-hover:border-[#C9A84C]/55 group-hover:bg-[#201509] transition-all duration-300"
+                      className="w-14 h-14 rounded-xl bg-[#0f0724] border border-[#8b5cf6]/20 flex items-center justify-center mb-4 group-hover:border-[#8b5cf6]/55 group-hover:bg-[#150a29] transition-all duration-300"
                       whileHover={{ rotate: [0, -6, 6, 0] }}
                       transition={{ duration: 0.45 }}
                     >
-                      <Icon className="h-7 w-7 text-[#C9A84C]" />
+                      <Icon className="h-7 w-7 text-[#8b5cf6]" />
                     </motion.div>
                     <CardTitle className="text-white font-orbitron tracking-wide text-base">
                       {t.features[key].title}

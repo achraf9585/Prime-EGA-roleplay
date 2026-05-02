@@ -58,9 +58,9 @@ export default function MembershipPricing({ t }: { t: any }) {
       icon: <Crown className="h-16 w-16" />,
       price: 30,
       benefits: ["Exclusive Vehicle"],
-      color: "#FFD700",
-      glowColor: "255, 215, 0",
-      gradient: "from-[#FFD700] to-[#FFA500]",
+      color: "#3b82f6",
+      glowColor: "59, 130, 246",
+      gradient: "from-[#3b82f6] to-[#60a5fa]",
       link: "https://egamarketplace.com/p/gold-membership-1"
     },
     {
@@ -144,11 +144,11 @@ export default function MembershipPricing({ t }: { t: any }) {
   };
 
   return (
-    <section id="membership" className="py-20 px-4 bg-[#0D0802] relative overflow-hidden">
+    <section id="membership" className="py-20 px-4 bg-[#0a0514] relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#C9A84C]/8 rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#B8860B]/10 rounded-full blur-[120px] animate-pulse delay-1000" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#8b5cf6]/8 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#3b82f6]/10 rounded-full blur-[120px] animate-pulse delay-1000" />
       </div>
 
       <div className="container mx-auto relative z-10">

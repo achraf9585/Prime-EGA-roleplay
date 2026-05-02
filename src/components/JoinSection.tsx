@@ -22,17 +22,17 @@ const SOCIALS = [
 
 export default function JoinSection({ t }: { t: any }) {
   return (
-    <section id="join" className="py-28 px-4 bg-[#0A0700] relative overflow-hidden">
+    <section id="join" className="py-28 px-4 bg-[#0a0514] relative overflow-hidden">
       {/* Layered ambient glows */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#C9A84C]/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[220px] bg-[#FFD700]/4 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#8b5cf6]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[220px] bg-[#3b82f6]/4 rounded-full blur-2xl" />
       </div>
 
       {/* Animated top border */}
       <div className="absolute top-0 left-0 w-full h-px overflow-hidden">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C9A84C]/65 to-transparent"
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#8b5cf6]/65 to-transparent"
           animate={{ x: ["-100%", "100%"] }}
           transition={{ duration: 4.5, repeat: Infinity, ease: "linear" }}
         />
@@ -49,9 +49,9 @@ export default function JoinSection({ t }: { t: any }) {
           >
             {/* Decorative divider */}
             <motion.div variants={item} className="flex items-center gap-3">
-              <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#C9A84C]/45" />
-              <div className="w-2 h-2 rounded-full bg-[#C9A84C]" />
-              <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#C9A84C]/45" />
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#8b5cf6]/45" />
+              <div className="w-2 h-2 rounded-full bg-[#8b5cf6]" />
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#8b5cf6]/45" />
             </motion.div>
 
             <motion.h2
@@ -82,7 +82,7 @@ export default function JoinSection({ t }: { t: any }) {
               >
                 <Button
                   size="lg"
-                  className="relative overflow-hidden rounded-full bg-gradient-to-r from-[#C9A84C] to-[#B8860B] hover:from-[#FFD700] hover:to-[#C9A84C] text-[#0F0A04] text-lg px-10 py-6 font-orbitron font-bold tracking-wide shadow-[0_0_32px_rgba(201,168,76,0.28)] hover:shadow-[0_0_54px_rgba(255,215,0,0.50)] transition-shadow duration-300 border-0"
+                  className="relative overflow-hidden rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#3b82f6] hover:from-[#3b82f6] hover:to-[#8b5cf6] text-[#0a0514] text-lg px-10 py-6 font-orbitron font-bold tracking-wide shadow-[0_0_32px_rgba(139,92,246,0.28)] hover:shadow-[0_0_54px_rgba(59,130,246,0.50)] transition-shadow duration-300 border-0"
                 >
                   <Play className="mr-2 h-5 w-5" />
                   {t.join.connectServer}
@@ -115,7 +115,7 @@ export default function JoinSection({ t }: { t: any }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-11 h-11 rounded-full bg-[#1A1208] border border-[#2A1E0A] hover:border-[#C9A84C]/45 flex items-center justify-center text-[hsl(220_15%_60%)] hover:text-[#C9A84C] transition-all duration-300"
+                  className="w-11 h-11 rounded-full bg-[#0f0724] border border-[#1a103c] hover:border-[#8b5cf6]/45 flex items-center justify-center text-[hsl(220_15%_60%)] hover:text-[#8b5cf6] transition-all duration-300"
                   initial={{ opacity: 0, scale: 0.7 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}

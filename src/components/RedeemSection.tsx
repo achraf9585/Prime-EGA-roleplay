@@ -48,9 +48,9 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0700] to-[#0F0A04] opacity-95" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#C9A84C]/8 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#B8860B]/8 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0514] to-[#0a0514] opacity-95" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#8b5cf6]/8 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#3b82f6]/8 rounded-full blur-3xl" />
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center mb-12">
@@ -58,7 +58,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C9A84C]/10 border border-[#C9A84C]/25 text-[#C9A84C] mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#8b5cf6]/10 border border-[#8b5cf6]/25 text-[#8b5cf6] mb-6"
           >
             <Gift className="w-4 h-4" />
             <span className="text-sm font-medium uppercase tracking-wider">
@@ -80,8 +80,8 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
           viewport={{ once: true }}
           className="max-w-md mx-auto relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-[#C9A84C] to-[#B8860B] rounded-2xl blur opacity-15" />
-          <div className="relative bg-[#100C04]/85 backdrop-blur-xl border border-[#2A1E0A] rounded-2xl p-8 shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#8b5cf6] to-[#3b82f6] rounded-2xl blur opacity-15" />
+          <div className="relative bg-[#100C04]/85 backdrop-blur-xl border border-[#1a103c] rounded-2xl p-8 shadow-2xl">
             
             <div className="space-y-6">
                 <div className="relative">
@@ -90,7 +90,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                     placeholder="XXXX-XXXX-XXXX"
-                    className="w-full bg-[#180E04]/60 border border-[#2A1E0A] focus:border-[#C9A84C] rounded-xl px-5 py-4 text-center text-xl tracking-widest text-white placeholder:text-[#4A3A20] outline-none transition-all"
+                    className="w-full bg-[#0f0724]/60 border border-[#1a103c] focus:border-[#8b5cf6] rounded-xl px-5 py-4 text-center text-xl tracking-widest text-white placeholder:text-[#2e1f4f] outline-none transition-all"
                   />
                 </div>
 
@@ -102,7 +102,7 @@ export default function RedeemSection({ t }: RedeemSectionProps) {
                       ? "bg-green-500 hover:bg-green-600" 
                       : status === "error"
                       ? "bg-red-500 hover:bg-red-600"
-                      : "bg-gradient-to-r from-[#C9A84C] to-[#B8860B] hover:from-[#FFD700] hover:to-[#C9A84C] text-[#0F0A04]"
+                      : "bg-gradient-to-r from-[#8b5cf6] to-[#3b82f6] hover:from-[#3b82f6] hover:to-[#8b5cf6] text-[#0a0514]"
                   }`}
                 >
                   {status === "loading" ? (
