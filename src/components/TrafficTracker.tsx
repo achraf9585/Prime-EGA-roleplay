@@ -7,6 +7,9 @@ export default function TrafficTracker() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Only track unique visitors per session
+    if (sessionStorage.getItem("has_visited_ega")) return;
+
     const track = async () => {
       try {
         await fetch("/api/analytics/track", {
@@ -14,6 +17,7 @@ export default function TrafficTracker() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ path: pathname }),
         });
+        sessionStorage.setItem("has_visited_ega", "true");
       } catch (err) {
         // Silently fail
       }
