@@ -63,7 +63,9 @@ import {
   Area,
   BarChart,
   Bar,
-  Cell
+  Cell,
+  PieChart,
+  Pie
 } from 'recharts';
 
 // --- Types ---
@@ -138,6 +140,7 @@ interface DashboardStats {
     staffCount: number;
   };
   tierDistribution: Record<string, number>;
+  countryDistribution: { name: string; value: number }[];
   trafficData: { name: string; visitors: number }[];
   recentActivity: {
     codes: RedeemCode[];
@@ -449,17 +452,40 @@ export default function AdminDashboard() {
                           <p className="text-3xl font-black italic text-amber-500">{stats.trafficData.reduce((s,d)=>s+d.visitors,0)}</p>
                         </div>
                       </div>
-                      <div className="h-[200px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={stats.trafficData}>
-                            <defs><linearGradient id="colorVis" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25}/><stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/></linearGradient></defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1a1a1a" />
-                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill:'#555',fontSize:10}} dy={10} />
-                            <YAxis hide />
-                            <Tooltip contentStyle={{backgroundColor:'#111',border:'1px solid #333',borderRadius:'12px',fontSize:'11px'}} itemStyle={{color:'#f59e0b',fontWeight:'bold'}} />
-                            <Area type="monotone" dataKey="visitors" stroke="#f59e0b" strokeWidth={2.5} fillOpacity={1} fill="url(#colorVis)" dot={{r:3,fill:'#f59e0b',strokeWidth:0}} activeDot={{r:5}} />
-                          </AreaChart>
-                        </ResponsiveContainer>
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="h-[200px] w-full lg:col-span-2">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={stats.trafficData}>
+                              <defs><linearGradient id="colorVis" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25}/><stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/></linearGradient></defs>
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1a1a1a" />
+                              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill:'#555',fontSize:10}} dy={10} />
+                              <YAxis hide />
+                              <Tooltip contentStyle={{backgroundColor:'#111',border:'1px solid #333',borderRadius:'12px',fontSize:'11px'}} itemStyle={{color:'#f59e0b',fontWeight:'bold'}} />
+                              <Area type="monotone" dataKey="visitors" stroke="#f59e0b" strokeWidth={2.5} fillOpacity={1} fill="url(#colorVis)" dot={{r:3,fill:'#f59e0b',strokeWidth:0}} activeDot={{r:5}} />
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </div>
+                        <div className="h-[200px] w-full lg:col-span-1 flex flex-col items-center justify-center">
+                          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">Top Origins</p>
+                          <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                              <Pie
+                                data={stats.countryDistribution || []}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={40}
+                                outerRadius={60}
+                                paddingAngle={5}
+                                dataKey="value"
+                              >
+                                {(stats.countryDistribution || []).map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={['#f59e0b', '#d97706', '#b45309', '#78350f', '#451a03'][index % 5]} />
+                                ))}
+                              </Pie>
+                              <Tooltip contentStyle={{backgroundColor:'#111',border:'1px solid #333',borderRadius:'12px',fontSize:'11px'}} itemStyle={{color:'#fff',fontWeight:'bold'}} />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </div>
                       </div>
                     </div>
                   </Card>

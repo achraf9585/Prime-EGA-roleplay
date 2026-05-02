@@ -27,9 +27,17 @@ export async function GET(request: Request) {
     supabase.from('RedeemCode').select('*').order('created_at', { ascending: false }).limit(5),
     supabase.from('StreamerApplications').select('*').order('created_at', { ascending: false }).limit(4),
     supabase.from('FamilyApplications').select('*').order('created_at', { ascending: false }).limit(4),
-    supabase.from('SiteTraffic').select('created_at').gte('created_at', (() => {
-      const d = new Date(); d.setDate(d.getDate() - 7); return d.toISOString();
-    })()).limit(10000),
+    (async () => {
+      let all: any[] = [];
+      const sevenDaysAgo = (() => { const d = new Date(); d.setDate(d.getDate() - 7); return d.toISOString(); })();
+      for (let i = 0; i < 10; i++) {
+        const { data } = await supabase.from('SiteTraffic').select('created_at, country').gte('created_at', sevenDaysAgo).range(i * 1000, (i + 1) * 1000 - 1);
+        if (!data || data.length === 0) break;
+        all.push(...data);
+        if (data.length < 1000) break;
+      }
+      return { data: all };
+    })(),
   ]);
 
   // Code stats
@@ -66,6 +74,18 @@ export async function GET(request: Request) {
     last7Days.push({ name: dayName, visitors: trafficByDay[dayName] || 0 });
   }
 
+  // Country distribution
+  const countryDist = trafficData?.reduce((acc: any, curr) => {
+    const country = curr.country || 'Unknown';
+    acc[country] = (acc[country] || 0) + 1;
+    return acc;
+  }, {}) ?? {};
+
+  const countryDistribution = Object.entries(countryDist)
+    .map(([name, value]) => ({ name, value }))
+    .sort((a: any, b: any) => b.value - a.value)
+    .slice(0, 5);
+
   return NextResponse.json({
     metrics: {
       totalCodes,
@@ -84,6 +104,7 @@ export async function GET(request: Request) {
       staffCount: staffCount || 0,
     },
     tierDistribution,
+    countryDistribution,
     trafficData: last7Days,
     recentActivity: {
       codes:  recentCodes  || [],
