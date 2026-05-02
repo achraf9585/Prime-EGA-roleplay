@@ -12,31 +12,6 @@ export default function VehiclesPage() {
   const [currentLanguage, setCurrentLanguage] = useState("en");
   const [t, setT] = useState(translations.en);
 
-  useEffect(() => {
-    // Load saved language from localStorage
-    const savedLanguage = localStorage.getItem("language") || "en";
-    setCurrentLanguage(savedLanguage);
-    setT(translations[savedLanguage as keyof typeof translations]);
-  }, []);
-
-  // Listen for language changes
-  useEffect(() => {
-    const handleLanguageChange = (event: CustomEvent) => {
-      const newLanguage = event.detail.language;
-      setCurrentLanguage(newLanguage);
-      setT(translations[newLanguage as keyof typeof translations]);
-    };
-
-    window.addEventListener(
-      "languageChanged",
-      handleLanguageChange as EventListener
-    );
-    return () =>
-      window.removeEventListener(
-        "languageChanged",
-        handleLanguageChange as EventListener
-      );
-  }, []);
 
   const tiers = [
     {
