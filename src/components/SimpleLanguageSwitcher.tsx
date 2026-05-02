@@ -352,24 +352,20 @@ const translations = {
     aboutPage: {
       title: "About Us",
       storyline: {
-        title: "Season Storyline",
-        description: "Welcome to the new era of EGA Roleplay. The world has evolved, and power dynamics have shifted. Three major powers have emerged, each defined by their unique culture, governance, and challenges. Explore the futuristic streets of Neo San Voro, survive the harsh wilderness of The North, or navigate the treacherous waters of Cayo Repuplica."
+        title: "🌆 About EGA Roleplay",
+        description: "EGA Roleplay is more than just a server — it’s a living, breathing world where stories are built, empires rise, and every decision matters. We are dedicated to delivering a serious and immersive roleplay experience, built for players who value depth, realism, and long-term character development. Whether you’re a lone hustler, a business owner, or the head of a powerful organization, your journey in EGA is shaped by your actions. 🎭 Roleplay Excellence: Deep storylines driven by players, realistic economy and progression systems, meaningful interactions where every choice has consequences, and strict standards that ensure immersive and believable scenarios. 🤝 Community: Mature, respectful players with zero tolerance for toxicity and a strong focus on collaboration. 🛡️ Staff: Responsive, fair, and active 24/7 to support players. 🧠 Development: Constant updates with 80%+ custom scripts and unique systems. 🎥 Content: A growing streamer community with cinematic roleplay. ⚙️ Performance: High FPS, optimized scripts, and stable servers. 🌐 Growth: Active, expanding, and full of opportunities. 🚀 Vision: To build one of the most immersive roleplay environments where players don’t just play a role—they live it.",
+        intro: "EGA Roleplay is more than just a server — it’s a living, breathing world where stories are built, empires rise, and every decision matters. We are dedicated to delivering a serious and immersive roleplay experience, built for players who value depth, realism, and long-term character development. Whether you’re a lone hustler, a business owner, or the head of a powerful organization, your journey in EGA is shaped by your actions.",
+        features: [
+          { icon: "🎭", title: "Roleplay Excellence", text: "Deep storylines driven by players, realistic economy and progression systems, meaningful interactions where every choice has consequences, and strict standards that ensure immersive and believable scenarios." },
+          { icon: "🤝", title: "Community", text: "Mature, respectful players with zero tolerance for toxicity and a strong focus on collaboration." },
+          { icon: "🛡️", title: "Staff", text: "Responsive, fair, and active 24/7 to support players." },
+          { icon: "🧠", title: "Development", text: "Constant updates with 80%+ custom scripts and unique systems." },
+          { icon: "🎥", title: "Content", text: "A growing streamer community with cinematic roleplay." },
+          { icon: "⚙️", title: "Performance", text: "High FPS, optimized scripts, and stable servers." },
+          { icon: "🌐", title: "Growth", text: "Active, expanding, and full of opportunities." },
+          { icon: "🚀", title: "Vision", text: "To build one of the most immersive roleplay environments where players don’t just play a role—they live it." }
+        ]
       },
-      countries: {
-        title: "Our Continents",
-        neoSanVoro: {
-            title: "Neo San Voro",
-            description: "A sprawling metropolis of neon and steel. Neo San Voro is the heart of commerce and technology, but beneath its shiny exterior lies a web of corporate intrigue and criminal syndicates."
-        },
-        theNorth: {
-            title: "The North",
-            description: "Rugged, untamed, and unforgiving. The North is home to those who reject the city's control. Survival here means mastering the wild and defending your territory against rival factions."
-        },
-        cayo: {
-            title: "Cayo Repuplica",
-            description: "A tropical paradise ruled by iron fists. Cayo Repuplica offers immense wealth and luxury, but it is built on a foundation of illicit trade and dangerous power struggles."
-        }
-      }
     },
   },
   ar: {

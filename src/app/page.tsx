@@ -7,6 +7,7 @@ import { translations } from "@/components/SimpleLanguageSwitcher";
 
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import StorylineSection from "@/components/StorylineSection";
 import Features from "@/components/Features";
 import HowToPlay from "@/components/HowToPlay";
 import ApplicationSection from "@/components/ApplicationSection";
@@ -14,7 +15,7 @@ import RulesSection from "@/components/RulesSection";
 import JoinSection from "@/components/JoinSection";
 import Footer from "@/components/Footer";
 import LegalFactions from "@/components/LegalFactions";
-import IllegalFactions from "@/components/IllegalFactions";
+import FamilySection from "@/components/FamilySection";
 import AvailableJobs from "@/components/AvailableJobs";
 import MembershipPricing from "@/components/MembershipPricing";
 import RedeemSection from "@/components/RedeemSection";
@@ -27,22 +28,9 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30, restDelta: 0.001 });
 
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") || "en";
-    setCurrentLanguage(savedLanguage);
-    setT(translations[savedLanguage as keyof typeof translations]);
-  }, []);
 
-  useEffect(() => {
-    const handleLanguageChange = (event: CustomEvent) => {
-      const newLanguage = event.detail.language;
-      setCurrentLanguage(newLanguage);
-      setT(translations[newLanguage as keyof typeof translations]);
-    };
 
-    window.addEventListener("languageChanged", handleLanguageChange as EventListener);
-    return () => window.removeEventListener("languageChanged", handleLanguageChange as EventListener);
-  }, []);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0514] via-[#0f0724] to-[#0a0514] relative">
@@ -74,12 +62,13 @@ export default function Home() {
         </div>
       </section>
 
+      <StorylineSection t={t} />
       <MembershipPricing t={t} />
       <RedeemSection t={t} />
       <Features t={t} />
-      {/* <LegalFactions t={t} />
-      <IllegalFactions t={t} />
-      <AvailableJobs t={t} /> */}
+      {/* <LegalFactions t={t} /> */}
+      <FamilySection t={t} />
+      {/* <AvailableJobs t={t} /> */}
       <HowToPlay t={t} />
       <RulesSection t={t} />
       <JoinSection t={t} />

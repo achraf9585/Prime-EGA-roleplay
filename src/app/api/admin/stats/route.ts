@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     supabase.from('FamilyApplications').select('*').order('created_at', { ascending: false }).limit(4),
     supabase.from('SiteTraffic').select('created_at').gte('created_at', (() => {
       const d = new Date(); d.setDate(d.getDate() - 7); return d.toISOString();
-    })()),
+    })()).limit(10000),
   ]);
 
   // Code stats

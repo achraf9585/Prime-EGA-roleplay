@@ -112,6 +112,14 @@ interface FamilyApp {
   created_at: string;
 }
 
+interface ActiveFamily {
+  id: string;
+  name: string;
+  logo: string | null;
+  description: string | null;
+  created_at: string;
+}
+
 interface DashboardStats {
   metrics: {
     totalCodes: number;
@@ -138,7 +146,7 @@ interface DashboardStats {
   };
 }
 
-type ActiveTab = "overview" | "codes" | "admins" | "applications" | "family";
+type ActiveTab = "overview" | "codes" | "admins" | "applications" | "family" | "active_families";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
@@ -147,6 +155,7 @@ export default function AdminDashboard() {
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
   const [streamerApps, setStreamerApps] = useState<StreamerApp[]>([]);
   const [familyApps, setFamilyApps] = useState<FamilyApp[]>([]);
+  const [activeFamilies, setActiveFamilies] = useState<ActiveFamily[]>([]);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -154,13 +163,17 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [selectedApp, setSelectedApp] = useState<StreamerApp | null>(null);
   const [selectedFamilyApp, setSelectedFamilyApp] = useState<FamilyApp | null>(null);
+  const [selectedActiveFamily, setSelectedActiveFamily] = useState<ActiveFamily | null>(null);
   const [error, setError] = useState("");
 
   // Dialog states
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isAdminAddOpen, setIsAdminAddOpen] = useState(false);
+  const [isFamilyAddOpen, setIsFamilyAddOpen] = useState(false);
+  const [isFamilyEditOpen, setIsFamilyEditOpen] = useState(false);
   const [newCode, setNewCode] = useState({ code: "", tier: "Gold", count: 0 });
   const [newAdmin, setNewAdmin] = useState({ email: "", password: "", name: "" });
+  const [newFamily, setNewFamily] = useState({ name: "", logo: "", description: "" });
 
   useEffect(() => {
     const auth = localStorage.getItem("ega_admin_auth");
@@ -198,6 +211,7 @@ export default function AdminDashboard() {
       admins:       "/api/admin/users",
       applications: "/api/admin/applications",
       family:       "/api/admin/family-applications",
+      active_families: "/api/admin/families",
     };
 
     try {
@@ -209,6 +223,7 @@ export default function AdminDashboard() {
         else if (activeTab === "admins")  setAdminUsers(data);
         else if (activeTab === "applications") setStreamerApps(data);
         else if (activeTab === "family")  setFamilyApps(data);
+        else if (activeTab === "active_families") setActiveFamilies(data);
       } else {
         localStorage.removeItem("ega_admin_auth");
         window.location.href = "/admin/login";
@@ -318,6 +333,53 @@ export default function AdminDashboard() {
   const filteredAdmins  = adminUsers.filter(u => u.email.toLowerCase().includes(search.toLowerCase()) || u.name?.toLowerCase().includes(search.toLowerCase()));
   const filteredApps    = streamerApps.filter(app => app.ingame_name_cid.toLowerCase().includes(search.toLowerCase()) || app.discord_id.toLowerCase().includes(search.toLowerCase()));
   const filteredFamily  = familyApps.filter(app => app.ic_name.toLowerCase().includes(search.toLowerCase()) || app.discord_id.toLowerCase().includes(search.toLowerCase()));
+  const filteredActiveFamilies = activeFamilies.filter(f => f.name.toLowerCase().includes(search.toLowerCase()));
+
+  // Active Family handlers
+  const handleAddFamily = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("/api/admin/families", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...getAuthHeaders() },
+      body: JSON.stringify(newFamily),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setActiveFamilies(prev => [data, ...prev]);
+      setIsFamilyAddOpen(false);
+      setNewFamily({ name: "", logo: "", description: "" });
+      toast.success("Family Established");
+    }
+  };
+
+  const handleEditFamily = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedActiveFamily) return;
+    const res = await fetch(`/api/admin/families?id=${selectedActiveFamily.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", ...getAuthHeaders() },
+      body: JSON.stringify(selectedActiveFamily),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setActiveFamilies(prev => prev.map(f => f.id === data.id ? data : f));
+      setIsFamilyEditOpen(false);
+      setSelectedActiveFamily(null);
+      toast.success("Family Updated");
+    }
+  };
+
+  const handleDeleteFamily = async (id: string) => {
+    if (!confirm("Disband this family?")) return;
+    const res = await fetch(`/api/admin/families?id=${id}`, {
+      method: "DELETE",
+      headers: getAuthHeaders(),
+    });
+    if (res.ok) {
+      setActiveFamilies(prev => prev.filter(f => f.id !== id));
+      toast.success("Family Disbanded");
+    }
+  };
 
   const pageTitle: Record<ActiveTab, string> = {
     overview:     "HQ OVERVIEW",
@@ -325,6 +387,7 @@ export default function AdminDashboard() {
     admins:       "STAFF BOARD",
     applications: "CREATOR POOL",
     family:       "FAMILY ROSTER",
+    active_families: "ACTIVE FAMILIES",
   };
 
   const pendingFamilyCount = familyApps.filter(a => a.status === 'pending').length;
@@ -342,6 +405,7 @@ export default function AdminDashboard() {
             <NavButton active={activeTab === "codes"}         onClick={() => setActiveTab("codes")}         icon={<Ticket size={18} />}          label="Unit Records" />
             <NavButton active={activeTab === "applications"} onClick={() => setActiveTab("applications")}  icon={<Video size={18} />}            label="Creator Pool"   count={stats?.metrics.pendingApps} />
             <NavButton active={activeTab === "family"}        onClick={() => setActiveTab("family")}        icon={<Shield size={18} />}           label="Family Roster"  count={pendingFamilyCount || undefined} />
+            <NavButton active={activeTab === "active_families"} onClick={() => setActiveTab("active_families")} icon={<Globe size={18} />}            label="Active Families" />
             <NavButton active={activeTab === "admins"}        onClick={() => setActiveTab("admins")}        icon={<Users size={18} />}            label="Staff Access" />
           </div>
           <div className="mt-10 pt-6 border-t border-[#222] opacity-50 hover:opacity-100 transition-opacity">
@@ -363,6 +427,7 @@ export default function AdminDashboard() {
                 <Button variant="outline" size="sm" onClick={fetchData} className="bg-transparent border-[#333] hover:bg-white/5 opacity-80"><RefreshCcw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} /> Sync State</Button>
                 {activeTab === "codes"  && <Button onClick={() => setIsAddOpen(true)}      className="bg-white text-black font-bold h-9 italic tracking-widest uppercase text-xs px-4">New Distribution</Button>}
                 {activeTab === "admins" && <Button onClick={() => setIsAdminAddOpen(true)} className="bg-white text-black font-bold h-9 italic tracking-widest uppercase text-xs px-4">New Operator</Button>}
+                {activeTab === "active_families" && <Button onClick={() => setIsFamilyAddOpen(true)} className="bg-white text-black font-bold h-9 italic tracking-widest uppercase text-xs px-4">New Family</Button>}
               </div>
             </div>
 
@@ -711,6 +776,31 @@ export default function AdminDashboard() {
                 </Card>
             )}
 
+            {/* TAB: ACTIVE FAMILIES */}
+            {activeTab === "active_families" && (
+                <Card className="bg-[#111] border-[#222] overflow-hidden animate-in slide-in-from-bottom-4">
+                    <div className="p-4 bg-[#1a1a1a] flex gap-4"><div className="relative flex-1"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" /><Input placeholder="Search families..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 bg-[#0a0a0a] border-[#333] max-w-sm" /></div></div>
+                    <Table>
+                        <TableHeader className="bg-[#1a1a1a]"><TableRow className="border-[#222]"><TableHead>Logo</TableHead><TableHead>Name</TableHead><TableHead>Description</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
+                        <TableBody>
+                            {filteredActiveFamilies.length === 0 ? (
+                              <TableRow className="border-[#222]"><TableCell colSpan={4} className="text-center text-gray-600 py-16 font-black uppercase tracking-widest italic text-sm">No families exist yet.</TableCell></TableRow>
+                            ) : filteredActiveFamilies.map(f => (
+                                <TableRow key={f.id} className="border-[#222] hover:bg-white/5 transition-colors">
+                                    <TableCell>{f.logo ? <img src={f.logo} alt={f.name} className="w-10 h-10 rounded-full object-cover border border-[#333]" /> : <div className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center font-bold text-gray-500 border border-[#333]">{f.name[0]?.toUpperCase()}</div>}</TableCell>
+                                    <TableCell className="font-black italic uppercase tracking-tighter text-amber-500">{f.name}</TableCell>
+                                    <TableCell className="text-gray-400 text-xs italic max-w-xs truncate">{f.description || "No description provided."}</TableCell>
+                                    <TableCell className="text-right">
+                                      <Button variant="ghost" size="sm" onClick={() => { setSelectedActiveFamily(f); setIsFamilyEditOpen(true); }} className="text-blue-500 hover:text-blue-400 mr-2 uppercase text-[10px] font-black tracking-widest italic">Edit</Button>
+                                      <Button variant="ghost" size="icon" onClick={() => handleDeleteFamily(f.id)} className="text-red-500 hover:scale-125 transition-transform"><Trash2 size={16} /></Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Card>
+            )}
+
             {/* TAB: ADMINS */}
             {activeTab === "admins" && (
                 <Card className="bg-[#111] border-[#222] overflow-hidden animate-in slide-in-from-bottom-4">
@@ -735,6 +825,8 @@ export default function AdminDashboard() {
       {/* ── Modals ── */}
       <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Initialize Unit Rollout</DialogTitle></DialogHeader><form onSubmit={handleAddCode} className="space-y-6 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black tracking-widest italic">Product Tier</Label><select value={newCode.tier} onChange={(e) => setNewCode({...newCode, tier: e.target.value})} className="w-full bg-[#111] border-[#222] rounded-2xl p-4 text-sm font-bold focus:ring-1 focus:ring-amber-500"><option>Bronze</option><option>Silver</option><option>Gold</option><option>Platinum</option><option>Ultimate</option></select></div><div className="grid grid-cols-2 gap-4"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Quantity</Label><Input type="number" min="0" placeholder="0 = Single" onChange={(e) => setNewCode({...newCode, count: parseInt(e.target.value) || 0})} className="bg-[#111] border-[#222] h-14 font-black" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Prefix</Label><Input placeholder="EGA" value={newCode.code} onChange={(e) => setNewCode({...newCode, code: e.target.value})} className="bg-[#111] border-[#222] h-14 font-black uppercase" required={!newCode.count}/></div></div><Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-14 rounded-2xl shadow-xl shadow-amber-900/10">Authorize Deployment</Button></form></DialogContent></Dialog>
       <Dialog open={isAdminAddOpen} onOpenChange={setIsAdminAddOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Onboard New Operator</DialogTitle></DialogHeader><form onSubmit={handleAddAdmin} className="space-y-6 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Operator ID Name</Label><Input placeholder="James" value={newAdmin.name} onChange={(e) => setNewAdmin({...newAdmin, name: e.target.value})} className="bg-[#111] border-[#222] h-14 font-bold" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Secure System Email</Label><Input type="email" placeholder="staff@ega.com" value={newAdmin.email} onChange={(e) => setNewAdmin({...newAdmin, email: e.target.value})} className="bg-[#111] border-[#222] h-14 font-bold" required /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Access Token</Label><Input type="password" placeholder="••••••••" value={newAdmin.password} onChange={(e) => setNewAdmin({...newAdmin, password: e.target.value})} className="bg-[#111] border-[#222] h-14 font-bold" required /></div><Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-14 rounded-2xl shadow-xl shadow-amber-900/10">Synchronize Clearance</Button></form></DialogContent></Dialog>
+      <Dialog open={isFamilyAddOpen} onOpenChange={setIsFamilyAddOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Register New Family</DialogTitle></DialogHeader><form onSubmit={handleAddFamily} className="space-y-4 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Family Name</Label><Input placeholder="Cartel de Sinaloa" value={newFamily.name} onChange={(e) => setNewFamily({...newFamily, name: e.target.value})} className="bg-[#111] border-[#222] h-12 font-bold" required /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Logo URL</Label><Input placeholder="https://example.com/logo.png" value={newFamily.logo} onChange={(e) => setNewFamily({...newFamily, logo: e.target.value})} className="bg-[#111] border-[#222] h-12 font-bold" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Description</Label><textarea rows={3} value={newFamily.description} onChange={(e) => setNewFamily({...newFamily, description: e.target.value})} className="w-full bg-[#111] border-[#222] rounded-2xl p-4 text-sm font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none" placeholder="A brief description of the family..." /></div><Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-12 rounded-2xl">Create Family</Button></form></DialogContent></Dialog>
+      <Dialog open={isFamilyEditOpen} onOpenChange={setIsFamilyEditOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Update Family</DialogTitle></DialogHeader>{selectedActiveFamily && <form onSubmit={handleEditFamily} className="space-y-4 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Family Name</Label><Input value={selectedActiveFamily.name} onChange={(e) => setSelectedActiveFamily({...selectedActiveFamily, name: e.target.value})} className="bg-[#111] border-[#222] h-12 font-bold" required /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Logo URL</Label><Input value={selectedActiveFamily.logo || ""} onChange={(e) => setSelectedActiveFamily({...selectedActiveFamily, logo: e.target.value})} className="bg-[#111] border-[#222] h-12 font-bold" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Description</Label><textarea rows={3} value={selectedActiveFamily.description || ""} onChange={(e) => setSelectedActiveFamily({...selectedActiveFamily, description: e.target.value})} className="w-full bg-[#111] border-[#222] rounded-2xl p-4 text-sm font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none" /></div><Button type="submit" className="w-full bg-blue-600 text-white font-black uppercase tracking-widest h-12 rounded-2xl">Save Changes</Button></form>}</DialogContent></Dialog>
     </div>
   );
 }
