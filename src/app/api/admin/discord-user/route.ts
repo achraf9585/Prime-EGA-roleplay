@@ -33,7 +33,7 @@ export async function GET(request: Request) {
       global_name: data.global_name,
       avatar: data.avatar 
         ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
-        : `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(data.id) >> 22n) % 6}.png`
+        : `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(data.id) >> BigInt(22)) % 6}.png`
     });
   } catch (err) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
