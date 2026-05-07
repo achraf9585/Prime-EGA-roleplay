@@ -35,6 +35,25 @@ export async function PATCH(request: Request) {
       .select();
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // If approved, automatically insert into active families
+    if (status === 'approved' && data && data.length > 0) {
+      const app = data[0];
+      const { error: insertError } = await supabase
+        .from('Family')
+        .insert([{
+          name: app.family_name || app.ic_name || 'Unknown Family',
+          logo: app.family_picture || null,
+          description: app.family_description || app.backstory || null,
+        }]);
+        
+      if (insertError) {
+        console.error("Failed to insert into active Family table:", insertError);
+        // We don't fail the request, but log the error. 
+        // The application is still marked as approved.
+      }
+    }
+
     return NextResponse.json(data[0]);
   } catch (err) {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });

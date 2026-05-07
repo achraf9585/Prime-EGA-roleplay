@@ -13,20 +13,22 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { 
-      ic_name, 
-      age, 
-      experience, 
-      backstory,
+      family_name,
+      family_picture,
+      family_nationality,
+      family_description,
+      family_goals,
+      family_members,
       discord_id 
     } = body;
 
     // Security check: Match session ID with provided Discord ID
     if (discord_id !== (session.user as any).id) {
-        return NextResponse.json({ error: 'Identity mismatch detected' }, { status: 403 });
+      return NextResponse.json({ error: 'Identity mismatch detected' }, { status: 403 });
     }
 
     // Basic validation
-    if (!ic_name || !age || !experience || !backstory) {
+    if (!family_name || !family_nationality || !family_description || !family_goals) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -35,10 +37,12 @@ export async function POST(request: Request) {
       .from('FamilyApplications')
       .insert([
         { 
-          ic_name, 
-          age: parseInt(age), 
-          experience, 
-          backstory,
+          family_name,
+          family_picture: family_picture || null,
+          family_nationality,
+          family_description,
+          family_goals,
+          family_members: family_members || [],
           discord_id,
           status: 'pending'
         }
@@ -47,7 +51,6 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error('Database error:', error);
-      // If table doesn't exist, we should probably log it
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 

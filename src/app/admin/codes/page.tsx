@@ -105,10 +105,12 @@ interface StreamerApp {
 
 interface FamilyApp {
   id: string;
-  ic_name: string;
-  age: number;
-  experience: string;
-  backstory: string;
+  family_name: string;
+  family_picture?: string;
+  family_nationality: string;
+  family_description: string;
+  family_goals: string;
+  family_members: { discord_id: string; role: string }[];
   discord_id: string;
   status: 'pending' | 'approved' | 'denied';
   created_at: string;
@@ -335,7 +337,7 @@ export default function AdminDashboard() {
   const filteredCodes   = codes.filter(c => c.codeHash.toLowerCase().includes(search.toLowerCase()) || c.tier.toLowerCase().includes(search.toLowerCase()));
   const filteredAdmins  = adminUsers.filter(u => u.email.toLowerCase().includes(search.toLowerCase()) || u.name?.toLowerCase().includes(search.toLowerCase()));
   const filteredApps    = streamerApps.filter(app => app.ingame_name_cid.toLowerCase().includes(search.toLowerCase()) || app.discord_id.toLowerCase().includes(search.toLowerCase()));
-  const filteredFamily  = familyApps.filter(app => app.ic_name.toLowerCase().includes(search.toLowerCase()) || app.discord_id.toLowerCase().includes(search.toLowerCase()));
+  const filteredFamily  = familyApps.filter(app => (app.family_name || '').toLowerCase().includes(search.toLowerCase()) || app.discord_id.toLowerCase().includes(search.toLowerCase()));
   const filteredActiveFamilies = activeFamilies.filter(f => f.name.toLowerCase().includes(search.toLowerCase()));
 
   // Active Family handlers
@@ -563,10 +565,10 @@ export default function AdminDashboard() {
                           : stats.recentActivity.family.map((app: FamilyApp) => (
                           <div key={app.id} className="px-6 py-3 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
                             <div className="flex items-center gap-3">
-                              <div className="w-7 h-7 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 text-[10px] font-black">{app.ic_name?.[0]?.toUpperCase()}</div>
+                              <div className="w-7 h-7 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 text-[10px] font-black">{app.family_name?.[0]?.toUpperCase()}</div>
                               <div>
-                                <p className="text-sm font-bold tracking-tight">{app.ic_name}</p>
-                                <p className="text-[10px] text-gray-600 font-mono">Age {app.age}</p>
+                                <p className="text-sm font-bold tracking-tight">{app.family_name}</p>
+                                <p className="text-[10px] text-gray-600 font-mono">{app.family_nationality}</p>
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
@@ -674,7 +676,7 @@ export default function AdminDashboard() {
                               <DialogContent className="bg-[#0a0a0a] border-[#222] text-white max-w-2xl">
                                   <DialogHeader><DialogTitle className="text-2xl font-black italic tracking-tighter uppercase underline decoration-amber-500">Review: {selectedApp?.ingame_name_cid}</DialogTitle></DialogHeader>
                                   {selectedApp && (
-                                      <div className="space-y-6 py-6 animate-in fade-in">
+                                      <div className="space-y-6 py-4 pr-3 animate-in fade-in overflow-y-auto max-h-[65vh] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-amber-500/50 hover:[&::-webkit-scrollbar-thumb]:bg-amber-500/80 [&::-webkit-scrollbar-thumb]:rounded-full shadow-[inset_0_-30px_30px_-30px_rgba(0,0,0,0.8)]">
                                           <div className="grid grid-cols-2 gap-4"><AppField label="Discord ID" value={selectedApp.discord_id} mono /><AppField label="Reach" value={selectedApp.platform} color="amber" /></div>
                                           <AppField label="Internal Email" value={selectedApp.email} />
                                           <div className="space-y-2"><p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Core Philosophy</p><div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-sm italic text-gray-300 leading-relaxed font-serif">"{selectedApp.ensemble_mindset}"</div></div>
@@ -709,8 +711,8 @@ export default function AdminDashboard() {
                     <TableHeader className="bg-[#1a1a1a]">
                       <TableRow className="border-[#222]">
                         <TableHead>Status</TableHead>
-                        <TableHead>IC Name</TableHead>
-                        <TableHead>Age</TableHead>
+                        <TableHead>Family Name</TableHead>
+                        <TableHead>Nationality</TableHead>
                         <TableHead>Discord ID</TableHead>
                         <TableHead>Applied</TableHead>
                         <TableHead className="text-right">Review</TableHead>
@@ -726,8 +728,8 @@ export default function AdminDashboard() {
                       ) : filteredFamily.map(app => (
                         <TableRow key={app.id} className="border-[#222] hover:bg-white/5 transition-colors">
                           <TableCell><StatusBadge status={app.status} /></TableCell>
-                          <TableCell><p className="font-bold text-sm tracking-tight">{app.ic_name}</p></TableCell>
-                          <TableCell className="text-gray-400 text-sm font-bold">{app.age}</TableCell>
+                          <TableCell><p className="font-bold text-sm tracking-tight">{app.family_name}</p></TableCell>
+                          <TableCell className="text-gray-400 text-sm font-bold">{app.family_nationality}</TableCell>
                           <TableCell className="text-[10px] text-gray-500 font-mono italic">{app.discord_id}</TableCell>
                           <TableCell className="text-[10px] text-gray-600 font-mono">{new Date(app.created_at).toLocaleDateString()}</TableCell>
                           <TableCell className="text-right">
@@ -740,25 +742,44 @@ export default function AdminDashboard() {
                               <DialogContent className="bg-[#0a0a0a] border-[#222] text-white max-w-2xl">
                                 <DialogHeader>
                                   <DialogTitle className="text-2xl font-black italic tracking-tighter uppercase underline decoration-orange-500">
-                                    Family Review: {selectedFamilyApp?.ic_name}
+                                    Family Review: {selectedFamilyApp?.family_name}
                                   </DialogTitle>
                                   <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest pt-1">Submitted {selectedFamilyApp && new Date(selectedFamilyApp.created_at).toLocaleString()}</p>
                                 </DialogHeader>
                                 {selectedFamilyApp && (
-                                  <div className="space-y-6 py-6 animate-in fade-in">
-                                    <div className="grid grid-cols-3 gap-4">
-                                      <AppField label="IC Name"    value={selectedFamilyApp.ic_name} />
-                                      <AppField label="Age"        value={String(selectedFamilyApp.age)} color="amber" />
-                                      <AppField label="Discord ID" value={selectedFamilyApp.discord_id} mono />
+                                  <div className="space-y-6 py-4 pr-3 animate-in fade-in overflow-y-auto max-h-[65vh] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-orange-500/50 hover:[&::-webkit-scrollbar-thumb]:bg-orange-500/80 [&::-webkit-scrollbar-thumb]:rounded-full shadow-[inset_0_-30px_30px_-30px_rgba(0,0,0,0.8)]">
+                                    <div className="grid grid-cols-2 gap-4">
+                                      <AppField label="Family Name"    value={selectedFamilyApp.family_name} />
+                                      <AppField label="Nationality"    value={selectedFamilyApp.family_nationality} color="amber" />
                                     </div>
                                     <div className="space-y-2">
-                                      <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">RP Experience</p>
-                                      <div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-sm text-gray-300 leading-relaxed">{selectedFamilyApp.experience}</div>
+                                      <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Discord ID (Founder)</p>
+                                      <DiscordUserBadge discordId={selectedFamilyApp.discord_id} role="Founder" />
+                                    </div>
+                                    {selectedFamilyApp.family_picture && (
+                                      <div className="space-y-2">
+                                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Family Logo</p>
+                                        <img src={selectedFamilyApp.family_picture} alt="Family" className="w-24 h-24 object-cover rounded-xl border border-orange-500/20" />
+                                      </div>
+                                    )}
+                                    <div className="space-y-2">
+                                      <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Family Description</p>
+                                      <div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-sm text-gray-300 leading-relaxed">{selectedFamilyApp.family_description}</div>
                                     </div>
                                     <div className="space-y-2">
-                                      <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Character Backstory</p>
-                                      <div className="p-4 bg-white/5 rounded-2xl border border-orange-500/10 text-sm italic text-gray-300 leading-relaxed font-serif max-h-48 overflow-y-auto">"{selectedFamilyApp.backstory}"</div>
+                                      <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Family Goals</p>
+                                      <div className="p-4 bg-white/5 rounded-2xl border border-orange-500/10 text-sm italic text-gray-300 leading-relaxed font-serif max-h-48 overflow-y-auto">"{selectedFamilyApp.family_goals}"</div>
                                     </div>
+                                    {selectedFamilyApp.family_members && selectedFamilyApp.family_members.length > 0 && (
+                                      <div className="space-y-2">
+                                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Members List</p>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                          {selectedFamilyApp.family_members.map((m, i) => (
+                                            <DiscordUserBadge key={i} discordId={m.discord_id} role={m.role} />
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
                                 )}
                                 <DialogFooter className="flex flex-row gap-4 border-t border-[#222] pt-6">
@@ -932,3 +953,35 @@ function QuickAction({ icon, label, sub, color = "amber", onClick }: any) {
   );
 }
 
+function DiscordUserBadge({ discordId, role }: { discordId: string, role?: string }) {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    if (!discordId) return;
+    fetch(`/api/admin/discord-user?id=${discordId}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(setData)
+      .catch(() => {});
+  }, [discordId]);
+
+  return (
+    <div className="flex items-center gap-3 p-3 bg-black/20 rounded-xl border border-white/5">
+      <div className="relative shrink-0">
+        {data?.avatar ? (
+          <img src={data.avatar} className="w-10 h-10 rounded-full object-cover ring-2 ring-orange-500/30" />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400 text-xs font-black">
+            ?
+          </div>
+        )}
+      </div>
+      <div className="min-w-0 flex-1">
+        {role && <span className="text-[10px] font-black uppercase text-orange-500 tracking-widest">{role}</span>}
+        <p className="text-sm font-bold tracking-tight text-gray-200 truncate">
+          {data?.global_name || data?.username || <span className="animate-pulse bg-white/10 text-transparent rounded w-16 h-4 inline-block" />}
+        </p>
+        <p className="text-[10px] text-gray-600 font-mono italic truncate">{discordId}</p>
+      </div>
+    </div>
+  );
+}
