@@ -17,6 +17,7 @@ export interface Actor {
   type: "admin" | "staff";
   name: string;
   role: StaffRole;
+  discordId?: string | null;
 }
 
 /** Resolve who is making the request, or null if unauthenticated/unauthorized. */
@@ -24,10 +25,21 @@ export async function resolveActor(req: Request): Promise<Actor | null> {
   // 1. Email/password session cookie (carries a role: admin | supervisor | member | app_reviewer)
   const adminSession = getAdminSession(req);
   if (adminSession) {
+    // Look up the operator's linked Discord ID (for audit logs / display)
+    let discordId: string | null = null;
+    const supabase = createAdminClient();
+    const { data: op } = await supabase
+      .from("AdminUsers")
+      .select("discord_id")
+      .eq("email", adminSession.email)
+      .single();
+    discordId = op?.discord_id ?? null;
+
     return {
       type: adminSession.role === "admin" ? "admin" : "staff",
       name: adminSession.email,
       role: adminSession.role as StaffRole,
+      discordId,
     };
   }
 
@@ -44,7 +56,7 @@ export async function resolveActor(req: Request): Promise<Actor | null> {
     .single();
   if (!data?.role) return null;
 
-  return { type: "staff", name: `${data.discord_username} (${data.role})`, role: data.role as StaffRole };
+  return { type: "staff", name: `${data.discord_username} (${data.role})`, role: data.role as StaffRole, discordId };
 }
 
 /** True if the actor's role is one of the allowed roles. Admin always allowed unless excluded. */

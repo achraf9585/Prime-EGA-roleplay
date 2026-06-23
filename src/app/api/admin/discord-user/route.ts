@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
-import { isAdmin } from '@/lib/adminAuth';
+import { resolveActor } from '@/lib/staffAuth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
-  if (!await isAdmin(request)) {
+  // Any authenticated dashboard actor (admin or staff) may resolve a Discord profile
+  if (!await resolveActor(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

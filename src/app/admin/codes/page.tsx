@@ -201,8 +201,15 @@ interface WhitelistLog {
   action: "approved" | "rejected";
   actor_type: "admin" | "staff";
   actor_name: string;
+  actor_discord_id?: string | null;
   notes?: string;
   created_at: string;
+}
+
+interface DiscordProfile {
+  username: string;
+  global_name: string | null;
+  avatar: string | null;
 }
 
 type InterviewSubTab = "details" | "quiz" | "scenarios";
@@ -241,6 +248,7 @@ export default function AdminDashboard() {
   const [authMode, setAuthMode] = useState<AuthMode>("none");
   const [authChecked, setAuthChecked] = useState(false);
   const [whitelistRole, setWhitelistRole] = useState<string | null>(null); // supervisor | member | app_reviewer
+  const [discordProfiles, setDiscordProfiles] = useState<Record<string, DiscordProfile | null>>({});
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [codes, setCodes] = useState<RedeemCode[]>([]);
@@ -367,6 +375,13 @@ export default function AdminDashboard() {
   // Reset player pagination when filters change
   useEffect(() => { setPPage(1); }, [pSearch, pSort, pJoinedWithin]);
 
+  // Load Discord profiles for operators (Staff Access tab) and whitelist staff
+  useEffect(() => {
+    if (activeTab === "admins") loadDiscordProfiles(adminUsers.map(a => a.discord_id));
+    if (activeTab === "whitelist_staff") loadDiscordProfiles(whitelistStaff.map(s => s.discord_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, adminUsers, whitelistStaff]);
+
   // Auto-load faction scenarios when entering the Step 2 (scenarios) sub-tab
   useEffect(() => {
     if (interviewTab === "scenarios" && selectedWhitelistApp && scenarios.length === 0 && !scenariosLoading) {
@@ -483,6 +498,27 @@ export default function AdminDashboard() {
     }
   };
 
+  // Fetch Discord profiles (name + avatar) for a set of IDs, caching results.
+  const loadDiscordProfiles = async (ids: (string | null | undefined)[]) => {
+    const unique = Array.from(new Set(ids.filter((x): x is string => !!x)));
+    const missing = unique.filter(id => !(id in discordProfiles));
+    if (missing.length === 0) return;
+    const results = await Promise.all(
+      missing.map(async (id) => {
+        try {
+          const res = await fetch(`/api/admin/discord-user?id=${id}`);
+          if (res.ok) return [id, await res.json()] as const;
+        } catch {}
+        return [id, null] as const;
+      })
+    );
+    setDiscordProfiles(prev => {
+      const next = { ...prev };
+      for (const [id, profile] of results) next[id] = profile;
+      return next;
+    });
+  };
+
   // Fetch & open the audit logs panel (optionally scoped to one application)
   const openLogs = async (applicationId?: string) => {
     setShowLogs(true);
@@ -490,8 +526,11 @@ export default function AdminDashboard() {
     try {
       const url = applicationId ? `/api/admin/whitelist-logs?application_id=${applicationId}` : "/api/admin/whitelist-logs";
       const res = await fetch(url, { headers: getAuthHeaders() });
-      if (res.ok) setWlLogs(await res.json());
-      else toast.error("Failed to load logs");
+      if (res.ok) {
+        const logs: WhitelistLog[] = await res.json();
+        setWlLogs(logs);
+        loadDiscordProfiles(logs.map(l => l.actor_discord_id));
+      } else toast.error("Failed to load logs");
     } catch {
       toast.error("Failed to load logs");
     } finally {
@@ -662,8 +701,8 @@ export default function AdminDashboard() {
   // Unique faction values present in the data (for the filter dropdown)
   const wlFactions = Array.from(new Set(whitelistApps.map(a => a.faction_choice))).filter(Boolean);
 
-  // Only admins and supervisors can issue verdicts; members are review-only
-  const canVerdict = authMode === "admin" || whitelistRole === "supervisor";
+  // Admins and all whitelist staff (supervisor + member) can issue verdicts
+  const canVerdict = authMode === "admin" || authMode === "whitelist_staff";
 
   // Players: filter → sort → paginate
   const filteredPlayers = (() => {
@@ -1612,6 +1651,12 @@ export default function AdminDashboard() {
                       </div>
                       <div className="flex items-center gap-1.5 text-xs">
                         <span className="text-gray-500">by</span>
+                        {(() => { const dp = log.actor_discord_id ? discordProfiles[log.actor_discord_id] : null; return dp?.avatar
+                          ? <img src={dp.avatar} className="w-5 h-5 rounded-full" alt="" />
+                          : null; })()}
+                        {(() => { const dp = log.actor_discord_id ? discordProfiles[log.actor_discord_id] : null; return dp
+                          ? <span className="font-bold text-blue-400">{dp.global_name || dp.username}</span>
+                          : null; })()}
                         <span className={`font-bold ${log.actor_type === 'admin' ? 'text-amber-400' : 'text-blue-400'}`}>{log.actor_name}</span>
                         <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${log.actor_type === 'admin' ? 'bg-amber-500/15 text-amber-400' : 'bg-blue-500/15 text-blue-400'}`}>{log.actor_type}</span>
                       </div>
@@ -1808,15 +1853,28 @@ export default function AdminDashboard() {
                     <Table>
                         <TableHeader className="bg-[#1a1a1a]"><TableRow className="border-[#222]"><TableHead>Operator</TableHead><TableHead>HQ Email</TableHead><TableHead>Role</TableHead><TableHead>Discord ID</TableHead><TableHead className="text-right">Revoke Access</TableHead></TableRow></TableHeader>
                         <TableBody>
-                            {filteredAdmins.map(admin => (
+                            {filteredAdmins.map(admin => {
+                                const dp = admin.discord_id ? discordProfiles[admin.discord_id] : null;
+                                return (
                                 <TableRow key={admin.id} className="border-[#222] hover:bg-white/5 transition-colors">
-                                    <TableCell className="font-black italic uppercase tracking-tighter">{admin.name || "UNIDENTIFIED"}</TableCell>
+                                    <TableCell>
+                                      <div className="flex items-center gap-3">
+                                        {dp?.avatar
+                                          ? <img src={dp.avatar} className="w-8 h-8 rounded-full" alt="" />
+                                          : <div className="w-8 h-8 rounded-full bg-[#222] flex items-center justify-center text-gray-500 text-xs font-black">{(admin.name || admin.email)[0]?.toUpperCase()}</div>}
+                                        <div>
+                                          <p className="font-black italic uppercase tracking-tighter">{admin.name || "UNIDENTIFIED"}</p>
+                                          {dp && <p className="text-[10px] text-gray-500 not-italic">{dp.global_name || dp.username} · @{dp.username}</p>}
+                                        </div>
+                                      </div>
+                                    </TableCell>
                                     <TableCell className="text-gray-400 font-mono text-xs italic">{admin.email}</TableCell>
                                     <TableCell><Badge className={`uppercase text-[9px] border-none ${(admin.role || 'admin') === 'admin' ? 'bg-amber-500/15 text-amber-400' : 'bg-blue-500/15 text-blue-400'}`}>{admin.role || 'admin'}</Badge></TableCell>
                                     <TableCell className="text-gray-500 font-mono text-xs">{admin.discord_id || '—'}</TableCell>
                                     <TableCell className="text-right">{admin.email !== "admin@ega.com" && <Button variant="ghost" size="icon" onClick={() => handleDeleteAdmin(admin.id)} className="text-red-500 hover:scale-125 transition-transform"><Trash2 size={16} /></Button>}</TableCell>
                                 </TableRow>
-                            ))}
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </Card>
