@@ -7,8 +7,8 @@ const db = () => createAdminClient();
 
 // Roles allowed to VIEW the whitelist queue
 const WL_VIEW_ROLES = ["admin", "supervisor", "member"];
-// Roles allowed to issue a verdict (approve/reject) — members are review-only
-const WL_VERDICT_ROLES = ["admin", "supervisor"];
+// Roles allowed to issue a verdict (approve/reject)
+const WL_VERDICT_ROLES = ["admin", "supervisor", "member"];
 
 // GET — list all whitelist applications (with question details)
 export async function GET(req: NextRequest) {
@@ -109,6 +109,7 @@ export async function PATCH(req: NextRequest) {
     action: status,
     actor_type: actor.type,
     actor_name: actor.name,
+    actor_discord_id: actor.discordId || null,
     notes: admin_notes || null,
   });
 
