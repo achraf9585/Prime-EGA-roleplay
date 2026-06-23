@@ -2,22 +2,32 @@ import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/server';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { rateLimit } from '@/lib/rateLimit';
+import { cleanString, cleanImageUrl } from '@/lib/validation';
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  
+
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  const sessionId = (session.user as any).id;
+  // Rate limit: max 3 streamer applications per hour per user
+  const rl = rateLimit(`apply-streamer:${sessionId}`, 3, 60 * 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: `Too many submissions. Try again in ${rl.retryAfterSec}s.` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } }
+    );
+  }
+
   try {
     const body = await request.json();
-    const { 
-      ingame_name_cid, 
-      discord_id, 
+    const {
+      discord_id,
       email,
-      platform, 
-      channel_url, 
+      platform,
       followers_count,
       rp_experience,
       ensemble_mindset,
@@ -33,13 +43,15 @@ export async function POST(request: Request) {
     const discord_avatar = (session.user as any).image ?? null;
 
     // Security check: Match session ID with provided Discord ID
-    if (discord_id !== (session.user as any).id) {
+    if (discord_id !== sessionId) {
         return NextResponse.json({ error: 'Identity mismatch detect' }, { status: 403 });
     }
 
-    // Basic validation
-    if (!ingame_name_cid || !discord_id || !channel_url) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    // Server-side validation
+    const ingame_name_cid = cleanString(body.ingame_name_cid, { min: 2, max: 100 });
+    const channel_url = cleanImageUrl(body.channel_url); // http(s) URL, capped
+    if (!ingame_name_cid || !channel_url) {
+      return NextResponse.json({ error: 'Missing or invalid required fields' }, { status: 400 });
     }
 
     const supabase = createAdminClient();

@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from('AdminUsers')
-    .select('id, email, name, created_at') // Never return the password hash
+    .select('id, email, name, role, discord_id, created_at') // Never return the password hash
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -28,11 +28,14 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { email, password, name } = await request.json();
+    const { email, password, name, role, discord_id } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
+
+    const allowedRoles = ['admin', 'supervisor', 'member', 'app_reviewer'];
+    const safeRole = allowedRoles.includes(role) ? role : 'admin';
 
     // Hash the password before storing
     const hashedPassword = await hashPassword(password);
@@ -40,8 +43,8 @@ export async function POST(request: Request) {
     const supabase = createAdminClient();
     const { data, error } = await supabase
       .from('AdminUsers')
-      .insert([{ email, password: hashedPassword, name }])
-      .select('id, email, name, created_at');
+      .insert([{ email, password: hashedPassword, name, role: safeRole, discord_id: discord_id || null }])
+      .select('id, email, name, role, discord_id, created_at');
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

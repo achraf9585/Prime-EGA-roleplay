@@ -4,9 +4,9 @@ import { isAdmin } from '@/lib/adminAuth';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
-  // if (!await isAdmin(request)) {
-  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  // }
+  if (!await isAdmin(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');

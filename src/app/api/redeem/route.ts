@@ -4,23 +4,32 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { createClient } from '@/lib/server';
+import { rateLimit } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  
+
   // Create Supabase client
   const supabase = await createClient();
-  
+
   // Optional: Require login
   if (!session) {
      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  // Rate limit to stop code-guessing/brute force (10 attempts / 10 min / user)
+  const rl = rateLimit(`redeem:${(session.user as any).id}`, 10, 10 * 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: `Too many attempts. Try again in ${rl.retryAfterSec}s.` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } }
+    );
+  }
+
   try {
     const { code } = await request.json();
-   
-    
-    if (!code) {
+
+    if (!code || typeof code !== 'string' || code.length > 100) {
       return NextResponse.json({ error: 'Code is required' }, { status: 400 });
     }
 

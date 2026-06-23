@@ -17,11 +17,10 @@ export default function AdminLogin() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if already logged in
-    const auth = localStorage.getItem("ega_admin_auth");
-    if (auth) {
-      router.push("/admin/codes");
-    }
+    // Redirect if an active session cookie already exists
+    fetch("/api/admin/me")
+      .then((res) => { if (res.ok) router.push("/admin/codes"); })
+      .catch(() => {});
   }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -29,21 +28,22 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      // We test the credentials against the stats API (the safest way to check if authorized)
-      const res = await fetch("/api/admin/stats", {
-        headers: {
-          "x-admin-email": email,
-          "x-admin-password": password,
-        },
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
 
       if (res.ok) {
-        localStorage.setItem("ega_admin_auth", JSON.stringify({ email, password }));
+        // Session is set in an HttpOnly cookie — nothing sensitive in localStorage.
         toast.success("Access Granted. Synchronizing...");
         router.push("/admin/codes");
+      } else if (res.status === 429) {
+        toast.error("Too many attempts. Please wait and try again.");
+        setLoading(false);
       } else {
         toast.error("Authorization Denied: Invalid Credentials");
-        setLoading(false); // Reset the button
+        setLoading(false);
       }
     } catch (err) {
       toast.error("HQ Connection Failed");
