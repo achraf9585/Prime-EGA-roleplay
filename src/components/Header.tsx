@@ -79,6 +79,9 @@ export default function Header({ t }: { t: any }) {
               <a href="/family-apply" className="text-[#a855f7] font-semibold hover:text-[#c084fc] transition-colors">
                 {t.navigation.familyApply}
               </a>
+              <a href="/whitelist-apply" className="text-green-400 font-semibold hover:text-green-300 transition-colors">
+                Whitelist
+              </a>
               <a href="/#join" className="text-[hsl(220_15%_72%)] hover:text-white transition-colors">
                 {t.navigation.join}
               </a>

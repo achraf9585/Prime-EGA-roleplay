@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/server';
-import { isAdmin } from '@/lib/adminAuth';
+import { resolveActor } from '@/lib/staffAuth';
 
 export const dynamic = 'force-dynamic';
 
+const APP_ROLES = ['admin', 'app_reviewer'];
+
 export async function GET(request: Request) {
-  if (!await isAdmin(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const actor = await resolveActor(request);
+  if (!actor || !APP_ROLES.includes(actor.role)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const supabase = createAdminClient();
   const { data, error } = await supabase
@@ -18,7 +21,8 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!await isAdmin(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const actor = await resolveActor(request);
+  if (!actor || !APP_ROLES.includes(actor.role)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
     const { searchParams } = new URL(request.url);

@@ -1,14 +1,18 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/server';
-import { isAdmin } from '@/lib/adminAuth';
+import { resolveActor } from '@/lib/staffAuth';
 import { Resend } from 'resend';
 
 export const dynamic = 'force-dynamic';
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
+// Super admin and the dedicated application reviewer may manage these applications.
+const APP_ROLES = ['admin', 'app_reviewer'];
+
 export async function GET(request: Request) {
-  if (!await isAdmin(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const actor = await resolveActor(request);
+  if (!actor || !APP_ROLES.includes(actor.role)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const supabase = createAdminClient();
   const { data, error } = await supabase.from('StreamerApplications').select('*').order('created_at', { ascending: false });
@@ -18,7 +22,8 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!await isAdmin(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const actor = await resolveActor(request);
+  if (!actor || !APP_ROLES.includes(actor.role)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
     const { searchParams } = new URL(request.url);
