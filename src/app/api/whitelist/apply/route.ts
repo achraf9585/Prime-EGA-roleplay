@@ -5,11 +5,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { cleanString, wordCount } from "@/lib/validation";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 const QUIZ_PASS_THRESHOLD = 15; // out of 20
 const QUIZ_FAIL_LOCKOUT_MS = 48 * 60 * 60 * 1000; // 48 hours
 const ADMIN_REJECT_LOCKOUT_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -76,6 +71,11 @@ export async function POST(req: NextRequest) {
   const discordUsername = session.user.name || "";
   // Extract avatar hash from Discord image URL
   const discordAvatar = session.user.image || "";
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   // Check for existing application
   const { data: existing } = await supabase

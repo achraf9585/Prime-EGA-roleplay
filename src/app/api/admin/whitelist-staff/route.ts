@@ -2,7 +2,9 @@ import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/adminAuth";
 
-const supabase = createClient(
+// Lazy client — constructing at module scope breaks the Vercel build (env not
+// available during "collect page data"). Build inside the handler instead.
+const db = () => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
@@ -10,6 +12,7 @@ const supabase = createClient(
 // GET — list all whitelist staff (admin only)
 export async function GET(req: NextRequest) {
   if (!await isAdmin(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const supabase = db();
   const { data, error } = await supabase
     .from("whitelist_staff")
     .select("*")
@@ -25,6 +28,7 @@ export async function POST(req: NextRequest) {
   if (!discord_id || !discord_username || !role) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
+  const supabase = db();
   const { data, error } = await supabase
     .from("whitelist_staff")
     .upsert({ discord_id, discord_username, role }, { onConflict: "discord_id" })
@@ -40,6 +44,7 @@ export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
+  const supabase = db();
   const { error } = await supabase.from("whitelist_staff").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });

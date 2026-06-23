@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/server";
 import { resolveActor } from "@/lib/staffAuth";
 
-const supabase = createAdminClient();
-
 // Roles allowed to view whitelist review material
 const WL_VIEW_ROLES = ["admin", "supervisor", "member"];
 
@@ -26,6 +24,7 @@ export async function GET(req: NextRequest) {
   const faction = searchParams.get("faction") || "";
   const track = FACTION_TO_TRACK[faction] || "a";
 
+  const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("whitelist_scenarios")
     .select("*")

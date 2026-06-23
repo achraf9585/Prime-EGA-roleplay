@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/server";
 import { resolveActor } from "@/lib/staffAuth";
 
-const supabase = createAdminClient();
+// Lazy — module-scope construction breaks the Vercel build (env unavailable at collect-page-data).
+const db = () => createAdminClient();
 
 // Roles allowed to VIEW the whitelist queue
 const WL_VIEW_ROLES = ["admin", "supervisor", "member"];
@@ -16,6 +17,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = db();
   const { data: apps, error } = await supabase
     .from("whitelist_applications")
     .select("*")
@@ -59,6 +61,8 @@ export async function PATCH(req: NextRequest) {
   if (!WL_VERDICT_ROLES.includes(actor.role)) {
     return NextResponse.json({ error: "Your role cannot issue verdicts." }, { status: 403 });
   }
+
+  const supabase = db();
 
   const { id, status, admin_notes } = await req.json();
   if (!id || !status) return NextResponse.json({ error: "Missing fields" }, { status: 400 });

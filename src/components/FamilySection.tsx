@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import { Users } from "lucide-react";
 
 interface Family {
@@ -30,6 +30,7 @@ export default function FamilySection({ t }: { t: any }) {
   useEffect(() => {
     async function fetchFamilies() {
       try {
+        const supabase = getSupabase();
         const { data, error } = await supabase
           .from("Family")
           .select("*")

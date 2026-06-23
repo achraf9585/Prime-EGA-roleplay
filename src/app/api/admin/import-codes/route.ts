@@ -91,7 +91,8 @@ export async function POST(request: Request) {
 
     // Insert into Supabase
     // Using upsert to avoid duplicates if codeHash is unique constraint
-    const { supabase } = await import('@/lib/supabase');
+    const { getSupabase } = await import('@/lib/supabase');
+    const supabase = getSupabase();
     const { data, error } = await supabase
       .from('RedeemCode')
       .upsert(recordsToInsert, { onConflict: 'codeHash', ignoreDuplicates: true })
