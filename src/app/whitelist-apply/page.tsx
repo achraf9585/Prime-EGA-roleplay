@@ -111,14 +111,20 @@ export default function WhitelistApplyPage() {
   const tabOutCount = useRef(0);
   const pasteCount = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const statusLoaded = useRef(false);
 
-  // Load application status on mount
+  // Load application status ONCE after auth resolves.
+  // NextAuth re-issues the `session` object on tab refocus/refetch; without this
+  // guard the effect would re-run mid-quiz, see status "none", and reset pageStep
+  // back to the form — kicking the user out of the quiz.
   useEffect(() => {
     if (authStatus === "loading") return;
     if (!session) {
       setLoading(false);
-      return;
+      return; // not yet authenticated — allow re-run once a session appears
     }
+    if (statusLoaded.current) return;
+    statusLoaded.current = true;
     fetch("/api/whitelist/status")
       .then((r) => r.json())
       .then((data) => {
@@ -196,6 +202,11 @@ export default function WhitelistApplyPage() {
         });
         return { ...q, options: remapped, answerMap };
       });
+      // Reset quiz state for a clean run
+      setAnswers({});
+      setTimeLeft(QUIZ_DURATION);
+      tabOutCount.current = 0;
+      pasteCount.current = 0;
       setQuestions(shuffled);
       setPageStep("quiz");
     } catch {
