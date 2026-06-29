@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { cleanString, wordCount } from "@/lib/validation";
+import { sendDiscordDM } from "@/lib/discord";
 
 const QUIZ_PASS_THRESHOLD = 15; // out of 20
 const QUIZ_FAIL_LOCKOUT_MS = 48 * 60 * 60 * 1000; // 48 hours
@@ -150,6 +151,30 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // DM the applicant their quiz result (best-effort — won't block the response)
+  const total = Object.keys(quizAnswers).length || 20;
+  if (failedQuiz) {
+    await sendDiscordDM(discordId, {
+      embeds: [{
+        title: "❌ Whitelist Quiz — Failed",
+        description:
+          `You scored **${computedScore}/${total}** on the EGA rules quiz.\n\n` +
+          `You need at least **15/20** to pass. You can retake the test in **48 hours**.`,
+        color: 0xef4444,
+      }],
+    });
+  } else {
+    await sendDiscordDM(discordId, {
+      embeds: [{
+        title: "✅ Whitelist Quiz — Passed",
+        description:
+          `Congratulations! You scored **${computedScore}/${total}** on the EGA rules quiz.\n\n` +
+          `Your application is now **under staff review**. You'll be notified of the final decision.`,
+        color: 0x22c55e,
+      }],
+    });
   }
 
   return NextResponse.json({ success: true, failedQuiz, score: computedScore });
