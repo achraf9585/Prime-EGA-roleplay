@@ -14,7 +14,27 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotMode, setForgotMode] = useState(false);
+  const [forgotSending, setForgotSending] = useState(false);
   const router = useRouter();
+
+  const handleForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setForgotSending(true);
+    try {
+      await fetch("/api/admin/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      toast.success("If that email is registered, a reset link has been sent.");
+      setForgotMode(false);
+    } catch {
+      toast.error("Connection failed.");
+    } finally {
+      setForgotSending(false);
+    }
+  };
 
   useEffect(() => {
     // Redirect if an active session cookie already exists
@@ -82,6 +102,28 @@ export default function AdminLogin() {
           </CardHeader>
 
           <CardContent className="px-8 pb-10">
+            {forgotMode ? (
+              <form onSubmit={handleForgot} className="space-y-6">
+                <div className="space-y-2">
+                  <Label className="text-gray-400 text-[10px] uppercase font-black tracking-widest ml-1">Operator ID</Label>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@egaroleplay.com"
+                    className="bg-[#111] border-[#222] h-12 rounded-xl"
+                    required
+                  />
+                  <p className="text-[10px] text-gray-600">We'll email a reset link if this account exists.</p>
+                </div>
+                <Button type="submit" disabled={forgotSending} className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-black font-black uppercase tracking-[0.2em] italic text-xs rounded-xl disabled:opacity-50">
+                  {forgotSending ? "Sending..." : "Send Reset Link"}
+                </Button>
+                <button type="button" onClick={() => setForgotMode(false)} className="w-full text-center text-[10px] text-gray-500 hover:text-gray-300 uppercase tracking-widest font-black">
+                  ← Back to login
+                </button>
+              </form>
+            ) : (
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <Label className="text-gray-400 text-[10px] uppercase font-black tracking-widest ml-1">Operator ID</Label>
@@ -119,7 +161,11 @@ export default function AdminLogin() {
                     </div>
                 ) : "Establish Secure Link"}
               </Button>
+              <button type="button" onClick={() => setForgotMode(true)} className="w-full text-center text-[10px] text-gray-500 hover:text-amber-500 uppercase tracking-widest font-black transition-colors">
+                Forgot password?
+              </button>
             </form>
+            )}
 
             <div className="mt-8 pt-6 border-t border-[#1a1a1a] text-center">
                 <p className="text-[9px] text-gray-600 font-black uppercase tracking-widest flex items-center justify-center gap-2">

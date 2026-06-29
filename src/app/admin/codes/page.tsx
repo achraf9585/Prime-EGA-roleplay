@@ -249,6 +249,9 @@ export default function AdminDashboard() {
   const [authChecked, setAuthChecked] = useState(false);
   const [whitelistRole, setWhitelistRole] = useState<string | null>(null); // supervisor | member | app_reviewer
   const [discordProfiles, setDiscordProfiles] = useState<Record<string, DiscordProfile | null>>({});
+  const [authVia, setAuthVia] = useState<"email" | "discord" | null>(null);
+  const [isChangePwOpen, setIsChangePwOpen] = useState(false);
+  const [changePw, setChangePw] = useState({ current: "", next: "", confirm: "" });
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [codes, setCodes] = useState<RedeemCode[]>([]);
@@ -312,6 +315,7 @@ export default function AdminDashboard() {
           const data = await res.json();
           setEmail(data.email || "");
           setIsAuthorized(true);
+          setAuthVia("email");
           const role = data.role || "admin";
           if (role === "admin") {
             setAuthMode("admin");
@@ -357,6 +361,7 @@ export default function AdminDashboard() {
         }
         setWhitelistRole(role);
         setIsAuthorized(true);
+        setAuthVia("discord");
         if (role === "app_reviewer") {
           setAuthMode("app_reviewer");
           setActiveTab("applications");
@@ -434,6 +439,25 @@ export default function AdminDashboard() {
       toast.error("Failed to connect to HQ");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (changePw.next.length < 8) { toast.error("New password must be at least 8 characters."); return; }
+    if (changePw.next !== changePw.confirm) { toast.error("Passwords do not match."); return; }
+    const res = await fetch("/api/admin/change-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ currentPassword: changePw.current, newPassword: changePw.next }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      toast.success("Password updated.");
+      setIsChangePwOpen(false);
+      setChangePw({ current: "", next: "", confirm: "" });
+    } else {
+      toast.error(data.error || "Failed to update password.");
     }
   };
 
@@ -828,7 +852,12 @@ export default function AdminDashboard() {
               </>
             )}
           </div>
-          <div className="mt-10 pt-6 border-t border-[#222] opacity-50 hover:opacity-100 transition-opacity">
+          <div className="mt-10 pt-6 border-t border-[#222] space-y-3">
+            {authVia === "email" && (
+              <button onClick={() => setIsChangePwOpen(true)} className="text-gray-500 flex items-center gap-2 text-sm hover:text-amber-500 transition-colors">
+                <Lock size={14} /> Change Password
+              </button>
+            )}
             <button onClick={handleLogout} className="text-gray-500 flex items-center gap-2 text-sm hover:text-white transition-colors">
               <LogOut size={14} /> Terminate Session
             </button>
@@ -1884,6 +1913,17 @@ export default function AdminDashboard() {
       </div>
 
       {/* ── Modals ── */}
+      <Dialog open={isChangePwOpen} onOpenChange={setIsChangePwOpen}>
+        <DialogContent className="bg-[#0a0a0a] border-[#222] text-white">
+          <DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Change Password</DialogTitle></DialogHeader>
+          <form onSubmit={handleChangePassword} className="space-y-5 pt-4">
+            <div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Current Password</Label><Input type="password" value={changePw.current} onChange={(e) => setChangePw({ ...changePw, current: e.target.value })} className="bg-[#111] border-[#222] h-12" required /></div>
+            <div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">New Password</Label><Input type="password" value={changePw.next} onChange={(e) => setChangePw({ ...changePw, next: e.target.value })} className="bg-[#111] border-[#222] h-12" required /></div>
+            <div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Confirm New Password</Label><Input type="password" value={changePw.confirm} onChange={(e) => setChangePw({ ...changePw, confirm: e.target.value })} className="bg-[#111] border-[#222] h-12" required /></div>
+            <Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-12 rounded-2xl">Update Password</Button>
+          </form>
+        </DialogContent>
+      </Dialog>
       <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Initialize Unit Rollout</DialogTitle></DialogHeader><form onSubmit={handleAddCode} className="space-y-6 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black tracking-widest italic">Product Tier</Label><select value={newCode.tier} onChange={(e) => setNewCode({...newCode, tier: e.target.value})} className="w-full bg-[#111] border-[#222] rounded-2xl p-4 text-sm font-bold focus:ring-1 focus:ring-amber-500"><option>Bronze</option><option>Silver</option><option>Gold</option><option>Platinum</option><option>Ultimate</option></select></div><div className="grid grid-cols-2 gap-4"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Quantity</Label><Input type="number" min="0" placeholder="0 = Single" onChange={(e) => setNewCode({...newCode, count: parseInt(e.target.value) || 0})} className="bg-[#111] border-[#222] h-14 font-black" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Prefix</Label><Input placeholder="EGA" value={newCode.code} onChange={(e) => setNewCode({...newCode, code: e.target.value})} className="bg-[#111] border-[#222] h-14 font-black uppercase" required={!newCode.count}/></div></div><Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-14 rounded-2xl shadow-xl shadow-amber-900/10">Authorize Deployment</Button></form></DialogContent></Dialog>
       <Dialog open={isAdminAddOpen} onOpenChange={setIsAdminAddOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Onboard New Operator</DialogTitle></DialogHeader><form onSubmit={handleAddAdmin} className="space-y-6 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Operator ID Name</Label><Input placeholder="James" value={newAdmin.name} onChange={(e) => setNewAdmin({...newAdmin, name: e.target.value})} className="bg-[#111] border-[#222] h-14 font-bold" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Secure System Email</Label><Input type="email" placeholder="staff@ega.com" value={newAdmin.email} onChange={(e) => setNewAdmin({...newAdmin, email: e.target.value})} className="bg-[#111] border-[#222] h-14 font-bold" required /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Access Token</Label><Input type="password" placeholder="••••••••" value={newAdmin.password} onChange={(e) => setNewAdmin({...newAdmin, password: e.target.value})} className="bg-[#111] border-[#222] h-14 font-bold" required /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Role</Label><select value={newAdmin.role} onChange={(e) => setNewAdmin({...newAdmin, role: e.target.value})} className="w-full bg-[#111] border border-[#222] rounded-2xl p-4 text-sm font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none"><option value="admin">Super Admin — full access</option><option value="supervisor">WL Supervisor — approve & reject</option><option value="member">WL Member — review only</option><option value="app_reviewer">App Reviewer — streamer & family apps</option></select></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Discord ID</Label><Input type="text" inputMode="numeric" autoComplete="off" placeholder="123456789012345678" value={newAdmin.discord_id} onChange={(e) => setNewAdmin({...newAdmin, discord_id: e.target.value})} className="bg-[#111] border-[#222] h-14 font-mono" /></div><Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-14 rounded-2xl shadow-xl shadow-amber-900/10">Synchronize Clearance</Button></form></DialogContent></Dialog>
       <Dialog open={isFamilyAddOpen} onOpenChange={setIsFamilyAddOpen}><DialogContent className="bg-[#0a0a0a] border-[#222] text-white"><DialogHeader><DialogTitle className="font-black italic text-xl uppercase tracking-tighter">Register New Family</DialogTitle></DialogHeader><form onSubmit={handleAddFamily} className="space-y-4 pt-6"><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Family Name</Label><Input placeholder="Cartel de Sinaloa" value={newFamily.name} onChange={(e) => setNewFamily({...newFamily, name: e.target.value})} className="bg-[#111] border-[#222] h-12 font-bold" required /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Logo URL</Label><Input placeholder="https://example.com/logo.png" value={newFamily.logo} onChange={(e) => setNewFamily({...newFamily, logo: e.target.value})} className="bg-[#111] border-[#222] h-12 font-bold" /></div><div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black italic">Description</Label><textarea rows={3} value={newFamily.description} onChange={(e) => setNewFamily({...newFamily, description: e.target.value})} className="w-full bg-[#111] border-[#222] rounded-2xl p-4 text-sm font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none" placeholder="A brief description of the family..." /></div><Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase tracking-widest h-12 rounded-2xl">Create Family</Button></form></DialogContent></Dialog>
