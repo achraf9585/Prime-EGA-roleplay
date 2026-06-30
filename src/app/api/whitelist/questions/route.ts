@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
   for (let cat = 1; cat <= 5; cat++) {
     const { data, error } = await supabase
       .from("whitelist_questions")
-      .select("id, category_number, category_name, question_text, options")
+      .select("id, category_number, category_name, question_text, options, question_text_ar, options_ar")
       .eq("category_number", cat);
     if (error || !data) continue;
     const shuffled = data.sort(() => Math.random() - 0.5).slice(0, 4);

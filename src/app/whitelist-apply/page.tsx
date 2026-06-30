@@ -21,6 +21,7 @@ import {
 interface QuizOption {
   value: string;
   text: string;
+  text_ar?: string;
 }
 
 interface Question {
@@ -28,9 +29,13 @@ interface Question {
   category_number: number;
   category_name: string;
   question_text: string;
+  question_text_ar?: string;
   options: QuizOption[];
+  options_ar?: { value: string; text: string }[];
   answerMap?: Record<string, string>; // newLetter -> originalLetter
 }
+
+type QuizLang = "en" | "ar";
 
 interface ApplicationStatus {
   status: "none" | "pending" | "approved" | "rejected";
@@ -108,6 +113,7 @@ export default function WhitelistApplyPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [timeLeft, setTimeLeft] = useState(QUIZ_DURATION);
   const [quizSubmitting, setQuizSubmitting] = useState(false);
+  const [quizLang, setQuizLang] = useState<QuizLang>("en");
   const tabOutCount = useRef(0);
   const pasteCount = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -193,12 +199,15 @@ export default function WhitelistApplyPage() {
       const letters = ["A", "B", "C", "D"];
       // Shuffle the option texts but keep letters in A/B/C order
       const shuffled = qs.map(q => {
+        // Map original value → Arabic text so it survives the shuffle
+        const arByValue: Record<string, string> = {};
+        (q.options_ar || []).forEach(o => { arByValue[o.value] = o.text; });
         const shuffledTexts = [...q.options].sort(() => Math.random() - 0.5);
         const answerMap: Record<string, string> = {};
         const remapped = shuffledTexts.map((opt, i) => {
           const newLetter = letters[i];
           answerMap[newLetter] = opt.value; // new display letter → original correct-answer letter
-          return { value: newLetter, text: opt.text };
+          return { value: newLetter, text: opt.text, text_ar: arByValue[opt.value] ?? opt.text };
         });
         return { ...q, options: remapped, answerMap };
       });
@@ -375,6 +384,8 @@ export default function WhitelistApplyPage() {
               timeLeft={timeLeft}
               onSubmit={() => handleQuizSubmit(false)}
               submitting={quizSubmitting}
+              quizLang={quizLang}
+              setQuizLang={setQuizLang}
             />
           )}
 
@@ -619,10 +630,11 @@ function ApplicationForm({
 
 // ─── Quiz Section ─────────────────────────────────────────────────────────────
 
-function QuizSection({ questions, answers, setAnswers, timeLeft, onSubmit, submitting }: any) {
+function QuizSection({ questions, answers, setAnswers, timeLeft, onSubmit, submitting, quizLang, setQuizLang }: any) {
   const answeredCount = Object.keys(answers).length;
   const progress = (answeredCount / questions.length) * 100;
   const isUrgent = timeLeft < 180;
+  const ar = quizLang === "ar";
 
   return (
     <div className="space-y-6">
@@ -641,6 +653,19 @@ function QuizSection({ questions, answers, setAnswers, timeLeft, onSubmit, submi
             <h2 className="font-orbitron font-bold tracking-wider">Section B — Rules Quiz</h2>
           </div>
           <div className="flex items-center gap-4">
+            {/* Language toggle */}
+            <div className="flex rounded-lg border border-[#8b5cf6]/30 overflow-hidden text-xs font-orbitron">
+              <button
+                type="button"
+                onClick={() => setQuizLang("en")}
+                className={`px-3 py-1.5 transition-colors ${!ar ? "bg-[#8b5cf6] text-white" : "text-[hsl(220_15%_72%)] hover:text-white"}`}
+              >EN</button>
+              <button
+                type="button"
+                onClick={() => setQuizLang("ar")}
+                className={`px-3 py-1.5 transition-colors ${ar ? "bg-[#8b5cf6] text-white" : "text-[hsl(220_15%_72%)] hover:text-white"}`}
+              >ع</button>
+            </div>
             <div className="text-sm text-[hsl(220_15%_72%)]">
               {answeredCount}/{questions.length} answered
             </div>
@@ -666,28 +691,28 @@ function QuizSection({ questions, answers, setAnswers, timeLeft, onSubmit, submi
             answers[q.id] ? "border-[#8b5cf6]/30" : "border-[#2a1e4a]"
           }`}
         >
-          <div className="flex items-start gap-3 mb-4">
+          <div className="flex items-start gap-3 mb-4" dir={ar ? "rtl" : "ltr"}>
             <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#8b5cf6]/15 border border-[#8b5cf6]/30 flex items-center justify-center text-xs font-orbitron text-[#8b5cf6]">
               {idx + 1}
             </span>
-            <div>
+            <div className={ar ? "text-right" : ""}>
               <p className="text-xs font-orbitron tracking-wider text-[#8b5cf6]/60 mb-1">{q.category_name}</p>
-              <p className="text-white">{q.question_text}</p>
+              <p className="text-white">{ar ? (q.question_text_ar || q.question_text) : q.question_text}</p>
             </div>
           </div>
-          <div className="space-y-2 ml-10">
+          <div className="space-y-2 ml-10" dir={ar ? "rtl" : "ltr"}>
             {q.options.map((opt: QuizOption) => (
               <button
                 key={opt.value}
                 onClick={() => setAnswers((prev: any) => ({ ...prev, [q.id]: opt.value }))}
-                className={`w-full text-left px-4 py-3 rounded-lg border transition-all duration-150 ${
+                className={`w-full px-4 py-3 rounded-lg border transition-all duration-150 ${ar ? "text-right" : "text-left"} ${
                   answers[q.id] === opt.value
                     ? "border-[#8b5cf6] bg-[#8b5cf6]/15 text-white"
                     : "border-[#2a1e4a] hover:border-[#8b5cf6]/40 text-[hsl(220_15%_72%)] hover:text-white"
                 }`}
               >
-                <span className="font-orbitron text-xs text-[#8b5cf6] mr-3">{opt.value}.</span>
-                {opt.text}
+                <span className="font-orbitron text-xs text-[#8b5cf6] mx-3">{opt.value}.</span>
+                {ar ? (opt.text_ar || opt.text) : opt.text}
               </button>
             ))}
           </div>
