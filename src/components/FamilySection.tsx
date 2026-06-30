@@ -78,23 +78,23 @@ export default function FamilySection({ t }: { t: any }) {
             return (
               <motion.div
                 key={family.id}
-                className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-8 md:gap-16`}
+                className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center md:items-start gap-8 md:gap-16`}
                 initial={{ opacity: 0, x: reverse ? 60 : -60 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.75, ease: "easeOut" }}
               >
-                {/* Image panel */}
-                <div className="w-full md:w-1/2 relative h-[300px] rounded-2xl overflow-hidden border border-[#1a1a2e] bg-[#0d0d1a]/90 group shadow-2xl">
+                {/* Image panel — square so a logo fills it; top-aligned with the heading */}
+                <div className="w-full md:w-1/2 md:max-w-md relative aspect-square md:sticky md:top-28 rounded-2xl overflow-hidden border border-[#1a1a2e] bg-[#0d0d1a]/90 group shadow-2xl">
                   <motion.div
-                    className="absolute inset-0 flex items-center justify-center p-8"
+                    className="absolute inset-0 flex items-center justify-center p-5"
                     whileHover={{ scale: 1.07 }}
                     transition={{ duration: 0.55, ease: "easeOut" }}
                   >
                     {family.logo ? (
-                      <img 
-                        src={family.logo} 
-                        alt={family.name} 
+                      <img
+                        src={family.logo}
+                        alt={family.name}
                         className="w-full h-full object-contain"
                         onError={(e) => {
                           // Fallback if image fails to load
