@@ -607,7 +607,7 @@ function ApplicationForm({
         <div className="text-sm text-[hsl(220_15%_72%)]">
           <span className="text-amber-400 font-semibold">Next Step: </span>
           After submitting your portfolio, you will take a 20-question rules quiz with a{" "}
-          <span className="text-white font-semibold">20-minute timer</span>. Leaving the tab or copying answers will be recorded.
+          <span className="text-white font-semibold">5-minute timer</span>. Leaving the tab or copying answers will be recorded.
         </div>
       </div>
 
