@@ -114,6 +114,10 @@ export default function WhitelistApplyPage() {
   const [timeLeft, setTimeLeft] = useState(QUIZ_DURATION);
   const [quizSubmitting, setQuizSubmitting] = useState(false);
   const [quizLang, setQuizLang] = useState<QuizLang>("en");
+  // Mirror latest answers/questions in refs so the timer's auto-submit (a stale
+  // closure) reads the CURRENT answers instead of the empty set from quiz-start.
+  const answersRef = useRef<Record<string, string>>({});
+  const questionsRef = useRef<Question[]>([]);
   const tabOutCount = useRef(0);
   const pasteCount = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -141,6 +145,10 @@ export default function WhitelistApplyPage() {
       })
       .catch(() => setLoading(false));
   }, [session, authStatus]);
+
+  // Keep refs in sync with the latest state
+  useEffect(() => { answersRef.current = answers; }, [answers]);
+  useEffect(() => { questionsRef.current = questions; }, [questions]);
 
   // Tab-out detection
   useEffect(() => {
@@ -229,8 +237,12 @@ export default function WhitelistApplyPage() {
 
   async function handleQuizSubmit(forced = false) {
     if (quizSubmitting) return;
+    // Read from refs so a forced (timer) submit uses the CURRENT answers, not a stale closure
+    const currentAnswers = answersRef.current;
+    const currentQuestions = questionsRef.current;
+
     if (!forced) {
-      const unanswered = questions.filter((q) => !answers[q.id]);
+      const unanswered = currentQuestions.filter((q) => !currentAnswers[q.id]);
       if (unanswered.length > 0) {
         toast.error(`Please answer all ${unanswered.length} remaining questions.`);
         return;
@@ -239,11 +251,13 @@ export default function WhitelistApplyPage() {
     if (timerRef.current) clearInterval(timerRef.current);
     setQuizSubmitting(true);
 
-    // Translate display letters (A/B/C after shuffle) back to original DB letters for scoring
+    // Translate display letters (A/B/C after shuffle) back to original DB letters for scoring.
+    // Include EVERY question (unanswered → "") so the score is always out of 20:
+    // answered-correct count as right, unanswered/wrong count against, never an auto-0.
     const originalAnswers: Record<string, string> = {};
-    for (const [qId, displayLetter] of Object.entries(answers)) {
-      const q = questions.find(q => q.id === qId);
-      originalAnswers[qId] = q?.answerMap?.[displayLetter] ?? displayLetter;
+    for (const q of currentQuestions) {
+      const displayLetter = currentAnswers[q.id];
+      originalAnswers[q.id] = displayLetter ? (q.answerMap?.[displayLetter] ?? displayLetter) : "";
     }
 
     try {
