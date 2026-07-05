@@ -1528,7 +1528,9 @@ export default function AdminDashboard() {
                                       <p className="text-gray-200 mb-2 leading-snug">{q.question_text}</p>
                                       <div className={`flex items-start gap-1.5 ${q.is_correct ? 'text-green-400' : 'text-red-400'}`}>
                                         <span className="font-black mt-0.5">{q.is_correct ? '✓' : '✗'}</span>
-                                        <span><span className="font-black">{q.given_answer}.</span> {givenOption?.text}</span>
+                                        {q.given_answer
+                                          ? <span><span className="font-black">{q.given_answer}.</span> {givenOption?.text}</span>
+                                          : <span className="italic text-gray-500">No answer (ran out of time)</span>}
                                       </div>
                                       {!q.is_correct && (
                                         <div className="flex items-start gap-1.5 text-green-400 mt-1">
