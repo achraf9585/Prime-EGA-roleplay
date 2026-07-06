@@ -1394,6 +1394,7 @@ export default function AdminDashboard() {
                               {authMode === "admin" && isShame(app) && <span title="Approved despite failing the quiz">🔥</span>}
                             </p>
                             <p className="text-[10px] text-gray-500 truncate">@{app.discord_username} · {app.faction_choice.replace('_',' ')}</p>
+                            <p className="text-[9px] text-gray-600 truncate">{app.created_at ? new Date(app.created_at).toLocaleString() : ''}</p>
                           </div>
                           <div className={`text-[8px] font-black uppercase px-2 py-1 rounded border ${app.status==='pending'?'text-amber-500 border-amber-500/20 bg-amber-500/5':app.status==='approved'?'text-green-500 border-green-500/20 bg-green-500/5':'text-red-500 border-red-500/20 bg-red-500/5'}`}>{app.status}</div>
                         </button>
@@ -1451,7 +1452,7 @@ export default function AdminDashboard() {
                         {/* ── SUB-TAB: CANDIDATE DETAILS ── */}
                         {interviewTab === 'details' && (
                           <>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                               <div className="p-3 bg-white/5 rounded-xl border border-white/5">
                                 <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest">Faction</p>
                                 <p className="text-xs font-bold mt-0.5 capitalize">{selectedWhitelistApp.faction_choice.replace('_',' ')}</p>
@@ -1463,7 +1464,7 @@ export default function AdminDashboard() {
                                   <div className="p-3 bg-white/5 rounded-xl border border-white/5">
                                     <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest">Quiz Score</p>
                                     <div className="flex items-center gap-2 mt-0.5">
-                                      <p className="text-xs font-bold">{score ?? 'N/A'} / {selectedWhitelistApp.quiz_details?.length ?? 20}</p>
+                                      <p className="text-xs font-bold">{score ?? 'N/A'} / 20</p>
                                       {score != null && (
                                         <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${passed ? 'bg-green-500/15 text-green-400' : 'bg-red-500/15 text-red-400'}`}>
                                           {passed ? 'Pass' : 'Fail'}
@@ -1473,6 +1474,10 @@ export default function AdminDashboard() {
                                   </div>
                                 );
                               })()}
+                              <div className="p-3 bg-white/5 rounded-xl border border-white/5">
+                                <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest">Submitted</p>
+                                <p className="text-xs font-bold mt-0.5">{selectedWhitelistApp.created_at ? new Date(selectedWhitelistApp.created_at).toLocaleString() : '—'}</p>
+                              </div>
                               <div className="p-3 bg-white/5 rounded-xl border border-white/5">
                                 <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest">Tab-outs</p>
                                 <p className={`text-xs font-bold mt-0.5 ${selectedWhitelistApp.tab_out_count > 2 ? 'text-red-400' : 'text-white'}`}>{selectedWhitelistApp.tab_out_count}</p>
