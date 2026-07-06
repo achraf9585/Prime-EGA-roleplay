@@ -100,8 +100,13 @@ interface StreamerApp {
   platform: string;
   channel_url: string;
   followers_count: string;
+  rp_experience?: string;
   ensemble_mindset: string;
+  strict_rp_standards?: string;
+  history_info?: string;
   sample_content: string;
+  stream_schedule?: string;
+  privacy_comfort?: string;
   status: 'pending' | 'approved' | 'denied';
   created_at: string;
 }
@@ -1122,10 +1127,50 @@ export default function AdminDashboard() {
                                   <DialogHeader><DialogTitle className="text-2xl font-black italic tracking-tighter uppercase underline decoration-amber-500">Review: {selectedApp?.ingame_name_cid}</DialogTitle></DialogHeader>
                                   {selectedApp && (
                                       <div className="space-y-6 py-4 pr-3 animate-in fade-in overflow-y-auto max-h-[65vh] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-amber-500/50 hover:[&::-webkit-scrollbar-thumb]:bg-amber-500/80 [&::-webkit-scrollbar-thumb]:rounded-full shadow-[inset_0_-30px_30px_-30px_rgba(0,0,0,0.8)]">
-                                          <div className="grid grid-cols-2 gap-4"><AppField label="Discord ID" value={selectedApp.discord_id} mono /><AppField label="Reach" value={selectedApp.platform} color="amber" /></div>
-                                          <AppField label="Internal Email" value={selectedApp.email} />
-                                          <div className="space-y-2"><p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Core Philosophy</p><div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-sm italic text-gray-300 leading-relaxed font-serif">"{selectedApp.ensemble_mindset}"</div></div>
-                                          <div className="grid grid-cols-2 gap-4 pt-4"><a href={selectedApp.channel_url} target="_blank" className="flex items-center justify-center gap-3 p-4 bg-purple-600 rounded-2xl text-xs font-black uppercase tracking-widest">Inspect Channel <ExternalLink size={16}/></a><a href={selectedApp.sample_content} target="_blank" className="flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-2xl text-xs font-black uppercase tracking-widest">Review Content <Video size={16}/></a></div>
+                                          {/* General Information */}
+                                          <div>
+                                            <p className="text-[10px] text-amber-500 font-black uppercase tracking-widest italic mb-3">General Information</p>
+                                            <div className="grid grid-cols-2 gap-4">
+                                              <AppField label="In-Game Name & CID" value={selectedApp.ingame_name_cid} color="amber" />
+                                              <AppField label="Discord ID" value={selectedApp.discord_id} mono />
+                                              <AppField label="Email Address" value={selectedApp.email} />
+                                              <AppField label="Primary Platform" value={selectedApp.platform} color="amber" />
+                                              <AppField label="Followers Count" value={selectedApp.followers_count || '—'} />
+                                              <AppField label="Applied" value={selectedApp.created_at ? new Date(selectedApp.created_at).toLocaleString() : '—'} />
+                                            </div>
+                                          </div>
+
+                                          {/* RP Experience & Philosophy */}
+                                          <div>
+                                            <p className="text-[10px] text-amber-500 font-black uppercase tracking-widest italic mb-3">RP Experience &amp; Philosophy</p>
+                                            <div className="space-y-4">
+                                              <AppField label="How long have you been roleplaying in GTA V?" value={selectedApp.rp_experience || '—'} />
+                                              <div className="space-y-2">
+                                                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">The Ensemble Mindset</p>
+                                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-sm italic text-gray-300 leading-relaxed font-serif whitespace-pre-wrap">&quot;{selectedApp.ensemble_mindset || '—'}&quot;</div>
+                                              </div>
+                                              <div className="space-y-2">
+                                                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest italic">Strict RP Standards</p>
+                                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-sm italic text-gray-300 leading-relaxed font-serif whitespace-pre-wrap">&quot;{selectedApp.strict_rp_standards || '—'}&quot;</div>
+                                              </div>
+                                              <AppField label="History (bans / warnings on other servers)" value={selectedApp.history_info || '—'} />
+                                            </div>
+                                          </div>
+
+                                          {/* Technical & Content */}
+                                          <div>
+                                            <p className="text-[10px] text-amber-500 font-black uppercase tracking-widest italic mb-3">Technical &amp; Content</p>
+                                            <div className="grid grid-cols-2 gap-4">
+                                              <AppField label="Weekly Stream Schedule" value={selectedApp.stream_schedule || '—'} />
+                                              <AppField label="Privacy Comfort (screen hide)" value={selectedApp.privacy_comfort || '—'} color={selectedApp.privacy_comfort === 'Yes' ? 'amber' : 'white'} />
+                                            </div>
+                                          </div>
+
+                                          {/* Action links */}
+                                          <div className="grid grid-cols-2 gap-4 pt-4">
+                                            <a href={selectedApp.channel_url} target="_blank" className="flex items-center justify-center gap-3 p-4 bg-purple-600 rounded-2xl text-xs font-black uppercase tracking-widest">Inspect Channel <ExternalLink size={16}/></a>
+                                            <a href={selectedApp.sample_content} target="_blank" className="flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-2xl text-xs font-black uppercase tracking-widest">Review Content <Video size={16}/></a>
+                                          </div>
                                       </div>
                                   )}
                                   <DialogFooter className="flex flex-row gap-4 border-t border-[#222] pt-6">
