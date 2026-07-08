@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { cleanString, wordCount } from "@/lib/validation";
-import { sendDiscordDM, assignDiscordRole } from "@/lib/discord";
+import { sendDiscordDM } from "@/lib/discord";
 
 const QUIZ_PASS_THRESHOLD = 15; // out of 20
 const QUIZ_FAIL_LOCKOUT_MS = 48 * 60 * 60 * 1000; // 48 hours
@@ -166,14 +166,14 @@ export async function POST(req: NextRequest) {
       }],
     });
   } else {
-    // Passed the quiz — grant the "Accepted" role automatically
-    await assignDiscordRole(discordId, process.env.DISCORD_ROLE_ACCEPTED);
+    // Passed the quiz — the Accepted role is NOT granted here.
+    // A staff member reviews the application and grants it manually in the admin panel.
     await sendDiscordDM(discordId, {
       embeds: [{
         title: "✅ Whitelist Quiz — Passed",
         description:
           `Congratulations! You scored **${computedScore}/${total}** on the EGA rules quiz.\n\n` +
-          `You've been given the **Accepted** role. Your application is now **under staff review** — you'll be notified of the final decision.`,
+          `Your application is now **under staff review**. You'll receive a DM once a staff member has made the final decision.`,
         color: 0x22c55e,
       }],
     });

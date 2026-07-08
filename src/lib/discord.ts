@@ -21,6 +21,29 @@ export async function assignDiscordRole(userId: string, roleId: string | undefin
   }
 }
 
+// Remove a Discord role from a guild member via the bot.
+// Best-effort: returns false if config is missing, the user has left, or the role
+// was above the bot's top role. Safe to call even if the user doesn't have the role.
+export async function removeDiscordRole(userId: string, roleId: string | undefined): Promise<boolean> {
+  const botToken = process.env.DISCORD_BOT_TOKEN;
+  const guildId = process.env.DISCORD_GUILD_ID;
+  if (!botToken || !guildId || !roleId || !userId) return false;
+  try {
+    const res = await fetch(
+      `https://discord.com/api/v10/guilds/${guildId}/members/${userId}/roles/${roleId}`,
+      { method: "DELETE", headers: { Authorization: `Bot ${botToken}` } }
+    );
+    if (!res.ok) {
+      console.error("[discord] remove role failed:", res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (e) {
+    console.error("[discord] remove role error:", e);
+    return false;
+  }
+}
+
 // Send a direct message to a Discord user via the bot (REST API — no gateway needed).
 // Best-effort: returns false on failure (e.g. user has DMs closed or doesn't share the guild).
 

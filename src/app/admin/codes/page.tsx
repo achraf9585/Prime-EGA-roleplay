@@ -50,7 +50,8 @@ import {
   ArrowRight,
   BarChart3,
   MousePointer2,
-  Shield
+  Shield,
+  ShieldCheck
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -549,6 +550,27 @@ export default function AdminDashboard() {
   };
 
   // Fetch & open the audit logs panel (optionally scoped to one application)
+  // Manually grant the Accepted Discord role to a passing candidate.
+  const [grantingAccepted, setGrantingAccepted] = useState(false);
+  const grantAcceptedRole = async (appId: string) => {
+    setGrantingAccepted(true);
+    try {
+      const res = await fetch("/api/admin/whitelist/grant-accepted", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: appId }),
+      });
+      const data = await res.json();
+      if (res.ok && data.granted) toast.success("Accepted role granted.");
+      else if (res.ok && !data.granted) toast.error("Bot could not assign the role (check perms / hierarchy).");
+      else toast.error(data.error || "Failed to grant role.");
+    } catch {
+      toast.error("Failed to grant role.");
+    } finally {
+      setGrantingAccepted(false);
+    }
+  };
+
   const openLogs = async (applicationId?: string) => {
     setShowLogs(true);
     setLogsLoading(true);
@@ -1466,6 +1488,21 @@ export default function AdminDashboard() {
                           <p className="font-black italic uppercase tracking-tight text-lg">{selectedWhitelistApp.character_name}</p>
                           <p className="text-[11px] text-gray-500">@{selectedWhitelistApp.discord_username}</p>
                         </div>
+                        {(() => {
+                          const score = selectedWhitelistApp.quiz_score ?? 0;
+                          const canGrant = score >= 15 && selectedWhitelistApp.status !== "rejected";
+                          if (!canGrant) return null;
+                          return (
+                            <button
+                              onClick={() => grantAcceptedRole(selectedWhitelistApp.id)}
+                              disabled={grantingAccepted}
+                              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-green-500/40 text-green-400 hover:bg-green-500/10 transition-colors text-xs font-black uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
+                              title="Grant the Discord Accepted role to this candidate"
+                            >
+                              <ShieldCheck className="w-3.5 h-3.5" /> {grantingAccepted ? "Granting..." : "Grant Accepted"}
+                            </button>
+                          );
+                        })()}
                         <button
                           onClick={() => openLogs(selectedWhitelistApp.id)}
                           className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-blue-900/40 text-blue-400 hover:bg-blue-500/10 transition-colors text-xs font-black uppercase tracking-widest"
