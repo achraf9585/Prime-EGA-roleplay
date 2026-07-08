@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/server";
 import { resolveActor } from "@/lib/staffAuth";
+import { removeDiscordRole } from "@/lib/discord";
 
 // Lazy — module-scope construction breaks the Vercel build (env unavailable at collect-page-data).
 const db = () => createAdminClient();
@@ -57,7 +58,7 @@ export async function PATCH(req: NextRequest) {
   if (!actor || !WL_VIEW_ROLES.includes(actor.role)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  // Members are review-only — they cannot issue verdicts
+  // All whitelist staff (admin / supervisor / member) may issue verdicts.
   if (!WL_VERDICT_ROLES.includes(actor.role)) {
     return NextResponse.json({ error: "Your role cannot issue verdicts." }, { status: 403 });
   }
@@ -79,25 +80,34 @@ export async function PATCH(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  // On approval, automatically grant the "Pass Granted" Discord role
+  // Discord role side-effects (best-effort):
+  //  - approved: grant the Pass-Granted role
+  //  - rejected: revoke both Accepted and Pass-Granted (in case they were previously granted)
   let roleAssigned = false;
-  if (status === "approved" && updated?.discord_id) {
-    try {
-      const guildId = process.env.DISCORD_GUILD_ID;
-      const botToken = process.env.DISCORD_BOT_TOKEN;
-      const roleId = process.env.DISCORD_ROLE_PASS_GRANTED;
-      if (guildId && botToken && roleId) {
-        const res = await fetch(
-          `https://discord.com/api/v10/guilds/${guildId}/members/${updated.discord_id}/roles/${roleId}`,
-          { method: "PUT", headers: { Authorization: `Bot ${botToken}`, "Content-Type": "application/json" } }
-        );
-        if (res.ok) roleAssigned = true;
-        else console.error("Failed to assign whitelist role:", res.status, await res.text());
-      } else {
-        console.log("Skipping whitelist role assignment — missing DISCORD_ROLE_PASS_GRANTED / guild / bot token");
+  let roleRevoked = false;
+  if (updated?.discord_id) {
+    if (status === "approved") {
+      try {
+        const guildId = process.env.DISCORD_GUILD_ID;
+        const botToken = process.env.DISCORD_BOT_TOKEN;
+        const roleId = process.env.DISCORD_ROLE_PASS_GRANTED;
+        if (guildId && botToken && roleId) {
+          const res = await fetch(
+            `https://discord.com/api/v10/guilds/${guildId}/members/${updated.discord_id}/roles/${roleId}`,
+            { method: "PUT", headers: { Authorization: `Bot ${botToken}`, "Content-Type": "application/json" } }
+          );
+          if (res.ok) roleAssigned = true;
+          else console.error("Failed to assign whitelist role:", res.status, await res.text());
+        } else {
+          console.log("Skipping whitelist role assignment — missing DISCORD_ROLE_PASS_GRANTED / guild / bot token");
+        }
+      } catch (err) {
+        console.error("Error assigning whitelist role:", err);
       }
-    } catch (err) {
-      console.error("Error assigning whitelist role:", err);
+    } else if (status === "rejected") {
+      const revokedAccepted = await removeDiscordRole(updated.discord_id, process.env.DISCORD_ROLE_ACCEPTED);
+      const revokedPass = await removeDiscordRole(updated.discord_id, process.env.DISCORD_ROLE_PASS_GRANTED);
+      roleRevoked = revokedAccepted || revokedPass;
     }
   }
 
@@ -113,5 +123,5 @@ export async function PATCH(req: NextRequest) {
     notes: admin_notes || null,
   });
 
-  return NextResponse.json({ success: true, roleAssigned });
+  return NextResponse.json({ success: true, roleAssigned, roleRevoked });
 }
