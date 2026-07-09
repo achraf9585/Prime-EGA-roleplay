@@ -205,7 +205,7 @@ interface WhitelistLog {
   application_id: string;
   candidate_name: string;
   candidate_discord: string;
-  action: "approved" | "rejected";
+  action: "approved" | "rejected" | "accepted_role_granted" | string;
   actor_type: "admin" | "staff";
   actor_name: string;
   actor_discord_id?: string | null;
@@ -1787,7 +1787,7 @@ export default function AdminDashboard() {
               <DialogContent className="bg-[#111] border-[#333] text-white max-w-2xl">
                 <DialogHeader>
                   <DialogTitle className="font-black italic tracking-tighter uppercase flex items-center gap-2"><Activity size={18} className="text-blue-400" /> Whitelist Audit Logs</DialogTitle>
-                  <DialogDescription className="text-gray-500">Every approve / reject action and the staff member who made it.</DialogDescription>
+                  <DialogDescription className="text-gray-500">Every approve, reject, or role-grant action and the staff member who made it.</DialogDescription>
                 </DialogHeader>
                 <div className="max-h-[60vh] overflow-y-auto space-y-2 pr-1">
                   {logsLoading && (
@@ -1796,12 +1796,19 @@ export default function AdminDashboard() {
                   {!logsLoading && wlLogs.length === 0 && (
                     <p className="text-center text-gray-600 text-sm italic py-10">No log entries yet.</p>
                   )}
-                  {!logsLoading && wlLogs.map(log => (
-                    <div key={log.id} className={`p-3 rounded-xl border ${log.action === 'approved' ? 'border-green-500/20 bg-green-500/5' : 'border-red-500/20 bg-red-500/5'}`}>
+                  {!logsLoading && wlLogs.map(log => {
+                    // Map each action to its own visual treatment.
+                    const style = log.action === 'approved'
+                      ? { border: 'border-green-500/20 bg-green-500/5', badge: 'bg-green-500/15 text-green-400', label: '✓ Approved' }
+                      : log.action === 'accepted_role_granted'
+                      ? { border: 'border-blue-500/20 bg-blue-500/5', badge: 'bg-blue-500/15 text-blue-400', label: '🛡 Accepted Role' }
+                      : { border: 'border-red-500/20 bg-red-500/5', badge: 'bg-red-500/15 text-red-400', label: '✗ Rejected' };
+                    return (
+                    <div key={log.id} className={`p-3 rounded-xl border ${style.border}`}>
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <div className="flex items-center gap-2">
-                          <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${log.action === 'approved' ? 'bg-green-500/15 text-green-400' : 'bg-red-500/15 text-red-400'}`}>
-                            {log.action === 'approved' ? '✓ Approved' : '✗ Rejected'}
+                          <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${style.badge}`}>
+                            {style.label}
                           </span>
                           <span className="text-sm font-black italic uppercase tracking-tight">{log.candidate_name}</span>
                           <span className="text-[10px] text-gray-500">@{log.candidate_discord}</span>
@@ -1821,7 +1828,8 @@ export default function AdminDashboard() {
                       </div>
                       {log.notes && <p className="text-[11px] text-gray-400 mt-1.5 border-t border-[#222] pt-1.5 italic">&quot;{log.notes}&quot;</p>}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </DialogContent>
             </Dialog>
