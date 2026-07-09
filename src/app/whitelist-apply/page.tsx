@@ -56,7 +56,7 @@ const FACTIONS = [
   { value: "civilian", label: "Civilian", track: "a", icon: "👤" },
 ];
 
-const QUIZ_DURATION = 5 * 60; // 5 minutes in seconds
+const QUIZ_DURATION = 7 * 60 + 30; // 7 minutes 30 seconds
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -621,7 +621,7 @@ function ApplicationForm({
         <div className="text-sm text-[hsl(220_15%_72%)]">
           <span className="text-amber-400 font-semibold">Next Step: </span>
           After submitting your portfolio, you will take a 20-question rules quiz with a{" "}
-          <span className="text-white font-semibold">5-minute timer</span>. Leaving the tab or copying answers will be recorded.
+          <span className="text-white font-semibold">7:30 timer</span>. Leaving the tab or copying answers will be recorded.
         </div>
       </div>
 
