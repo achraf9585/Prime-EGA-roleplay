@@ -64,19 +64,29 @@ export async function POST(request: Request) {
       }
     }
 
-    // Update the code record to mark it as redeemed
-    const { error: updateError } = await supabase
+    // Atomic claim: only succeed if the row is still unredeemed. Two concurrent
+    // requests can no longer both win — whichever loses the race gets a null row
+    // back and we return "already redeemed."
+    const { data: claimed, error: updateError } = await supabase
       .from('RedeemCode')
       .update({
         isRedeemed: true,
-        redeemedBy: session.user.id || session.user.email, // Use Discord ID if available, fallback to email
+        redeemedBy: session.user.id || session.user.email,
         redeemedAt: new Date().toISOString()
       })
-      .eq('id', codeRecord.id);
+      .eq('id', codeRecord.id)
+      .eq('isRedeemed', false)
+      .select()
+      .maybeSingle();
 
     if (updateError) {
       console.error("Failed to redeem code:", updateError);
       return NextResponse.json({ error: 'Failed to redeem code. Please try again.' }, { status: 500 });
+    }
+
+    // Someone else won the race between the initial SELECT and this UPDATE
+    if (!claimed) {
+      return NextResponse.json({ error: 'Code has already been redeemed' }, { status: 400 });
     }
 
     // Attempt to assign Discord Role

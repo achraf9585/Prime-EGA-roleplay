@@ -21,12 +21,17 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(data);
 }
 
+const ALLOWED_STAFF_ROLES = ["supervisor", "member", "app_reviewer"];
+
 // POST — add whitelist staff member (admin only)
 export async function POST(req: NextRequest) {
   if (!await isAdmin(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { discord_id, discord_username, role } = await req.json();
   if (!discord_id || !discord_username || !role) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  }
+  if (!ALLOWED_STAFF_ROLES.includes(role)) {
+    return NextResponse.json({ error: "Invalid role." }, { status: 400 });
   }
   const supabase = db();
   const { data, error } = await supabase

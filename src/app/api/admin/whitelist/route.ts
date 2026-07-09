@@ -26,28 +26,39 @@ export async function GET(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  const enriched = await Promise.all((apps || []).map(async (app) => {
-    const answers: Record<string, string> = app.quiz_answers || {};
-    const ids = Object.keys(answers);
-    if (ids.length === 0) return { ...app, quiz_details: [] };
+  // Batch question fetch: gather every question id referenced across all
+  // applications, load them in ONE query, then attach details per-application.
+  const allIds = new Set<string>();
+  for (const app of apps || []) {
+    for (const qid of Object.keys(app.quiz_answers || {})) allIds.add(qid);
+  }
 
+  const questionMap = new Map<string, any>();
+  if (allIds.size > 0) {
     const { data: questions } = await supabase
       .from("whitelist_questions")
       .select("id, question_text, options, correct_answer, category_name")
-      .in("id", ids);
+      .in("id", Array.from(allIds));
+    for (const q of questions || []) questionMap.set(q.id, q);
+  }
 
-    const quiz_details = (questions || []).map(q => ({
-      id: q.id,
-      question_text: q.question_text,
-      category_name: q.category_name,
-      options: q.options,
-      correct_answer: q.correct_answer,
-      given_answer: answers[q.id],
-      is_correct: answers[q.id] === q.correct_answer,
-    }));
-
+  const enriched = (apps || []).map((app) => {
+    const answers: Record<string, string> = app.quiz_answers || {};
+    const ids = Object.keys(answers);
+    const quiz_details = ids
+      .map((qid) => questionMap.get(qid))
+      .filter(Boolean)
+      .map((q) => ({
+        id: q.id,
+        question_text: q.question_text,
+        category_name: q.category_name,
+        options: q.options,
+        correct_answer: q.correct_answer,
+        given_answer: answers[q.id],
+        is_correct: answers[q.id] === q.correct_answer,
+      }));
     return { ...app, quiz_details };
-  }));
+  });
 
   return NextResponse.json(enriched);
 }

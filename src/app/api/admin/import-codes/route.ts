@@ -1,31 +1,20 @@
 import { NextResponse } from 'next/server';
-import { addCodes } from '@/lib/codeStore';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
+import { isAdmin } from '@/lib/adminAuth';
 import fs from 'fs';
 import path from 'path';
 
 export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-  
-  if (!session) {
-     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  // Full super-admin only. Uses the signed admin session cookie — no plaintext
+  // password in the body anymore.
+  if (!(await isAdmin(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    const { password, useLocalFile } = await request.json();
-    console.log("hello");
-
-    // Security Check
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword || password !== adminPassword) {
-      return NextResponse.json({ error: 'Invalid Admin Password' }, { status: 403 });
-    }
+    const { useLocalFile } = await request.json();
 
     let codesToImport: { code: string; tier?: string }[] = [];
 
-   
     if (useLocalFile) {
       // Read from server filesystem
       const filePath = path.join(process.cwd(), 'src', 'data', 'Prime_EGA_Membership_Codes.csv');
