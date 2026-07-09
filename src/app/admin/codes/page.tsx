@@ -51,7 +51,8 @@ import {
   BarChart3,
   MousePointer2,
   Shield,
-  ShieldCheck
+  ShieldCheck,
+  Menu
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -556,6 +557,8 @@ export default function AdminDashboard() {
   // Fetch & open the audit logs panel (optionally scoped to one application)
   // Manually grant the Accepted Discord role to a passing candidate.
   const [grantingAccepted, setGrantingAccepted] = useState(false);
+  // Mobile drawer state — mirrors the desktop sidebar
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const grantAcceptedRole = async (appId: string) => {
     setGrantingAccepted(true);
     try {
@@ -844,64 +847,98 @@ export default function AdminDashboard() {
 
   const pendingFamilyCount = familyApps.filter(a => a.status === 'pending').length;
 
+  // Renders the nav body used in both the desktop sidebar and the mobile drawer.
+  // `afterPick` fires after selecting a tab — used to close the mobile drawer.
+  const renderNavBody = (afterPick: () => void) => {
+    const pick = (tab: ActiveTab) => { setActiveTab(tab); afterPick(); };
+    return (
+      <>
+        <div className="flex items-center gap-3 mb-10 text-amber-500"><Zap fill="currentColor" size={24} /><span className="font-black text-xl italic tracking-tighter text-white">EGA <span className="text-amber-500">HQ</span></span></div>
+        <div className="space-y-2 mb-auto">
+          {authMode === "whitelist_staff" ? (
+            <>
+              <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-gray-600">Whitelist</div>
+              <NavButton active={activeTab === "whitelist"} onClick={() => pick("whitelist")} icon={<Shield size={18} />} label="Applications" count={whitelistApps.filter(a => a.status === 'pending').length || undefined} />
+            </>
+          ) : authMode === "app_reviewer" ? (
+            <>
+              <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-gray-600">Applications</div>
+              <NavButton active={activeTab === "applications"} onClick={() => pick("applications")} icon={<Video size={18} />} label="Creator Pool" />
+              <NavButton active={activeTab === "family"} onClick={() => pick("family")} icon={<Shield size={18} />} label="Family Roster" />
+            </>
+          ) : (
+            <>
+              <NavButton active={activeTab === "overview"}      onClick={() => pick("overview")}      icon={<LayoutDashboard size={18} />} label="Operational Overview" />
+              <div className="h-px bg-[#222] my-4" />
+              <NavButton active={activeTab === "codes"}         onClick={() => pick("codes")}         icon={<Ticket size={18} />}          label="Unit Records" />
+              <NavButton active={activeTab === "applications"}  onClick={() => pick("applications")}  icon={<Video size={18} />}            label="Creator Pool"   count={stats?.metrics.pendingApps} />
+              <NavButton active={activeTab === "family"}        onClick={() => pick("family")}        icon={<Shield size={18} />}           label="Family Roster"  count={pendingFamilyCount || undefined} />
+              <NavButton active={activeTab === "active_families"} onClick={() => pick("active_families")} icon={<Globe size={18} />}          label="Active Families" />
+              <div className="h-px bg-[#222] my-4" />
+              <NavButton active={activeTab === "whitelist"}      onClick={() => pick("whitelist")}      icon={<Shield size={18} />}           label="Whitelist Apps" count={whitelistApps.filter(a => a.status === 'pending').length || undefined} />
+              <NavButton active={activeTab === "players"}        onClick={() => pick("players")}        icon={<Users size={18} />}            label="Players" />
+              <NavButton active={activeTab === "whitelist_staff"} onClick={() => pick("whitelist_staff")} icon={<User size={18} />}           label="Whitelist Staff" />
+              <div className="h-px bg-[#222] my-4" />
+              <NavButton active={activeTab === "admins"}        onClick={() => pick("admins")}        icon={<Users size={18} />}            label="Staff Access" />
+            </>
+          )}
+        </div>
+        <div className="mt-10 pt-6 border-t border-[#222] space-y-3">
+          {authVia === "email" && (
+            <button onClick={() => { setIsChangePwOpen(true); afterPick(); }} className="text-gray-500 flex items-center gap-2 text-sm hover:text-amber-500 transition-colors">
+              <Lock size={14} /> Change Password
+            </button>
+          )}
+          <button onClick={handleLogout} className="text-gray-500 flex items-center gap-2 text-sm hover:text-white transition-colors">
+            <LogOut size={14} /> Terminate Session
+          </button>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-amber-500/30">
       <div className="relative flex min-h-screen">
-        
-        {/* ── Sidebar ── */}
-        <nav className="w-68 border-r border-[#222] bg-[#0d0d0d] flex flex-col p-6 hidden lg:flex">
-          <div className="flex items-center gap-3 mb-10 text-amber-500"><Zap fill="currentColor" size={24} /><span className="font-black text-xl italic tracking-tighter text-white">EGA <span className="text-amber-500">HQ</span></span></div>
-          <div className="space-y-2 mb-auto">
-            {authMode === "whitelist_staff" ? (
-              // Restricted nav for whitelist staff (supervisor / member)
-              <>
-                <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-gray-600">Whitelist</div>
-                <NavButton active={activeTab === "whitelist"} onClick={() => setActiveTab("whitelist")} icon={<Shield size={18} />} label="Applications" count={whitelistApps.filter(a => a.status === 'pending').length || undefined} />
-              </>
-            ) : authMode === "app_reviewer" ? (
-              // Restricted nav for application reviewers (streamer + family)
-              <>
-                <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-gray-600">Applications</div>
-                <NavButton active={activeTab === "applications"} onClick={() => setActiveTab("applications")} icon={<Video size={18} />} label="Creator Pool" />
-                <NavButton active={activeTab === "family"} onClick={() => setActiveTab("family")} icon={<Shield size={18} />} label="Family Roster" />
-              </>
-            ) : (
-              // Full admin nav
-              <>
-                <NavButton active={activeTab === "overview"}      onClick={() => setActiveTab("overview")}      icon={<LayoutDashboard size={18} />} label="Operational Overview" />
-                <div className="h-px bg-[#222] my-4" />
-                <NavButton active={activeTab === "codes"}         onClick={() => setActiveTab("codes")}         icon={<Ticket size={18} />}          label="Unit Records" />
-                <NavButton active={activeTab === "applications"}  onClick={() => setActiveTab("applications")}  icon={<Video size={18} />}            label="Creator Pool"   count={stats?.metrics.pendingApps} />
-                <NavButton active={activeTab === "family"}        onClick={() => setActiveTab("family")}        icon={<Shield size={18} />}           label="Family Roster"  count={pendingFamilyCount || undefined} />
-                <NavButton active={activeTab === "active_families"} onClick={() => setActiveTab("active_families")} icon={<Globe size={18} />}          label="Active Families" />
-                <div className="h-px bg-[#222] my-4" />
-                <NavButton active={activeTab === "whitelist"}      onClick={() => setActiveTab("whitelist")}      icon={<Shield size={18} />}           label="Whitelist Apps" count={whitelistApps.filter(a => a.status === 'pending').length || undefined} />
-                <NavButton active={activeTab === "players"}        onClick={() => setActiveTab("players")}        icon={<Users size={18} />}            label="Players" />
-                <NavButton active={activeTab === "whitelist_staff"} onClick={() => setActiveTab("whitelist_staff")} icon={<User size={18} />}           label="Whitelist Staff" />
-                <div className="h-px bg-[#222] my-4" />
-                <NavButton active={activeTab === "admins"}        onClick={() => setActiveTab("admins")}        icon={<Users size={18} />}            label="Staff Access" />
-              </>
-            )}
-          </div>
-          <div className="mt-10 pt-6 border-t border-[#222] space-y-3">
-            {authVia === "email" && (
-              <button onClick={() => setIsChangePwOpen(true)} className="text-gray-500 flex items-center gap-2 text-sm hover:text-amber-500 transition-colors">
-                <Lock size={14} /> Change Password
-              </button>
-            )}
-            <button onClick={handleLogout} className="text-gray-500 flex items-center gap-2 text-sm hover:text-white transition-colors">
-              <LogOut size={14} /> Terminate Session
-            </button>
-          </div>
+
+        {/* ── Desktop sidebar ── */}
+        <nav className="w-68 border-r border-[#222] bg-[#0d0d0d] flex-col p-6 hidden lg:flex">
+          {renderNavBody(() => {})}
         </nav>
 
+        {/* ── Mobile drawer (< lg) ── */}
+        {mobileNavOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileNavOpen(false)} />
+            <nav className="absolute inset-y-0 left-0 w-72 border-r border-[#222] bg-[#0d0d0d] flex flex-col p-6 overflow-y-auto animate-in slide-in-from-left duration-200">
+              {renderNavBody(() => setMobileNavOpen(false))}
+            </nav>
+          </div>
+        )}
+
         {/* ── Main ── */}
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+          {/* Mobile top bar (< lg) — hamburger + current-tab title */}
+          <div className="lg:hidden flex items-center gap-3 mb-6 pb-4 border-b border-[#222]">
+            <button
+              onClick={() => setMobileNavOpen(true)}
+              aria-label="Open navigation"
+              className="p-2 rounded-lg border border-[#333] text-gray-300 hover:text-white hover:bg-white/5"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="flex items-center gap-2 text-amber-500">
+              <Zap fill="currentColor" size={18} />
+              <span className="font-black italic tracking-tighter text-white text-sm">EGA <span className="text-amber-500">HQ</span></span>
+            </div>
+            <span className="ml-auto text-[10px] font-black uppercase tracking-widest text-gray-500 truncate max-w-[45vw]">{pageTitle[activeTab]}</span>
+          </div>
+
           <div className="max-w-6xl mx-auto space-y-10">
-            <div className="flex justify-between items-end">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-3">
               <div className="space-y-1">
-                  <h1 className="text-4xl font-black italic tracking-tighter uppercase">{pageTitle[activeTab]}</h1>
-                  <p className="text-gray-400 font-medium tracking-wide">Command &amp; Control Interface</p>
+                  <h1 className="text-2xl md:text-4xl font-black italic tracking-tighter uppercase">{pageTitle[activeTab]}</h1>
+                  <p className="text-gray-400 font-medium tracking-wide text-sm md:text-base">Command &amp; Control Interface</p>
               </div>
               <div className="flex gap-3">
                 <Button variant="outline" size="sm" onClick={fetchData} className="bg-transparent border-[#333] hover:bg-white/5 opacity-80"><RefreshCcw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} /> Sync State</Button>

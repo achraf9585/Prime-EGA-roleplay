@@ -1,6 +1,15 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useServerStatus } from "@/hooks/useServerStatus";
 
 export default function ServerInfo({ t }: { t: any }) {
+  const status = useServerStatus();
+  const playersLabel = status
+    ? status.online
+      ? `${status.players}${status.maxPlayers ? `/${status.maxPlayers}` : ""}`
+      : "Offline"
+    : t.server.details.playersOnlineValue;
   return (
     <section id="server" className="py-20 px-4">
       <div className="container mx-auto">
@@ -22,11 +31,16 @@ export default function ServerInfo({ t }: { t: any }) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[hsl(220_15%_72%)]">{t.server.details.playersOnline}</span>
-                  <span className="text-[#C9A84C] font-semibold">{t.server.details.playersOnlineValue}</span>
+                  <span className={`font-semibold flex items-center gap-2 ${status?.online === false ? "text-red-400" : "text-[#C9A84C]"}`}>
+                    {status && (
+                      <span className={`w-2 h-2 rounded-full ${status.online ? "bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.7)]" : "bg-red-500"}`} />
+                    )}
+                    {playersLabel}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[hsl(220_15%_72%)]">{t.server.details.uptime}</span>
-                  <span className="text-white font-semibold">{t.server.details.uptimeValue}</span>
+                  <span className="text-white font-semibold">{status?.online === false ? "—" : t.server.details.uptimeValue}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[hsl(220_15%_72%)]">{t.server.details.location}</span>

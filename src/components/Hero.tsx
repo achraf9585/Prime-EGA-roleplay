@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Star, Play, Users, Zap, ChevronDown, Disc } from "lucide-react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef } from "react";
+import { useServerStatus } from "@/hooks/useServerStatus";
 
 export default function Hero({ t }: { t: any }) {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -30,9 +31,17 @@ export default function Hero({ t }: { t: any }) {
     },
   };
 
+  const status = useServerStatus();
+  const playersValue = status
+    ? status.online
+      ? `${status.players}${status.maxPlayers ? `/${status.maxPlayers}` : ""}`
+      : "Offline"
+    : "…";
+  const seasonValue = status?.online === false ? "OFFLINE" : "3 LIVE";
+
   const stats = [
-    { Icon: Users, label: "Active Players", value: "500+" },
-    { Icon: Zap, label: "Season", value: "3 LIVE" },
+    { Icon: Users, label: "Players Online", value: playersValue, dot: status ? (status.online ? "bg-green-500" : "bg-red-500") : "bg-gray-500" },
+    { Icon: Zap, label: "Season", value: seasonValue },
     { Icon: Star, label: "Uptime", value: "24/7" },
   ];
 
@@ -173,14 +182,18 @@ export default function Hero({ t }: { t: any }) {
             variants={item}
             className="flex items-center gap-3 sm:gap-5 flex-wrap justify-center"
           >
-            {stats.map(({ Icon, label, value }) => (
+            {stats.map(({ Icon, label, value, dot }: any) => (
               <motion.div
                 key={label}
                 whileHover={{ scale: 1.06, y: -2 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#0a0514]/90 border border-[#8b5cf6]/20 backdrop-blur-sm cursor-default"
               >
-                <Icon className="w-4 h-4 text-[#a855f7] flex-shrink-0" />
+                {dot ? (
+                  <span className={`w-2 h-2 rounded-full ${dot} ${dot === 'bg-green-500' ? 'animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.7)]' : ''}`} />
+                ) : (
+                  <Icon className="w-4 h-4 text-[#a855f7] flex-shrink-0" />
+                )}
                 <span className="text-[#c084fc] font-bold font-orbitron text-sm">{value}</span>
                 <span className="text-[hsl(220_15%_58%)] text-xs font-inter hidden sm:inline">{label}</span>
               </motion.div>
