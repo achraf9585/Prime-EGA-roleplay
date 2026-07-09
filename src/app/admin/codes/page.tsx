@@ -359,7 +359,11 @@ export default function AdminDashboard() {
     }
 
     fetch("/api/whitelist/my-role")
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`status ${r.status}`);
+        return r.json();
+      })
+      .catch(() => ({ role: null }))
       .then(({ role }) => {
         if (!role) {
           window.location.href = "/admin/login";
