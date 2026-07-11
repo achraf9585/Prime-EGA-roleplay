@@ -568,8 +568,13 @@ export default function AdminDashboard() {
         body: JSON.stringify({ id: appId }),
       });
       const data = await res.json();
-      if (res.ok && data.granted) toast.success("Accepted role granted.");
-      else if (res.ok && !data.granted) toast.error("Bot could not assign the role (check perms / hierarchy).");
+      if (res.ok && data.granted) {
+        toast.success("Accepted role granted.");
+        // Reflect the new approved status locally + refresh the list
+        setSelectedWhitelistApp(prev => prev && prev.id === appId ? { ...prev, status: "approved" } : prev);
+        setWhitelistApps(prev => prev.map(a => a.id === appId ? { ...a, status: "approved" } : a));
+        fetchData();
+      } else if (res.ok && !data.granted) toast.error("Bot could not assign the role (check perms / hierarchy).");
       else toast.error(data.error || "Failed to grant role.");
     } catch {
       toast.error("Failed to grant role.");

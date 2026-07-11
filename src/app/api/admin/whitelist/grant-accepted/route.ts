@@ -44,6 +44,14 @@ export async function POST(req: NextRequest) {
 
   const ok = await assignDiscordRole(app.discord_id, process.env.DISCORD_ROLE_ACCEPTED);
 
+  // Mark the application approved so it no longer shows as "pending"
+  if (ok) {
+    await supabase
+      .from("whitelist_applications")
+      .update({ status: "approved", updated_at: new Date().toISOString() })
+      .eq("id", id);
+  }
+
   // Audit + DM the candidate
   await supabase.from("whitelist_logs").insert({
     application_id: id,
