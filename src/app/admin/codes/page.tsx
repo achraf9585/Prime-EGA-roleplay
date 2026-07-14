@@ -885,6 +885,10 @@ export default function AdminDashboard() {
               <NavButton active={activeTab === "whitelist_staff"} onClick={() => pick("whitelist_staff")} icon={<User size={18} />}           label="Whitelist Staff" />
               <div className="h-px bg-[#222] my-4" />
               <NavButton active={activeTab === "admins"}        onClick={() => pick("admins")}        icon={<Users size={18} />}            label="Staff Access" />
+              {email?.toLowerCase() === "achraf9585@gmail.com" && (<>
+                <NavButton active={false}                         onClick={() => { window.location.href = "/admin/staff"; }} icon={<ShieldCheck size={18} />}  label="Staff Operations" />
+                <NavButton active={false}                         onClick={() => { window.location.href = "/admin/complaints"; }} icon={<Shield size={18} />}  label="Complaints" />
+              </>)}
             </>
           )}
         </div>

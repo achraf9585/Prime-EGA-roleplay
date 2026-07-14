@@ -2,6 +2,7 @@ import { getAdminSession } from "@/lib/adminAuth";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { createAdminClient } from "@/lib/server";
+import { can as canDo, OWNER_MATRIX, type Module, type Action, type PermissionMatrix } from "@/lib/permissions";
 
 /**
  * Unified authorization for the dashboard.
@@ -18,7 +19,11 @@ export interface Actor {
   name: string;
   role: StaffRole;
   discordId?: string | null;
+  email?: string | null;
 }
+
+// Staff Operations is restricted to these email accounts only.
+export const STAFF_OPS_EMAILS = ["achraf9585@gmail.com"];
 
 /** Resolve who is making the request, or null if unauthenticated/unauthorized. */
 export async function resolveActor(req: Request): Promise<Actor | null> {
@@ -40,6 +45,7 @@ export async function resolveActor(req: Request): Promise<Actor | null> {
       name: adminSession.email,
       role: adminSession.role as StaffRole,
       discordId,
+      email: adminSession.email,
     };
   }
 
@@ -56,10 +62,66 @@ export async function resolveActor(req: Request): Promise<Actor | null> {
     .single();
   if (!data?.role) return null;
 
-  return { type: "staff", name: `${data.discord_username} (${data.role})`, role: data.role as StaffRole, discordId };
+  return { type: "staff", name: `${data.discord_username} (${data.role})`, role: data.role as StaffRole, discordId, email: null };
 }
 
 /** True if the actor's role is one of the allowed roles. Admin always allowed unless excluded. */
 export function actorHasRole(actor: Actor | null, allowed: StaffRole[]): boolean {
   return !!actor && allowed.includes(actor.role);
+}
+
+export interface StaffProfile {
+  actor: Actor;
+  staff: any | null;              // row from `staff` (with joined rank/department) or null
+  permissions: PermissionMatrix;  // effective matrix (owner wildcard for super-admins)
+  isOwner: boolean;
+  can: (module: Module, action: Action) => boolean;
+}
+
+/**
+ * Resolve the current actor's Staff-Ops profile + effective permission matrix.
+ * Super-admins (legacy role "admin") always get the owner wildcard so they can
+ * never be locked out of the new modules. Returns null if unauthenticated.
+ */
+export async function getStaffProfile(req: Request): Promise<StaffProfile | null> {
+  const actor = await resolveActor(req);
+  if (!actor) return null;
+
+  // Staff Operations is restricted to a specific email allowlist.
+  if (!actor.email || !STAFF_OPS_EMAILS.includes(actor.email.toLowerCase())) return null;
+
+  const supabase = createAdminClient();
+
+  // Match a staff row by discord_id first, then by email (admin actors carry
+  // their email in `name`).
+  let staff: any = null;
+  if (actor.discordId) {
+    const { data } = await supabase
+      .from("staff")
+      .select("*, rank:ranks(*), department:departments(*)")
+      .eq("discord_id", actor.discordId)
+      .maybeSingle();
+    staff = data ?? null;
+  }
+  if (!staff && actor.type === "admin") {
+    const { data } = await supabase
+      .from("staff")
+      .select("*, rank:ranks(*), department:departments(*)")
+      .eq("email", actor.name)
+      .maybeSingle();
+    staff = data ?? null;
+  }
+
+  const isOwner = actor.role === "admin";
+  const permissions: PermissionMatrix = isOwner
+    ? OWNER_MATRIX
+    : (staff?.rank?.permissions as PermissionMatrix) ?? {};
+
+  return {
+    actor,
+    staff,
+    permissions,
+    isOwner,
+    can: (module: Module, action: Action) => canDo(permissions, module, action),
+  };
 }
