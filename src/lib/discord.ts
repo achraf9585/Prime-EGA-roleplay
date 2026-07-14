@@ -21,6 +21,25 @@ export async function assignDiscordRole(userId: string, roleId: string | undefin
   }
 }
 
+// Fetch a Discord user's avatar URL via the bot. Falls back to the default
+// embed avatar. Returns null if the user can't be fetched.
+export async function fetchDiscordAvatar(userId: string): Promise<string | null> {
+  const botToken = process.env.DISCORD_BOT_TOKEN;
+  if (!botToken || !userId) return null;
+  try {
+    const res = await fetch(`https://discord.com/api/v10/users/${userId}`, {
+      headers: { Authorization: `Bot ${botToken}` },
+    });
+    if (!res.ok) return null;
+    const d = await res.json();
+    return d.avatar
+      ? `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}.png`
+      : `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(d.id) >> BigInt(22)) % 6}.png`;
+  } catch {
+    return null;
+  }
+}
+
 // Remove a Discord role from a guild member via the bot.
 // Best-effort: returns false if config is missing, the user has left, or the role
 // was above the bot's top role. Safe to call even if the user doesn't have the role.
