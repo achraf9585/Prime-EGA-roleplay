@@ -441,11 +441,11 @@ export default function StaffOpsPage() {
             <p className="text-xs text-gray-500">Weekly duty roster · 8:00 PM → 2:00 AM · target <span className="text-amber-400 font-bold">5 slots/week</span> per admin. Dots show this week's attendance vs actual duty (<span className="text-green-400">●</span> covered <span className="text-red-400">●</span> missed <span className="text-gray-500">●</span> upcoming).</p>
 
             {/* Grid */}
-            <div className="bg-[#111] border border-[#222] rounded-xl overflow-x-auto">
+            <div className="bg-[#111] border border-[#222] rounded-xl overflow-auto max-h-[70vh]">
               <div className="min-w-[980px]">
                 <div className="grid" style={{ gridTemplateColumns: "72px repeat(6, 1fr)" }}>
-                  <div className="p-3 border-b border-r border-[#222]" />
-                  {SCHED_SLOTS.map(slot => <div key={slot.h} className="p-3 text-center text-xs font-black uppercase tracking-widest text-amber-400/80 border-b border-[#222] whitespace-nowrap">{slot.l}</div>)}
+                  <div className="p-3 border-b border-r border-[#222] sticky top-0 z-20 bg-[#111]" />
+                  {SCHED_SLOTS.map(slot => <div key={slot.h} className="p-3 text-center text-xs font-black uppercase tracking-widest text-amber-400/80 border-b border-[#222] whitespace-nowrap sticky top-0 z-10 bg-[#111]">{slot.l}</div>)}
                   {SCHED_DAYS.map((day, dayIdx) => (
                     <div key={day} className="contents">
                       <div className="p-3 text-xs font-black uppercase tracking-widest text-gray-300 border-r border-b border-[#222] flex items-center">{day}</div>
