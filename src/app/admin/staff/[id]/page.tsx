@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Clock, CalendarDays, Timer, Activity, Plus, Gavel, TrendingUp } from "lucide-react";
+import { ArrowLeft, Clock, CalendarDays, Timer, Activity, Plus, Gavel, TrendingUp, Trash2 } from "lucide-react";
 
 const DISC_TYPES: Record<string, { label: string; color: string }> = {
   verbal_warning: { label: "Verbal Warning", color: "#eab308" },
@@ -40,6 +40,8 @@ export default function StaffProfilePage() {
   const [promotions, setPromotions] = useState<any[]>([]);
   const [promoForm, setPromoForm] = useState<any>(null);
   const [ranks, setRanks] = useState<any[]>([]);
+  const [leave, setLeave] = useState<any[]>([]);
+  const [leaveForm, setLeaveForm] = useState<any>(null);
 
   const loadProfile = useCallback(() => {
     fetch(`/api/admin/staff/${id}`).then(r => r.ok ? r.json() : null).then(d => { if (d) setData(d); }).catch(() => {});
@@ -49,6 +51,9 @@ export default function StaffProfilePage() {
   }, [id]);
   const loadPromotions = useCallback(() => {
     fetch(`/api/admin/promotions?staff_id=${id}`).then(r => r.ok ? r.json() : []).then(setPromotions).catch(() => {});
+  }, [id]);
+  const loadLeave = useCallback(() => {
+    fetch(`/api/admin/leave?staff_id=${id}`).then(r => r.ok ? r.json() : []).then(setLeave).catch(() => {});
   }, [id]);
 
   useEffect(() => {
@@ -65,8 +70,21 @@ export default function StaffProfilePage() {
       .finally(() => setLoading(false));
     loadDiscipline();
     loadPromotions();
+    loadLeave();
     fetch("/api/admin/ranks").then(r => r.ok ? r.json() : []).then(setRanks).catch(() => {});
-  }, [id, router, loadDiscipline, loadPromotions]);
+  }, [id, router, loadDiscipline, loadPromotions, loadLeave]);
+
+  const saveLeave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("/api/admin/leave", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...leaveForm, staff_id: id }) });
+    const d = await res.json();
+    if (res.ok) { toast.success("Leave logged."); setLeaveForm(null); loadLeave(); } else toast.error(d.error || "Failed.");
+  };
+  const deleteLeave = async (lid: string) => {
+    if (!confirm("Remove this record?")) return;
+    const res = await fetch(`/api/admin/leave?id=${lid}`, { method: "DELETE" });
+    if (res.ok) loadLeave(); else toast.error("Failed.");
+  };
 
   const savePromotion = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,6 +159,40 @@ export default function StaffProfilePage() {
           <Stat icon={<Activity size={16} />} label="Sessions" value={String(d.sessionCount)} />
           <Stat icon={<Clock size={16} />} label="Last On Duty" value={d.lastOnDuty ? new Date(d.lastOnDuty).toLocaleDateString() : "—"} />
         </div>
+
+        {/* Performance */}
+        {d && (() => {
+          const p = data.performance;
+          if (!p) return null;
+          const gradeColor = p.grade === "A" ? "#22c55e" : p.grade === "B" ? "#84cc16" : p.grade === "C" ? "#eab308" : p.grade === "D" ? "#f97316" : "#ef4444";
+          const riskColor = p.risk === "low" ? "bg-green-500/15 text-green-400" : p.risk === "medium" ? "bg-amber-500/15 text-amber-400" : "bg-red-500/15 text-red-400";
+          const Bar = ({ label, val }: { label: string; val: number | null }) => (
+            <div>
+              <div className="flex justify-between text-[10px] mb-1"><span className="text-gray-500 uppercase tracking-widest font-black">{label}</span><span className="text-gray-300 font-mono">{val === null ? "N/A" : val}</span></div>
+              <div className="h-2 bg-white/5 rounded-full overflow-hidden">{val !== null && <div className="h-full rounded-full" style={{ width: `${val}%`, background: val >= 70 ? "#22c55e" : val >= 45 ? "#eab308" : "#ef4444" }} />}</div>
+            </div>
+          );
+          return (
+            <Card className="bg-[#111] border-[#222] p-5">
+              <div className="flex items-center gap-5 flex-wrap">
+                <div className="text-center">
+                  <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl font-black italic" style={{ background: `${gradeColor}18`, color: gradeColor }}>{p.grade}</div>
+                  <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest mt-2">Grade</p>
+                </div>
+                <div className="flex-1 min-w-[220px] space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Performance · Overall {p.overall}</p>
+                    <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${riskColor}`}>{p.risk} risk</span>
+                  </div>
+                  <Bar label="Activity" val={p.activity} />
+                  <Bar label="Reliability" val={p.reliability} />
+                  <Bar label="Conduct" val={p.conduct} />
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-600 italic mt-3">Computed from duty hours, schedule compliance, discipline & complaints. Other dimensions (professionalism, leadership…) require FiveM/manual data.</p>
+            </Card>
+          );
+        })()}
 
         {/* Recent sessions */}
         <Card className="bg-[#111] border-[#222] overflow-hidden">
@@ -221,7 +273,52 @@ export default function StaffProfilePage() {
             </TableBody>
           </Table>
         </Card>
+        {/* Leave & Absences */}
+        <Card className="bg-[#111] border-[#222] overflow-hidden">
+          <div className="p-3 border-b border-[#222] flex items-center justify-between">
+            <p className="text-xs font-black uppercase tracking-widest text-gray-500 flex items-center gap-2"><CalendarDays size={14} /> Leave & Absences</p>
+            <Button size="sm" onClick={() => setLeaveForm({ type: "leave", start_date: "", end_date: "", reason: "" })} className="bg-amber-500 text-black font-black uppercase text-[10px] tracking-widest h-7"><Plus size={13} className="mr-1" /> Log</Button>
+          </div>
+          <Table>
+            <TableHeader className="bg-[#1a1a1a]"><TableRow className="border-[#222]"><TableHead>Type</TableHead><TableHead>From</TableHead><TableHead>To</TableHead><TableHead>Reason</TableHead><TableHead></TableHead></TableRow></TableHeader>
+            <TableBody>
+              {leave.length === 0 && <TableRow><TableCell colSpan={5} className="text-center text-gray-600 py-8 italic">No leave records.</TableCell></TableRow>}
+              {leave.map(l => (
+                <TableRow key={l.id} className="border-[#222] hover:bg-white/5">
+                  <TableCell><Badge className="border-none text-[10px] uppercase bg-blue-500/15 text-blue-300">{l.type}</Badge></TableCell>
+                  <TableCell className="text-xs text-gray-400">{new Date(l.start_date).toLocaleDateString()}</TableCell>
+                  <TableCell className="text-xs text-gray-400">{l.end_date ? new Date(l.end_date).toLocaleDateString() : "—"}</TableCell>
+                  <TableCell className="text-xs text-gray-300 max-w-[200px]"><div className="truncate" title={l.reason}>{l.reason || "—"}</div></TableCell>
+                  <TableCell className="text-right"><Button size="icon" variant="ghost" onClick={() => deleteLeave(l.id)} className="text-red-500 h-7 w-7"><Trash2 size={13} /></Button></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
       </div>
+
+      {/* Log leave dialog */}
+      <Dialog open={!!leaveForm} onOpenChange={o => !o && setLeaveForm(null)}>
+        <DialogContent className="bg-[#0a0a0a] border-[#222] text-white">
+          <DialogHeader><DialogTitle className="font-black italic uppercase tracking-tighter">Log Leave / Absence</DialogTitle></DialogHeader>
+          {leaveForm && (
+            <form onSubmit={saveLeave} className="space-y-3 pt-2">
+              <div className="space-y-1">
+                <Label className="text-gray-500 text-[10px] uppercase font-black tracking-widest">Type</Label>
+                <select value={leaveForm.type} onChange={e => setLeaveForm({ ...leaveForm, type: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-md h-10 px-3 text-sm capitalize">
+                  <option value="leave">Leave</option><option value="vacation">Vacation</option><option value="absent">Absent</option>
+                </select>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black tracking-widest">From</Label><Input type="date" required value={leaveForm.start_date} onChange={e => setLeaveForm({ ...leaveForm, start_date: e.target.value })} className="bg-[#111] border-[#333]" /></div>
+                <div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black tracking-widest">To (optional)</Label><Input type="date" value={leaveForm.end_date} onChange={e => setLeaveForm({ ...leaveForm, end_date: e.target.value })} className="bg-[#111] border-[#333]" /></div>
+              </div>
+              <div className="space-y-1"><Label className="text-gray-500 text-[10px] uppercase font-black tracking-widest">Reason</Label><Input value={leaveForm.reason} onChange={e => setLeaveForm({ ...leaveForm, reason: e.target.value })} className="bg-[#111] border-[#333]" /></div>
+              <DialogFooter><Button type="submit" className="bg-amber-500 text-black font-black uppercase tracking-widest">Log</Button></DialogFooter>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Propose promotion dialog */}
       <Dialog open={!!promoForm} onOpenChange={o => !o && setPromoForm(null)}>

@@ -10,7 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Plus, Trash2, Users, Shield, Building2, RefreshCcw, Clock, LayoutDashboard, ShieldAlert, TrendingUp, Gavel, CalendarDays, X } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Users, Shield, Building2, RefreshCcw, Clock, LayoutDashboard, ShieldAlert, TrendingUp, Gavel, CalendarDays, X, ScrollText, Bell, Sparkles, AlertTriangle } from "lucide-react";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+
+const AUDIT_MODULES = ["all", "staff", "ranks", "departments", "duty", "discipline", "promotions", "complaints"];
 
 const SCHED_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const SCHED_SLOTS = [
@@ -27,7 +30,14 @@ interface Staff {
   rank: Rank | null; department: Department | null;
 }
 
-type Tab = "overview" | "directory" | "duty" | "schedule" | "ranks" | "departments";
+type Tab = "overview" | "directory" | "duty" | "schedule" | "notifications" | "assistant" | "ranks" | "departments" | "audit";
+
+const AI_REPORTS = [
+  { key: "executive_summary", label: "Executive Summary", desc: "High-level state of the team for leadership." },
+  { key: "weekly_report", label: "Weekly Report", desc: "Activity, complaints, promotions & coverage over the period." },
+  { key: "risk_analysis", label: "Risk Analysis", desc: "Where the team carries operational risk, ranked." },
+  { key: "promotion_recommendations", label: "Promotion & Training", desc: "Who looks ready, backed by the numbers." },
+];
 const STATUSES = ["active", "inactive", "on_leave", "suspended"];
 
 // Duty tracking launched on this date — no window ever counts data before it.
@@ -71,10 +81,19 @@ export default function StaffOpsPage() {
   const [dutyRange, setDutyRange] = useState<"today" | "week" | "month">("week");
   const [syncing, setSyncing] = useState(false);
   const [editSession, setEditSession] = useState<any>(null);
+  // Audit
+  const [audit, setAudit] = useState<any[]>([]);
+  const [auditModule, setAuditModule] = useState("all");
   // Schedule
   const [schedule, setSchedule] = useState<any[]>([]);
   const [addCell, setAddCell] = useState<any>(null); // { day, slot }
   const [addStaffId, setAddStaffId] = useState("");
+  // Notifications
+  const [notif, setNotif] = useState<{ alerts: any[]; counts: any; generatedAt: string } | null>(null);
+  // AI Assistant
+  const [aiType, setAiType] = useState<string>("executive_summary");
+  const [aiReport, setAiReport] = useState<{ label: string; text: string; generatedAt: string } | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   // Auth gate — reuse the existing admin session check
   useEffect(() => {
@@ -129,10 +148,32 @@ export default function StaffOpsPage() {
   }, []);
   useEffect(() => { if (ready && tab === "overview") loadOverview(); }, [ready, tab, loadOverview]);
 
+  const loadAudit = useCallback(() => {
+    fetch(`/api/admin/audit?module=${auditModule}`).then(r => r.ok ? r.json() : []).then(setAudit).catch(() => {});
+  }, [auditModule]);
+  useEffect(() => { if (ready && tab === "audit") loadAudit(); }, [ready, tab, loadAudit]);
+
   const loadSchedule = useCallback(() => {
     fetch("/api/admin/schedule").then(r => r.ok ? r.json() : []).then(setSchedule).catch(() => {});
   }, []);
   useEffect(() => { if (ready && tab === "schedule") loadSchedule(); }, [ready, tab, loadSchedule]);
+
+  const loadNotifications = useCallback(() => {
+    fetch("/api/admin/notifications").then(r => r.ok ? r.json() : null).then(d => { if (d) setNotif(d); }).catch(() => {});
+  }, []);
+  // Load once on ready so the header bell badge is always current.
+  useEffect(() => { if (ready) loadNotifications(); }, [ready, loadNotifications]);
+
+  const generateReport = useCallback(async (type: string) => {
+    setAiLoading(true); setAiReport(null);
+    try {
+      const res = await fetch("/api/admin/ai", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type }) });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || "Failed to generate report."); return; }
+      setAiReport(data);
+    } catch { toast.error("Failed to reach the AI service."); }
+    finally { setAiLoading(false); }
+  }, []);
 
   const addAssignment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -257,9 +298,12 @@ export default function StaffOpsPage() {
 
         {/* Sub-tab nav */}
         <div className="flex border-b border-[#222] gap-1">
-          {([["overview", "Overview", LayoutDashboard], ["directory", "Directory", Users], ["duty", "Duty", Clock], ["schedule", "Schedule", CalendarDays], ["ranks", "Ranks", Shield], ["departments", "Departments", Building2]] as const).map(([key, label, Icon]) => (
+          {([["overview", "Overview", LayoutDashboard], ["directory", "Directory", Users], ["duty", "Duty", Clock], ["schedule", "Schedule", CalendarDays], ["notifications", "Alerts", Bell], ["assistant", "AI Assistant", Sparkles], ["ranks", "Ranks", Shield], ["departments", "Departments", Building2], ["audit", "Audit Log", ScrollText]] as const).map(([key, label, Icon]) => (
             <button key={key} onClick={() => setTab(key)} className={`flex items-center gap-2 px-4 py-3 text-xs font-black uppercase tracking-widest border-b-2 -mb-px transition-colors ${tab === key ? "text-amber-500 border-amber-500" : "text-gray-500 border-transparent hover:text-gray-300"}`}>
               <Icon size={14} /> {label}
+              {key === "notifications" && notif && notif.counts.total > 0 && (
+                <span className={`ml-0.5 min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-black flex items-center justify-center ${notif.counts.high > 0 ? "bg-red-500 text-white" : "bg-amber-500 text-black"}`}>{notif.counts.total}</span>
+              )}
             </button>
           ))}
         </div>
@@ -280,6 +324,22 @@ export default function StaffOpsPage() {
                   <Kpi icon={<Gavel size={16} />} label="Active Discipline" value={String(overview.discipline.active)} accent={overview.discipline.active ? "red" : undefined} />
                   <Kpi icon={<ShieldAlert size={16} />} label="Total Complaints" value={String(overview.complaints.total)} />
                 </div>
+
+                {/* Duty trend chart */}
+                <Card className="bg-[#111] border-[#222] p-4">
+                  <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-3 flex items-center gap-2"><TrendingUp size={13} /> Duty Hours — last 14 days</p>
+                  <div style={{ width: "100%", height: 200 }}>
+                    <ResponsiveContainer>
+                      <BarChart data={overview.duty.dailyDuty || []} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#222" vertical={false} />
+                        <XAxis dataKey="date" tickFormatter={(d) => d.slice(5)} tick={{ fill: "#666", fontSize: 10 }} axisLine={{ stroke: "#333" }} tickLine={false} />
+                        <YAxis tick={{ fill: "#666", fontSize: 10 }} axisLine={false} tickLine={false} />
+                        <Tooltip contentStyle={{ background: "#111", border: "1px solid #333", borderRadius: 8, fontSize: 12 }} labelStyle={{ color: "#aaa" }} formatter={(v: any) => [`${v}h`, "Duty"]} />
+                        <Bar dataKey="hours" fill="#f59e0b" radius={[3, 3, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Card>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   {/* Duty leaderboard */}
@@ -440,6 +500,27 @@ export default function StaffOpsPage() {
           <div className="space-y-4">
             <p className="text-xs text-gray-500">Weekly duty roster · 8:00 PM → 2:00 AM · target <span className="text-amber-400 font-bold">5 slots/week</span> per admin. Dots show this week's attendance vs actual duty (<span className="text-green-400">●</span> covered <span className="text-red-400">●</span> missed <span className="text-gray-500">●</span> upcoming).</p>
 
+            {/* Coverage heatmap */}
+            <div className="bg-[#111] border border-[#222] rounded-xl p-4">
+              <p className="text-[10px] uppercase font-black tracking-widest text-gray-500 mb-3">Coverage — <span className="text-red-400">red = gap</span>, <span className="text-amber-400">amber = 1</span>, <span className="text-green-400">green = 2+</span></p>
+              <div className="overflow-x-auto">
+                <div className="min-w-[720px] grid" style={{ gridTemplateColumns: "60px repeat(6, 1fr)" }}>
+                  <div />
+                  {SCHED_SLOTS.map(s => <div key={s.h} className="text-center text-[9px] text-gray-500 pb-1 whitespace-nowrap">{s.l}</div>)}
+                  {SCHED_DAYS.map((day, di) => (
+                    <div key={day} className="contents">
+                      <div className="text-[10px] text-gray-500 font-black pr-2 flex items-center">{day}</div>
+                      {SCHED_SLOTS.map(s => {
+                        const c = schedule.filter(a => a.day_of_week === di && a.slot_hour === s.h).length;
+                        const col = c === 0 ? "bg-red-500/25 text-red-300" : c === 1 ? "bg-amber-500/25 text-amber-300" : "bg-green-500/25 text-green-300";
+                        return <div key={s.h} className={`m-0.5 rounded text-center text-[11px] font-bold py-1.5 ${col}`}>{c}</div>;
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             {/* Grid */}
             <div className="bg-[#111] border border-[#222] rounded-xl overflow-auto max-h-[70vh]">
               <div className="min-w-[980px]">
@@ -504,6 +585,34 @@ export default function StaffOpsPage() {
           </div>
         )}
 
+        {/* ── AUDIT LOG ── */}
+        {tab === "audit" && (
+          <div className="space-y-4">
+            <div className="flex gap-2 flex-wrap">
+              {AUDIT_MODULES.map(m => (
+                <button key={m} onClick={() => setAuditModule(m)} className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border transition-colors ${auditModule === m ? "border-amber-500 text-amber-500" : "border-[#333] text-gray-500 hover:text-gray-300"}`}>{m}</button>
+              ))}
+            </div>
+            <Card className="bg-[#111] border-[#222] overflow-hidden">
+              <Table>
+                <TableHeader className="bg-[#1a1a1a]"><TableRow className="border-[#222]"><TableHead>When</TableHead><TableHead>Actor</TableHead><TableHead>Module</TableHead><TableHead>Action</TableHead><TableHead>Summary</TableHead></TableRow></TableHeader>
+                <TableBody>
+                  {audit.length === 0 && <TableRow><TableCell colSpan={5} className="text-center text-gray-600 py-8 italic">No audit entries.</TableCell></TableRow>}
+                  {audit.map(a => (
+                    <TableRow key={a.id} className="border-[#222] hover:bg-white/5">
+                      <TableCell className="text-xs text-gray-500 whitespace-nowrap">{new Date(a.created_at).toLocaleString()}</TableCell>
+                      <TableCell className="text-xs"><span className="font-medium">{a.actor_name || "—"}</span> {a.actor_type && <span className="text-[9px] text-gray-500 uppercase">({a.actor_type})</span>}</TableCell>
+                      <TableCell><Badge className="border-none text-[9px] uppercase bg-white/5 text-gray-300">{a.module}</Badge></TableCell>
+                      <TableCell className="text-xs text-gray-400">{a.action}</TableCell>
+                      <TableCell className="text-xs text-gray-300 max-w-md"><div className="truncate" title={a.summary}>{a.summary || "—"}</div></TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Card>
+          </div>
+        )}
+
         {/* ── RANKS ── */}
         {tab === "ranks" && (
           <div className="space-y-4">
@@ -550,6 +659,86 @@ export default function StaffOpsPage() {
                 </TableBody>
               </Table>
             </Card>
+          </div>
+        )}
+
+        {/* ── NOTIFICATIONS / ALERTS ── */}
+        {tab === "notifications" && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 flex-wrap">
+              <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest flex items-center gap-2"><Bell size={13} /> Live Alerts</p>
+              {notif && <span className="text-[11px] text-gray-600">Updated {new Date(notif.generatedAt).toLocaleTimeString()}</span>}
+              <Button variant="outline" size="sm" onClick={loadNotifications} className="ml-auto bg-transparent border-[#333] hover:bg-white/5 text-xs"><RefreshCcw className="w-3 h-3 mr-1.5" /> Refresh</Button>
+            </div>
+            {!notif ? (
+              <div className="flex justify-center py-16"><div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" /></div>
+            ) : notif.alerts.length === 0 ? (
+              <Card className="bg-[#111] border-[#222] p-10 text-center">
+                <Bell className="w-10 h-10 text-gray-700 mx-auto mb-3" />
+                <p className="text-gray-400 font-black uppercase tracking-widest text-sm">All clear</p>
+                <p className="text-gray-600 text-xs mt-1">No operational issues need attention right now.</p>
+              </Card>
+            ) : (
+              <div className="space-y-2.5">
+                {notif.alerts.map((a: any) => {
+                  const tone = a.severity === "high" ? "border-red-500/40 bg-red-500/5" : a.severity === "medium" ? "border-amber-500/40 bg-amber-500/5" : "border-[#222] bg-[#111]";
+                  const iconColor = a.severity === "high" ? "text-red-400" : a.severity === "medium" ? "text-amber-400" : "text-gray-500";
+                  return (
+                    <Card key={a.id} className={`border p-4 flex items-start gap-3 ${tone}`}>
+                      <AlertTriangle className={`w-4 h-4 mt-0.5 shrink-0 ${iconColor}`} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-black text-sm">{a.title}</span>
+                          <Badge className={`border-none text-[9px] uppercase tracking-widest ${a.severity === "high" ? "bg-red-500/20 text-red-400" : a.severity === "medium" ? "bg-amber-500/20 text-amber-400" : "bg-gray-500/20 text-gray-400"}`}>{a.severity}</Badge>
+                          <span className="text-[9px] text-gray-600 uppercase tracking-widest">{a.module}</span>
+                        </div>
+                        <p className="text-gray-400 text-xs mt-1">{a.detail}</p>
+                      </div>
+                      {a.href && a.href !== "/admin/staff" && (
+                        <Button size="sm" variant="ghost" onClick={() => router.push(a.href)} className="text-xs h-7 shrink-0">Open</Button>
+                      )}
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── AI ASSISTANT ── */}
+        {tab === "assistant" && (
+          <div className="space-y-4">
+            <Card className="bg-[#111] border-[#222] p-4">
+              <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1 flex items-center gap-2"><Sparkles size={13} /> AI Assistant</p>
+              <p className="text-gray-500 text-xs mb-4">Generates analysis from your real staff data. Recommendations are advisory only — decisions remain yours.</p>
+              <div className="grid sm:grid-cols-2 gap-2.5">
+                {AI_REPORTS.map(r => (
+                  <button key={r.key} onClick={() => setAiType(r.key)} className={`text-left p-3 rounded-lg border transition-colors ${aiType === r.key ? "border-amber-500 bg-amber-500/5" : "border-[#222] hover:border-[#333]"}`}>
+                    <p className="font-black text-sm">{r.label}</p>
+                    <p className="text-gray-500 text-xs mt-0.5">{r.desc}</p>
+                  </button>
+                ))}
+              </div>
+              <Button onClick={() => generateReport(aiType)} disabled={aiLoading} className="mt-4 bg-amber-500 text-black font-black uppercase tracking-widest text-xs disabled:opacity-50">
+                {aiLoading ? <><div className="w-3.5 h-3.5 border-2 border-black/40 border-t-black rounded-full animate-spin mr-2" /> Generating…</> : <><Sparkles size={14} className="mr-1.5" /> Generate</>}
+              </Button>
+            </Card>
+            {aiLoading && (
+              <Card className="bg-[#111] border-[#222] p-8 flex flex-col items-center gap-3">
+                <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                <p className="text-gray-500 text-xs">Analysing staff data — this can take up to a minute.</p>
+              </Card>
+            )}
+            {aiReport && !aiLoading && (
+              <Card className="bg-[#111] border-[#222] p-5">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  <span className="font-black italic uppercase tracking-tighter text-lg">{aiReport.label}</span>
+                  <span className="text-[11px] text-gray-600 ml-auto">{new Date(aiReport.generatedAt).toLocaleString()}</span>
+                </div>
+                <div className="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">{aiReport.text}</div>
+                <p className="text-[10px] text-gray-600 mt-4 pt-3 border-t border-[#222]">Generated by AI from live data. Verify before acting.</p>
+              </Card>
+            )}
           </div>
         )}
       </div>

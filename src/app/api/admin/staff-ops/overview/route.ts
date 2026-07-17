@@ -57,9 +57,27 @@ export async function GET(req: NextRequest) {
   const { data: disc } = await db.from("discipline_records").select("status, expires_at").eq("status", "active");
   const activeDiscipline = (disc || []).filter((d) => !d.expires_at || new Date(d.expires_at).getTime() > now).length;
 
+  // Daily duty hours for the last 14 days (for the trend chart)
+  const days14 = new Date(); days14.setHours(0, 0, 0, 0); days14.setDate(days14.getDate() - 13);
+  const { data: recent } = await db
+    .from("duty_sessions")
+    .select("started_at, ended_at, duration_seconds")
+    .gte("started_at", days14.toISOString())
+    .limit(5000);
+  const daily: Record<string, number> = {};
+  for (let i = 0; i < 14; i++) { const d = new Date(days14); d.setDate(d.getDate() + i); daily[d.toISOString().slice(0, 10)] = 0; }
+  for (const s of recent || []) {
+    const key = new Date(s.started_at).toISOString().slice(0, 10);
+    if (key in daily) {
+      const secs = s.duration_seconds || (!s.ended_at ? Math.round((now - new Date(s.started_at).getTime()) / 1000) : 0);
+      daily[key] += secs;
+    }
+  }
+  const dailyDuty = Object.entries(daily).map(([date, seconds]) => ({ date, hours: Math.round((seconds / 3600) * 10) / 10 }));
+
   return NextResponse.json({
     staff: { total: staffTotal, active: staffActive },
-    duty: { onDutyNow, todaySeconds, weekSeconds, top: topDuty },
+    duty: { onDutyNow, todaySeconds, weekSeconds, top: topDuty, dailyDuty },
     complaints: { open: openComplaints, total: complaints?.length || 0, byStatus: cByStatus },
     promotions: { pending: pendingPromotions || 0 },
     discipline: { active: activeDiscipline },
