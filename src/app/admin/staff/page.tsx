@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Plus, Trash2, Users, Shield, Building2, RefreshCcw, Clock, LayoutDashboard, ShieldAlert, TrendingUp, Gavel, CalendarDays, X, ScrollText, Bell, Sparkles, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Users, Shield, Building2, RefreshCcw, Clock, LayoutDashboard, ShieldAlert, TrendingUp, Gavel, CalendarDays, X, ScrollText, Bell, Sparkles, AlertTriangle, Ticket, Timer } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 const AUDIT_MODULES = ["all", "staff", "ranks", "departments", "duty", "discipline", "promotions", "complaints"];
@@ -30,7 +30,7 @@ interface Staff {
   rank: Rank | null; department: Department | null;
 }
 
-type Tab = "overview" | "directory" | "duty" | "schedule" | "notifications" | "assistant" | "ranks" | "departments" | "audit";
+type Tab = "overview" | "directory" | "duty" | "schedule" | "tickets" | "notifications" | "assistant" | "ranks" | "departments" | "audit";
 
 const AI_REPORTS = [
   { key: "executive_summary", label: "Executive Summary", desc: "High-level state of the team for leadership." },
@@ -94,6 +94,10 @@ export default function StaffOpsPage() {
   const [aiType, setAiType] = useState<string>("executive_summary");
   const [aiReport, setAiReport] = useState<{ label: string; text: string; generatedAt: string } | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
+  // Tickets
+  const [tickets, setTickets] = useState<any>(null);
+  const [ticketRange, setTicketRange] = useState<"week" | "month" | "all">("month");
+  const [ticketSyncing, setTicketSyncing] = useState(false);
 
   // Auth gate — reuse the existing admin session check
   useEffect(() => {
@@ -163,6 +167,28 @@ export default function StaffOpsPage() {
   }, []);
   // Load once on ready so the header bell badge is always current.
   useEffect(() => { if (ready) loadNotifications(); }, [ready, loadNotifications]);
+
+  const loadTickets = useCallback((range: "week" | "month" | "all") => {
+    let url = "/api/admin/tickets";
+    if (range !== "all") {
+      const days = range === "week" ? 7 : 30;
+      const from = new Date(Math.max(Date.now() - days * DAY_MS, TRACKING_START.getTime()));
+      url += `?from=${from.toISOString()}`;
+    }
+    fetch(url).then(r => r.ok ? r.json() : null).then(d => { if (d) setTickets(d); }).catch(() => {});
+  }, []);
+  useEffect(() => { if (ready && tab === "tickets") loadTickets(ticketRange); }, [ready, tab, ticketRange, loadTickets]);
+
+  const syncTickets = async () => {
+    setTicketSyncing(true);
+    try {
+      const res = await fetch("/api/admin/tickets/sync", { method: "POST" });
+      const d = await res.json();
+      if (res.ok) { toast.success(`Synced — ${d.live} open, ${d.closed} newly closed.`); loadTickets(ticketRange); }
+      else toast.error(d.error || "Sync failed.");
+    } catch { toast.error("Sync failed."); }
+    finally { setTicketSyncing(false); }
+  };
 
   const generateReport = useCallback(async (type: string) => {
     setAiLoading(true); setAiReport(null);
@@ -298,7 +324,7 @@ export default function StaffOpsPage() {
 
         {/* Sub-tab nav */}
         <div className="flex border-b border-[#222] gap-1">
-          {([["overview", "Overview", LayoutDashboard], ["directory", "Directory", Users], ["duty", "Duty", Clock], ["schedule", "Schedule", CalendarDays], ["notifications", "Alerts", Bell], ["assistant", "AI Assistant", Sparkles], ["ranks", "Ranks", Shield], ["departments", "Departments", Building2], ["audit", "Audit Log", ScrollText]] as const).map(([key, label, Icon]) => (
+          {([["overview", "Overview", LayoutDashboard], ["directory", "Directory", Users], ["duty", "Duty", Clock], ["schedule", "Schedule", CalendarDays], ["tickets", "Tickets", Ticket], ["notifications", "Alerts", Bell], ["assistant", "AI Assistant", Sparkles], ["ranks", "Ranks", Shield], ["departments", "Departments", Building2], ["audit", "Audit Log", ScrollText]] as const).map(([key, label, Icon]) => (
             <button key={key} onClick={() => setTab(key)} className={`flex items-center gap-2 px-4 py-3 text-xs font-black uppercase tracking-widest border-b-2 -mb-px transition-colors ${tab === key ? "text-amber-500 border-amber-500" : "text-gray-500 border-transparent hover:text-gray-300"}`}>
               <Icon size={14} /> {label}
               {key === "notifications" && notif && notif.counts.total > 0 && (
@@ -659,6 +685,82 @@ export default function StaffOpsPage() {
                 </TableBody>
               </Table>
             </Card>
+          </div>
+        )}
+
+        {/* ── TICKETS ── */}
+        {tab === "tickets" && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex bg-[#111] border border-[#222] rounded-lg p-0.5">
+                {(["week", "month", "all"] as const).map(r => (
+                  <button key={r} onClick={() => setTicketRange(r)} className={`px-3 py-1.5 rounded-md text-[11px] font-black uppercase tracking-widest transition-colors ${ticketRange === r ? "bg-amber-500 text-black" : "text-gray-500 hover:text-gray-300"}`}>{r === "all" ? "All" : r === "week" ? "7 Days" : "30 Days"}</button>
+                ))}
+              </div>
+              <Button variant="outline" size="sm" onClick={syncTickets} disabled={ticketSyncing} className="ml-auto bg-transparent border-[#333] hover:bg-white/5 text-xs disabled:opacity-50">
+                <RefreshCcw className={`w-3 h-3 mr-1.5 ${ticketSyncing ? "animate-spin" : ""}`} /> {ticketSyncing ? "Syncing…" : "Sync from Discord"}
+              </Button>
+            </div>
+
+            {!tickets ? (
+              <div className="flex justify-center py-16"><div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" /></div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <Kpi icon={<Ticket size={16} />} label="Open Tickets" value={String(tickets.totals.open)} accent={tickets.totals.awaiting_response ? "amber" : "green"} />
+                  <Kpi icon={<AlertTriangle size={16} />} label="Awaiting Reply" value={String(tickets.totals.awaiting_response)} accent={tickets.totals.awaiting_response ? "red" : undefined} />
+                  <Kpi icon={<Timer size={16} />} label="Avg First Response" value={tickets.totals.avg_first_response_seconds != null ? fmtDuration(tickets.totals.avg_first_response_seconds) : "—"} />
+                  <Kpi icon={<Clock size={16} />} label="Avg Resolution" value={tickets.totals.avg_resolution_seconds != null ? fmtDuration(tickets.totals.avg_resolution_seconds) : "—"} />
+                </div>
+
+                {/* Per-staff leaderboard */}
+                <Card className="bg-[#111] border-[#222] overflow-hidden">
+                  <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest p-4 pb-2 flex items-center gap-2"><TrendingUp size={13} /> Ticket Handling by Staff</p>
+                  {tickets.leaderboard.length === 0 ? (
+                    <p className="text-gray-600 text-sm italic px-4 pb-4">No ticket activity in this period. Run a sync, or wait for staff to respond to tickets.</p>
+                  ) : (
+                    <Table>
+                      <TableHeader className="bg-[#1a1a1a]"><TableRow className="border-[#222]"><TableHead>Staff</TableHead><TableHead className="text-right">Handled</TableHead><TableHead className="text-right">1st Replies</TableHead><TableHead className="text-right">Avg Response</TableHead><TableHead className="text-right">Avg Resolution</TableHead></TableRow></TableHeader>
+                      <TableBody>
+                        {tickets.leaderboard.map((s: any) => (
+                          <TableRow key={s.discord_id} className="border-[#222] hover:bg-white/5">
+                            <TableCell><div className="flex items-center gap-2">{s.avatar ? <img src={s.avatar} className="w-6 h-6 rounded-full" alt="" /> : <div className="w-6 h-6 rounded-full bg-[#222]" />}<span className="text-sm">{s.name}</span></div></TableCell>
+                            <TableCell className="text-right font-mono text-amber-400">{s.handled}</TableCell>
+                            <TableCell className="text-right font-mono text-gray-400">{s.first_responses}</TableCell>
+                            <TableCell className="text-right font-mono text-gray-300">{s.avg_first_response_seconds != null ? fmtDuration(s.avg_first_response_seconds) : "—"}</TableCell>
+                            <TableCell className="text-right font-mono text-gray-300">{s.avg_resolution_seconds != null ? fmtDuration(s.avg_resolution_seconds) : "—"}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </Card>
+
+                {/* Recent tickets */}
+                <Card className="bg-[#111] border-[#222] overflow-hidden">
+                  <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest p-4 pb-2 flex items-center gap-2"><Ticket size={13} /> Recent Tickets</p>
+                  {tickets.recent.length === 0 ? (
+                    <p className="text-gray-600 text-sm italic px-4 pb-4">No tickets recorded yet.</p>
+                  ) : (
+                    <Table>
+                      <TableHeader className="bg-[#1a1a1a]"><TableRow className="border-[#222]"><TableHead>Ticket</TableHead><TableHead>Opened by</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Response</TableHead><TableHead>Handlers</TableHead></TableRow></TableHeader>
+                      <TableBody>
+                        {tickets.recent.map((t: any, i: number) => (
+                          <TableRow key={i} className="border-[#222] hover:bg-white/5">
+                            <TableCell className="font-mono text-xs">{t.channel_name || `ticket-${t.ticket_number}`}</TableCell>
+                            <TableCell className="text-xs text-gray-400">{t.opener_username || "—"}</TableCell>
+                            <TableCell><Badge className={`border-none text-[9px] uppercase tracking-widest ${t.status === "open" ? "bg-green-500/15 text-green-400" : "bg-gray-500/15 text-gray-400"}`}>{t.status}</Badge></TableCell>
+                            <TableCell className="text-right font-mono text-xs text-gray-300">{t.first_response_seconds != null ? fmtDuration(t.first_response_seconds) : <span className="text-red-400">none</span>}</TableCell>
+                            <TableCell className="text-xs text-gray-400 truncate max-w-[180px]">{t.handlers.length ? t.handlers.join(", ") : "—"}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </Card>
+                <p className="text-[10px] text-gray-600">Closed tickets are detected when Ticket Tool deletes the channel, so resolution time is measured to the moment the sync notices it&apos;s gone. Run syncs regularly (or via cron) for accurate close times.</p>
+              </>
+            )}
           </div>
         )}
 
