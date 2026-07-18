@@ -16,6 +16,7 @@ export const MODULES = [
   "attendance",
   "coverage",
   "leaderboards",
+  "tickets",
   "notifications",
   "audit",
 ] as const;
