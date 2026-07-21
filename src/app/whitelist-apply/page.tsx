@@ -56,7 +56,7 @@ const FACTIONS = [
   { value: "civilian", label: "Civilian", track: "a", icon: "👤" },
 ];
 
-const QUIZ_DURATION = 7 * 60 + 30; // 7 minutes 30 seconds
+const QUIZ_DURATION = 10 * 60; // 10 minutes
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
