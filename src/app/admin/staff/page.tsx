@@ -184,7 +184,7 @@ export default function StaffOpsPage() {
     try {
       const res = await fetch("/api/admin/tickets/sync", { method: "POST" });
       const d = await res.json();
-      if (res.ok) { toast.success(`Synced — ${d.live} open, ${d.closed} newly closed.`); loadTickets(ticketRange); }
+      if (res.ok) { toast.success(`Synced — ${d.live} open, ${d.closed} newly closed${d.skipped ? `, ${d.skipped} skipped (no bot access)` : ""}.`); loadTickets(ticketRange); }
       else toast.error(d.error || "Sync failed.");
     } catch { toast.error("Sync failed."); }
     finally { setTicketSyncing(false); }

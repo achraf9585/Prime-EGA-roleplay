@@ -22,11 +22,16 @@ function snowflakeMs(id: string): number {
   return Number(BigInt(id) >> BigInt(22)) + DISCORD_EPOCH;
 }
 
+class DiscordError extends Error {
+  status: number;
+  constructor(status: number, msg: string) { super(msg); this.status = status; }
+}
+
 async function discord(path: string, token: string): Promise<any> {
   const res = await fetch(`https://discord.com/api/v10${path}`, {
     headers: { Authorization: `Bot ${token}` },
   });
-  if (!res.ok) throw new Error(`Discord API ${res.status} on ${path}: ${await res.text()}`);
+  if (!res.ok) throw new DiscordError(res.status, `Discord API ${res.status} on ${path}: ${await res.text()}`);
   return res.json();
 }
 
@@ -91,7 +96,7 @@ async function scanChannel(
  * Poll live Ticket Tool channels, snapshot open tickets, and close any tracked
  * ticket whose channel has disappeared. Best-effort; throws only on config/API errors.
  */
-export async function syncTickets(): Promise<{ live: number; opened: number; closed: number; scanned: number }> {
+export async function syncTickets(): Promise<{ live: number; opened: number; closed: number; scanned: number; skipped: number }> {
   const token = process.env.DISCORD_BOT_TOKEN;
   const guildId = process.env.DISCORD_GUILD_ID;
   if (!token || !guildId) throw new Error("Missing DISCORD_BOT_TOKEN or DISCORD_GUILD_ID");
@@ -108,7 +113,7 @@ export async function syncTickets(): Promise<{ live: number; opened: number; clo
   const staffByDiscord = new Map((staffRows || []).map((s: any) => [s.discord_id, s.id]));
   const staffIds = new Set((staffRows || []).map((s: any) => s.discord_id).filter(Boolean));
 
-  let opened = 0, scanned = 0;
+  let opened = 0, scanned = 0, skipped = 0;
 
   for (const ch of liveTickets) {
     const num = Number(ch.name.match(TICKET_NAME_RE)![1]);
@@ -125,7 +130,13 @@ export async function syncTickets(): Promise<{ live: number; opened: number; clo
       cursor: existing?.last_scanned_message_id ?? null,
     };
 
-    scanned += await scanChannel(ch.id, agg, staffIds, token);
+    try {
+      scanned += await scanChannel(ch.id, agg, staffIds, token);
+    } catch (e) {
+      // Bot lacks access to this private ticket channel — skip it, don't abort the run.
+      if (e instanceof DiscordError && (e.status === 403 || e.status === 404)) { skipped++; continue; }
+      throw e;
+    }
 
     const row = {
       channel_id: ch.id,
@@ -163,5 +174,5 @@ export async function syncTickets(): Promise<{ live: number; opened: number; clo
     closed++;
   }
 
-  return { live: liveTickets.length, opened, closed, scanned };
+  return { live: liveTickets.length, opened, closed, scanned, skipped };
 }
